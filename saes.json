@@ -135,5 +135,13 @@
 	]
 }
 
+//collection => citas_reinscripcion
+
+{
+	"id_alumno": "2013672132",
+	"periodo": "17/1",
+	"fecha_cita": 497924072394830 //son los milisegundos desde 1970, está más en corto guardarlo así que guardar como tal una fecha en un dicho formato
+}
+
 
 
