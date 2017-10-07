@@ -7,19 +7,9 @@
  
  ** Instrucciones **
  
- * Clonar este repositorio
+ * Clonar este repositorio 
  
- * Instalar dependencias
- 
- ** Cliente **
- 
-  ```bash
- saes$ cd client
- saes/client$ npm install
- saes/client$ npm run dev
- ```
- 
-  ** Servidor **
+ ** Servidor **
  
  * Renombrar saes/server/.env.example a .env
  
@@ -29,6 +19,18 @@
  saes/server$ npm tsc
  saes/server$ npm start
  ```
+ 
+ ** Cliente **
+ 
+  ```bash
+ saes$ cd client
+ saes/client$ npm install
+ saes/client$ npm run dev
+ ```
+ 
+ **Si todo salío bien abran esta ruta http://localhost:8080/#/alumnos y deberían ver esto ** 
+ ![alt text](example.png)
+
  
  ## Estructura del proyecto servidor (backend) => saes/server
 
