@@ -48,6 +48,7 @@
 
 ## Estructura del proyecto cliente (frontend) => saes/client
 **El frontend esta hecho con vue-js les puse un ejemplo de como hacer una vista y les explico los directorios y archivos más importantes, por lo general los archivos que NO se específican aquí no es necesario editarlos**
+**Utilicé semantic-ui para darle estilo al front  https://semantic-ui.com/introduction/getting-started.html**
 
 | Name | Description |
 | ------------------------ | --------------------------------------------------------------------------------------------- |
