@@ -16,7 +16,7 @@
   ```bash
  saes$ cd server
  saes/server$ npm install
- saes/server$ npm tsc
+ saes/server$ tsc
  saes/server$ npm start
  ```
  
