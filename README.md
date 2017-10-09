@@ -34,6 +34,13 @@
  ![alt text](example.png)
 
  
+**Seeder**
+ 
+  ```bash
+ saes$ cd server
+ saes/server$ npm run seed
+ ```
+
  ## Estructura del proyecto servidor (backend) => saes/server
 
 | Name | Description |
@@ -41,6 +48,9 @@
 | **dist**                 | Directorio donde se guarda el proyecto compilado                                              |
 | **src**                  | Directorio que contiene el código de todo el proyecto                                         |
 | **src/controllers**      | Directorio para los controladores (maneja todo lo relacionado con las peticiones)             |
+| **src/factories**        | Directorio para factories (poblar base de datos con datos fake)                               |
+| **src/factories/Seeder.ts**  | Archivo donde se ejecutan los factories                                                   |
+| **src/validators**       | Directorio para validar los parámetros de cada petición                                       |
 | **src/models**           | Directorio que contiene los modelos de mongo db                                               |
 | **src**/server.ts        | Express app                                                                                   |
 | .env.example             | Variables del proyecto  (renombra => .env)                                                    |
