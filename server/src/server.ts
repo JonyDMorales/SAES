@@ -7,6 +7,8 @@ var cors = require('cors');
 import * as mainController from "./controllers/MainController";
 import * as alumnoController from "./controllers/AlumnoController";
 
+import * as alumnoValidator from "./validators/AlumnoValidator";
+
 dotenv.config({ path: ".env" });
 
 (mongoose as any).Promise = global.Promise;
@@ -30,7 +32,7 @@ app.listen(app.get("port"), () => {
 app.get("/", mainController.index);
 
 app.get("/alumnos", alumnoController.index);
-app.post("/alumnos", alumnoController.store);
+app.post("/alumnos", alumnoValidator.register, alumnoController.store);
 app.get("/alumnos/:boleta", alumnoController.show);
 app.delete("/alumnos/:boleta", alumnoController.destroy);
 app.put("/alumnos/:boleta", alumnoController.update);

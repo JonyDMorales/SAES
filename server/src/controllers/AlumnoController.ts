@@ -5,7 +5,7 @@ import { default as Alumno } from "../models/Alumno";
 export let store = (req: Request, res: Response) => {
   res.sendStatus(200).end();
 
-  let alumno = new Alumno(req.body.alumno);
+  let alumno = new Alumno(req.body);
 
   alumno.save()
   .then(() => console.log("SAVED!!!"))

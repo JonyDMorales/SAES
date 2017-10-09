@@ -67,3 +67,4 @@ client/bower_components
 
 # dotenv environment variables file
 .env
+server/package-lock.json
