@@ -28,7 +28,11 @@ app.listen(app.get("port"), () => {
 });
 
 app.get("/", mainController.index);
+
 app.get("/alumnos", alumnoController.index);
 app.post("/alumnos", alumnoController.store);
+app.get("/alumnos/:boleta", alumnoController.show);
+app.delete("/alumnos/:boleta", alumnoController.destroy);
+app.put("/alumnos/:boleta", alumnoController.update);
 
 module.exports = app;

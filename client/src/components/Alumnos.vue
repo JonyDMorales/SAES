@@ -30,7 +30,7 @@ export default {
   {
     async getAlumnos () {
       const response = await AlumnoService.index()
-      this.alumnos = response.data.alumnos
+      this.alumnos = response.data
     }
 
   },
