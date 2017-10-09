@@ -42,7 +42,6 @@
 | **src**                  | Directorio que contiene el código de todo el proyecto                                         |
 | **src/controllers**      | Directorio para los controladores (maneja todo lo relacionado con las peticiones)             |
 | **src/models**           | Directorio que contiene los modelos de mongo db                                               |
-| **src/views**            | Vistas de la aplicación hechas con pug template (Front-end)                                   |
 | **src**/server.ts        | Express app                                                                                   |
 | .env.example             | Variables del proyecto  (renombra => .env)                                                    |
 | tsconfig.json            | Opciones de configuración para TypeScript                                                     |
