@@ -9,6 +9,8 @@
  
  * Clonar este repositorio 
  
+ * Abrir 2 consolas, una para cliente y otra para servidor
+ 
  ** Servidor **
  
  * Renombrar saes/server/.env.example a .env
