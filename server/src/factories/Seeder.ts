@@ -2,6 +2,7 @@ import * as dotenv from "dotenv";
 import * as mongoose from "mongoose";
 
 import * as alumnoFactory from "./AlumnoFactory";
+import * as unidadAprendizajeFactory from "./UnidadAprendizajeFactory";
 
 dotenv.config({ path: ".env" });
 
@@ -12,6 +13,7 @@ mongoose.connect(process.env.MONGOLAB_URI, { useMongoClient: true })
 
 function run() 
 {
-	alumnoFactory.alumnoData(5);
+	alumnoFactory.alumnoData(10);
+	unidadAprendizajeFactory.unidadAprendizajeData(10)
 }
 

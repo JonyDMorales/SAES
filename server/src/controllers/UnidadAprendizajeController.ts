@@ -1,30 +1,30 @@
 import { Request, Response, NextFunction } from "express";
 
-import { default as Alumno } from "../models/Alumno";
+import { default as UnidadAprendizaje } from "../models/UnidadAprendizaje";
 
 export let store = (req: Request, res: Response) => {
-  let alumno = new Alumno(req.body);
+  let unidadAprendizaje = new UnidadAprendizaje(req.body);
 
-  alumno.save()
+  unidadAprendizaje.save()
   .then(() => res.json({ status: "OK"}).end())
   .catch((err) => console.log(err));
   
 };
 
 export let index = (req: Request, res: Response) => {
- 	let query = Alumno.find();
+ 	let query = UnidadAprendizaje.find();
  	
  	query.exec()
- 	.then((alumnos) => res.json(alumnos).end())
+ 	.then((unidadesAprendizaje) => res.json(unidadesAprendizaje).end())
  	.catch((err) => console.log(err));
 
 };
 
 export let show = (req: Request, res: Response) => {
- 	let query = Alumno.findOne({ boleta: req.params.boleta });
+ 	let query = UnidadAprendizaje.findOne({ id: req.params.id });
 
  	query.exec()
- 	.then((alumno) => res.json(alumno).end())
+ 	.then((unidadAprendizaje) => res.json(unidadAprendizaje).end())
  	.catch((err) => console.log(err));
 };
 
@@ -33,10 +33,10 @@ export let update = (req: Request, res: Response) => {
 };
 
 export let destroy = (req: Request, res: Response) => {
-	let query = Alumno.remove({ boleta : req.params.boleta });
+	let query = UnidadAprendizaje.remove({ id : req.params.id });
 
  	query.exec()
- 	.then((alumno) => res.json({ status: "OK"}).end())
+ 	.then((unidadAprendizaje) => res.json({ status: "OK"}).end())
  	.catch((err) => console.log(err));
 };
 

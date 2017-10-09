@@ -2,6 +2,6 @@ import Api from '@/services/Api'
 
 export default {
   index () {
-    return Api().get('alumnos')
+    return Api().get('alumno')
   }
 }

@@ -6,6 +6,7 @@ var cors = require('cors');
 
 import * as mainController from "./controllers/MainController";
 import * as alumnoController from "./controllers/AlumnoController";
+import * as unidadAprendizajeController from "./controllers/UnidadAprendizajeController";
 
 import * as alumnoValidator from "./validators/AlumnoValidator";
 
@@ -31,10 +32,16 @@ app.listen(app.get("port"), () => {
 
 app.get("/", mainController.index);
 
-app.get("/alumnos", alumnoController.index);
-app.post("/alumnos", alumnoValidator.register, alumnoController.store);
-app.get("/alumnos/:boleta", alumnoController.show);
-app.delete("/alumnos/:boleta", alumnoController.destroy);
-app.put("/alumnos/:boleta", alumnoController.update);
+app.get("/alumno", alumnoController.index);
+app.post("/alumno", alumnoValidator.register, alumnoController.store);
+app.get("/alumno/:boleta", alumnoController.show);
+app.delete("/alumno/:boleta", alumnoController.destroy);
+app.put("/alumno/:boleta", alumnoController.update);
+
+app.get("/unidad_aprendizaje", unidadAprendizajeController.index);
+app.post("/unidad_aprendizaje", unidadAprendizajeController.store);
+app.get("/unidad_aprendizaje/:id", unidadAprendizajeController.show);
+app.delete("/unidad_aprendizaje/:id", unidadAprendizajeController.destroy);
+app.put("/unidad_aprendizaje/:id", unidadAprendizajeController.update);
 
 module.exports = app;

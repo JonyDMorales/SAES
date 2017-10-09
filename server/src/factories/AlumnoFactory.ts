@@ -10,7 +10,7 @@ export let alumnoData = (n: number) => {
 			nombres: Faker.random.boolean() ? Faker.name.firstName() : Faker.name.firstName() + ' ' + Faker.name.firstName(),
 			apellido_paterno: Faker.name.lastName(),
 			apellido_materno: Faker.name.lastName(),
-			boleta: Faker.random.number(2000000000,2010000000),
+			boleta: Faker.random.number({min: 2000000000, max: 2010000000}),
 			password: Faker.internet.password(),
 			email: Faker.internet.email(),
 		}

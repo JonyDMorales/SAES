@@ -7,7 +7,7 @@ const unidadAprendizajeSchema = new mongoose.Schema({
 	nombre: String,
 	semestre: Number,
 	creditos: Number,
-	optatativa: Boolean
+	optativa: Boolean
 
 }, { timestamps: true });
 
