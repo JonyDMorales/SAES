@@ -7,6 +7,8 @@ var cors = require('cors');
 import * as mainController from "./controllers/MainController";
 import * as alumnoController from "./controllers/AlumnoController";
 import * as unidadAprendizajeController from "./controllers/UnidadAprendizajeController";
+import * as horarioClaseController from "./controllers/HorarioClaseController";
+import * as planEstudiosController from "./controllers/PlanEstudiosController";
 
 import * as alumnoValidator from "./validators/AlumnoValidator";
 
@@ -43,5 +45,17 @@ app.post("/unidad_aprendizaje", unidadAprendizajeController.store);
 app.get("/unidad_aprendizaje/:id", unidadAprendizajeController.show);
 app.delete("/unidad_aprendizaje/:id", unidadAprendizajeController.destroy);
 app.put("/unidad_aprendizaje/:id", unidadAprendizajeController.update);
+
+app.get("/plan_estudios", planEstudiosController.index);
+app.post("/plan_estudios", planEstudiosController.store);
+app.get("/plan_estudios/:id", planEstudiosController.show);
+app.delete("/plan_estudios/:id", planEstudiosController.destroy);
+app.put("/plan_estudios/:id", planEstudiosController.update);
+
+app.get("/horario_clases", horarioClaseController.index);
+app.post("/horario_clases", horarioClaseController.store);
+app.get("/horario_clases/:id", horarioClaseController.show);
+app.delete("/horario_clases/:id", horarioClaseController.destroy);
+app.put("/horario_clases/:id", horarioClaseController.update);
 
 module.exports = app;
