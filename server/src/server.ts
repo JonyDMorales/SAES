@@ -35,10 +35,11 @@ app.listen(app.get("port"), () => {
 app.get("/", mainController.index);
 
 app.get("/alumno", alumnoController.index);
-app.post("/alumno", alumnoValidator.register, alumnoController.store);
+app.post("/alumno", alumnoValidator.store, alumnoController.store);
 app.get("/alumno/:boleta", alumnoController.show);
 app.delete("/alumno/:boleta", alumnoController.destroy);
 app.put("/alumno/:boleta", alumnoController.update);
+app.post("/alumno/login", alumnoController.login);
 
 app.get("/unidad_aprendizaje", unidadAprendizajeController.index);
 app.post("/unidad_aprendizaje", unidadAprendizajeController.store);

@@ -17,6 +17,7 @@
     "express": "^4.16.1",
     "faker": "^4.1.0",
     "joi": "^11.3.3",
+    "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.12.0",
     "pusher": "^1.5.1"
   },

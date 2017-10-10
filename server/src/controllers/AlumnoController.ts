@@ -1,6 +1,10 @@
 import { Request, Response, NextFunction } from "express";
+import * as dotenv from "dotenv";
+const JsonWebToken = require("jsonwebtoken"); 
 
 import { default as Alumno } from "../models/Alumno";
+
+dotenv.config({ path: ".env" });
 
 export let store = (req: Request, res: Response) => {
   let alumno = new Alumno(req.body);
@@ -43,3 +47,24 @@ export let destroy = (req: Request, res: Response) => {
 export let search = (req: Request, res: Response) => {
 	
 };
+
+export let login = (req: Request, res: Response) => {
+	let email = req.body.email;
+	let password = req.body.password;
+
+	let query = Alumno.findOne().and([{ email: email }, { password: password }]);
+
+	query.exec()
+ 	.then((alumno) => {
+ 		if(alumno) {
+ 			res.json({alumno: alumno, token: loginToken(alumno.toJSON())}).end();
+ 		} else {
+ 			res.json({status: "FAIL"}).end();
+ 		}
+ 	})
+ 	.catch((err) => console.log(err));
+};
+
+let loginToken = (alumno: any) => {
+	return JsonWebToken.sign(alumno, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24 * 7});
+}
