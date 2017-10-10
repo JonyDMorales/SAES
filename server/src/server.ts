@@ -10,8 +10,6 @@ import * as unidadAprendizajeController from "./controllers/UnidadAprendizajeCon
 import * as horarioClaseController from "./controllers/HorarioClaseController";
 import * as planEstudiosController from "./controllers/PlanEstudiosController";
 
-import * as alumnoValidator from "./validators/AlumnoValidator";
-
 dotenv.config({ path: ".env" });
 
 (mongoose as any).Promise = global.Promise;
@@ -35,7 +33,7 @@ app.listen(app.get("port"), () => {
 app.get("/", mainController.index);
 
 app.get("/alumno", alumnoController.index);
-app.post("/alumno", alumnoValidator.store, alumnoController.store);
+app.post("/alumno", alumnoController.store);
 app.get("/alumno/:boleta", alumnoController.show);
 app.delete("/alumno/:boleta", alumnoController.destroy);
 app.put("/alumno/:boleta", alumnoController.update);
