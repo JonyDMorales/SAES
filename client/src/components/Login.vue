@@ -40,16 +40,19 @@ export default {
         boleta: this.boleta,
         password: this.password
       })
-
       if (validationResult.status === 'ok') {
         const response = await AlumnoService.login({
           boleta: this.boleta,
           password: this.password
         })
-        this.$store.dispatch('setToken', response.data.token)
-        this.$store.dispatch('setAlumno', response.data.alumno)
+        if (response.data.status === 'ok') {
+          this.$store.dispatch('setToken', response.data.token)
+          this.$store.dispatch('setAlumno', response.data.alumno)
+        } else {
+          this.error = true
+          this.errors = response.data.errors
+        }
       } else {
-        console.log(JSON.stringify(validationResult.errors, null, 2))
         this.error = true
         this.errors = validationResult.errors
       }

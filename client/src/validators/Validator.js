@@ -3,7 +3,7 @@ import Joi from 'joi'
 export default {
   loginAlumno (credentials) {
     const schema = {
-      boleta: Joi.number().integer().min(2000000000).max(2020000000),
+      boleta: Joi.number().integer(),
       password: Joi.string().min(8)
     }
 

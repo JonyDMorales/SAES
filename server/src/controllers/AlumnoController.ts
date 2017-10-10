@@ -57,9 +57,9 @@ export let login = (req: Request, res: Response) => {
 	query.exec()
  	.then((alumno) => {
  		if(alumno) {
- 			res.json({alumno: alumno, token: loginToken(alumno.toJSON())}).end();
+ 			res.json({alumno: alumno, token: loginToken(alumno.toJSON()), status: "ok"}).end();
  		} else {
- 			res.json({status: "FAIL"}).end();
+ 			res.json({status: "error", errors: ['Los datos son incorrectos']}).end();
  		}
  	})
  	.catch((err) => console.log(err));
