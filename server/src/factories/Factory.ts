@@ -1,9 +1,29 @@
 const Faker = require('faker');
+import { default as Alumno } from "../models/Alumno";
 import { default as UnidadAprendizaje } from "../models/UnidadAprendizaje";
 
 Faker.locale = "es";
 
-export let unidadAprendizajeData = (n: number) => {
+export let alumno = (n: number) => {
+	while(n--) {
+		let data = {
+			nombres: Faker.name.firstName(),
+			apellido_paterno: Faker.name.lastName(),
+			apellido_materno: Faker.name.lastName(),
+			boleta: Faker.random.number({min: 2000000000, max: 2010000000}),
+			password: Faker.internet.password(),
+			email: Faker.internet.email().toLowerCase(),
+		}
+
+		let alumno = new Alumno(data);
+
+	  alumno.save()
+	  .then(() => console.log("Alumno Factory => Data => Success"))
+	  .catch((err) => console.log(err));
+	}
+}
+
+export let unidadAprendizaje = (n: number) => {
 	while(n--) {
 		let data = {
 			id: 'ua_' + Faker.random.alphaNumeric(8),
@@ -22,7 +42,7 @@ export let unidadAprendizajeData = (n: number) => {
 	}
 }
 
-export let escom = () => {
+export let plan_escom = () => {
 	let isc_escom = [
 		{
 		  "id": "UAIEYS1",
