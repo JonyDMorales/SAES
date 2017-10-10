@@ -12,6 +12,6 @@ mongoose.connect(process.env.MONGOLAB_URI, { useMongoClient: true })
 
 function run() 
 {
-	Factory.profesor(80);
+	//Factory.profesor(80);
 }
 

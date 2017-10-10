@@ -5,7 +5,7 @@ const horarioClaseSchema = new mongoose.Schema({
   id: String,
 	periodo: String,
 	id_profesor: String,
-	profesor: {type: String, unique: true},
+	profesor: String,
 	id_unidad_aprendizaje: String,
 	grupo: String,
 
