@@ -13,7 +13,8 @@ mongoose.connect(process.env.MONGOLAB_URI, { useMongoClient: true })
 
 function run() 
 {
-	alumnoFactory.alumnoData(10);
-	unidadAprendizajeFactory.unidadAprendizajeData(10)
+	//alumnoFactory.alumnoData(10);
+	//unidadAprendizajeFactory.unidadAprendizajeData(10);
+	unidadAprendizajeFactory.escom();
 }
 

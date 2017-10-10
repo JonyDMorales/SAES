@@ -14,7 +14,7 @@
               <input type="Password" name="password" placeholder="Contraseña" v-model="password">
             </div>
             <button class="medium ui orange button" @click="login">Ingresar</button>
-            <div class="ui error message" v-if="error === true">
+            <div class="ui error message" v-if="error">
               <div class="header">Error al ingresar</div>
               <p v-for="error in errors">{{ error }}</p>
             </div>
