@@ -3,13 +3,14 @@ import Router from 'vue-router'
 import Hello from '@/components/Hello'
 
 import Alumnos from '@/components/Alumnos'
+import Login from '@/components/Login'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/hello',
       name: 'Hello',
       component: Hello
     },
@@ -17,6 +18,11 @@ export default new Router({
       path: '/alumnos',
       name: 'alumnos',
       component: Alumnos
+    },
+    {
+      path: '/',
+      name: 'login',
+      component: Login
     }
   ]
 })

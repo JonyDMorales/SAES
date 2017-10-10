@@ -49,10 +49,10 @@ export let search = (req: Request, res: Response) => {
 };
 
 export let login = (req: Request, res: Response) => {
-	let email = req.body.email;
+	let boleta = req.body.boleta;
 	let password = req.body.password;
 
-	let query = Alumno.findOne().and([{ email: email }, { password: password }]);
+	let query = Alumno.findOne().and([{ boleta: boleta }, { password: password }]);
 
 	query.exec()
  	.then((alumno) => {

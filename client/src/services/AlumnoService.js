@@ -7,6 +7,10 @@ export default {
 
   store (alumno) {
     return Api().post('alumno')
+  },
+
+  login (credentials) {
+    return Api().post('alumno/login', credentials)
   }
   /*
   show (boleta) {
