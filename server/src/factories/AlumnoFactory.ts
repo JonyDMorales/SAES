@@ -12,7 +12,7 @@ export let alumnoData = (n: number) => {
 			apellido_materno: Faker.name.lastName(),
 			boleta: Faker.random.number({min: 2000000000, max: 2010000000}),
 			password: Faker.internet.password(),
-			email: Faker.internet.email(),
+			email: Faker.internet.email().toLowerCase(),
 		}
 
 		let alumno = new Alumno(data);
