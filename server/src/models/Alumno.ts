@@ -47,7 +47,7 @@ const alumnoSchema = new mongoose.Schema({
 		}
 	]
 
-}, { timestamps: true });
+}, { timestamps: false });
 
 const Alumno = mongoose.model("Alumno", alumnoSchema);
 export default Alumno;

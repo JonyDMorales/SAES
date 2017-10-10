@@ -8,7 +8,7 @@ const citaReinscripcionSchema = new mongoose.Schema({
 	fecha_inicio: Number,
 	fecha_fin: Number
 
-}, { timestamps: true });
+}, { timestamps: false });
 
 const CitaReinscripcion = mongoose.model("Cita_Reinscripcion", citaReinscripcionSchema);
 export default CitaReinscripcion;

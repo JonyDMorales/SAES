@@ -11,7 +11,7 @@ const planEstudiosSchema = new mongoose.Schema({
 	total_creditos: Number,
 	duracion_periodos: Number
 
-}, { timestamps: true });
+}, { timestamps: false });
 
 const PlanEstudios = mongoose.model("Plan_Estudios", planEstudiosSchema);
 export default PlanEstudios;

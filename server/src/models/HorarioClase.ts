@@ -18,7 +18,7 @@ const horarioClaseSchema = new mongoose.Schema({
 		}
 	]
 
-}, { timestamps: true });
+}, { timestamps: false });
 
 const HorarioClase = mongoose.model("Horario_Clase", horarioClaseSchema);
 export default HorarioClase;

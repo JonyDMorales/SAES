@@ -9,7 +9,7 @@ const unidadAprendizajeSchema = new mongoose.Schema({
 	creditos: Number,
 	optativa: Boolean
 
-}, { timestamps: true });
+}, { timestamps: false });
 
 const UnidadAprendizaje = mongoose.model("Unidad_Aprendizaje", unidadAprendizajeSchema);
 export default UnidadAprendizaje;

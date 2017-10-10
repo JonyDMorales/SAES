@@ -5,7 +5,7 @@ const escuelaSchema = new mongoose.Schema({
 	id: {type: String, unique: true},
 	nombre: String
 
-}, { timestamps: true });
+}, { timestamps: false });
 
 const Escuela = mongoose.model("Escuela", escuelaSchema);
 export default Escuela;

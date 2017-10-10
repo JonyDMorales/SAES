@@ -9,7 +9,7 @@ const profesorSchema = new mongoose.Schema({
 	password: String,
 	email: {type: String, unique: true}
 
-}, { timestamps: true });
+}, { timestamps: false });
 
 const Profesor = mongoose.model("Profesor", profesorSchema);
 export default Profesor;
