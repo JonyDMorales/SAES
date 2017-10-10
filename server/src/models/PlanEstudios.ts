@@ -4,7 +4,7 @@ const planEstudiosSchema = new mongoose.Schema({
 	
   id: {type: String, unique: true},
   nombre: String,
-	version: String,
+	version: Number,
 	carrera: String,
 	periodo_inicio: String,
 	periodo_fin: String,

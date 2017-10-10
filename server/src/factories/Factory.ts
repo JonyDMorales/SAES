@@ -1,24 +1,89 @@
 const Faker = require('faker');
 import { default as Alumno } from "../models/Alumno";
 import { default as UnidadAprendizaje } from "../models/UnidadAprendizaje";
+import { default as PlanEstudios } from "../models/PlanEstudios";
+import { default as Escuela } from "../models/Escuela";
+import { default as Profesor } from "../models/Profesor";
 
 Faker.locale = "es";
 
 export let alumno = (n: number) => {
 	while(n--) {
+		let email = Faker.internet.email().toLowerCase();
+		let name = Faker.name.firstName();
+		let _name = name.toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace(' ','')
 		let data = {
-			nombres: Faker.name.firstName(),
+			nombres: name,
 			apellido_paterno: Faker.name.lastName(),
 			apellido_materno: Faker.name.lastName(),
 			boleta: Faker.random.number({min: 2000000000, max: 2010000000}),
 			password: Faker.internet.password(),
-			email: Faker.internet.email().toLowerCase(),
+			email: _name + String(Faker.random.number({min: 100, max: 999})) + email.substring(email.indexOf('@'), email.length)
 		}
 
 		let alumno = new Alumno(data);
 
 	  alumno.save()
 	  .then(() => console.log("Alumno Factory => Data => Success"))
+	  .catch((err) => console.log(err));
+	}
+}
+
+export let profesor = (n: number) => {
+	while(n--) {
+		let email = Faker.internet.email().toLowerCase();
+		let name = Faker.name.firstName();
+		let _name = name.toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace(' ','')
+		let data = {
+			nombres: name,
+			apellido_paterno: Faker.name.lastName(),
+			apellido_materno: Faker.name.lastName(),
+			id_escuela: "ESCOM",
+			id: Faker.random.number({min: 2000000000, max: 2010000000}),
+			password: Faker.internet.password(),
+			email: _name + String(Faker.random.number({min: 100, max: 999})) + email.substring(email.indexOf('@'), email.length)
+		}
+
+		let profesor = new Profesor(data);
+
+	  profesor.save()
+	  .then(() => console.log("Profesor Factory => Data => Success"))
+	  .catch((err) => console.log(err));
+	}
+}
+
+export let planEstudios = (n: number) => {
+	while(n--) {
+		let data = {
+			id: "PEESCPM2009",
+		  nombre: "ESCOM2009",
+			version: 2,
+			carrera: "Ing. Sistemas Computacionales",
+			periodo_inicio: "09/1",
+			periodo_fin: "20/1",
+			total_creditos: 200,
+			duracion_periodos: 12
+		}
+
+		let plan_estudios = new PlanEstudios(data);
+
+	  plan_estudios.save()
+	  .then(() => console.log("PlanEstudios Factory => Data => Success"))
+	  .catch((err) => console.log(err));
+	}
+}
+
+export let escuela = (n: number) => {
+	while(n--) {
+		let data = {
+			id: "ESCOM",
+		  nombre: "Escuela Superior de Cómputo"
+		}
+
+		let escuela = new Escuela(data);
+
+	  escuela.save()
+	  .then(() => console.log("Escuela Factory => Data => Success"))
 	  .catch((err) => console.log(err));
 	}
 }
@@ -42,7 +107,7 @@ export let unidadAprendizaje = (n: number) => {
 	}
 }
 
-export let plan_escom = () => {
+export let unidadesAprendizajeEscom = () => {
 	let isc_escom = [
 		{
 		  "id": "UAIEYS1",
