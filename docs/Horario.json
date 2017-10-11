@@ -1,0 +1,22 @@
+{
+	"profesor": "Idalia Maldonado Castillo",
+	"id_unidad_aprendizaje": 31,
+	"grupo": "3CM1",
+	"horarios": [
+		{
+			"dia": "lunes",
+			"hora_inicio": "10:30",
+			"hora_fin": "12:00"
+		},
+		{
+			"dia": "martes",
+			"hora_inicio": "8:30",
+			"hora_fin": "10:00"
+		},
+		{
+			"dia": "jueves",
+			"hora_inicio": "10:30",
+			"hora_fin": "12:00"
+		}
+	]
+}
