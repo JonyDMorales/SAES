@@ -5,17 +5,17 @@
 	"grupo": "3CM1",
 	"horarios": [
 		{
-			"dia": "lunes",
+			"dia": "Lunes",
 			"hora_inicio": "10:30",
 			"hora_fin": "12:00"
 		},
 		{
-			"dia": "martes",
+			"dia": "Martes",
 			"hora_inicio": "8:30",
 			"hora_fin": "10:00"
 		},
 		{
-			"dia": "jueves",
+			"dia": "Jueves",
 			"hora_inicio": "10:30",
 			"hora_fin": "12:00"
 		}
