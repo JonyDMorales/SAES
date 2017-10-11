@@ -8,6 +8,8 @@ const horarioClaseSchema = new mongoose.Schema({
 	profesor: String,
 	id_unidad_aprendizaje: String,
 	grupo: String,
+	lugares_disponibles: Number,
+	alumnos_inscritos: Number,
 
 	horarios: 
 	[
