@@ -24,3 +24,8 @@ export let getAlumnoByBoletaAndPassword = (boleta: number, password: string) => 
 	let query = Alumno.findOne().and([{ boleta: boleta }, { password: password }]);
 	return query.exec();
 }
+
+export let getAlumnosSorted = () => {
+	let query = Alumno.find({},{ boleta: 1, apellido_paterno: 1, apellido_materno: 1, _id: 0 }).sort({numero_unidades_reprobadas: 1, promedio_general: -1});
+	return query.exec();
+}

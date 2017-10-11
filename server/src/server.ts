@@ -9,6 +9,7 @@ import * as alumnoController from "./controllers/AlumnoController";
 import * as unidadAprendizajeController from "./controllers/UnidadAprendizajeController";
 import * as horarioClaseController from "./controllers/HorarioClaseController";
 import * as planEstudiosController from "./controllers/PlanEstudiosController";
+import * as citaReinscripcionController from "./controllers/CitaReinscripcionController";
 
 dotenv.config({ path: ".env" });
 
@@ -56,5 +57,8 @@ app.post("/horario_clases", horarioClaseController.store);
 app.get("/horario_clases/:id", horarioClaseController.show);
 app.delete("/horario_clases/:id", horarioClaseController.destroy);
 app.put("/horario_clases/:id", horarioClaseController.update);
+
+app.post("/cita_reinscripcion", citaReinscripcionController.store);
+app.get("/cita_reinscripcion/:boleta", citaReinscripcionController.show);
 
 module.exports = app;

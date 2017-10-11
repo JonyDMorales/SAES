@@ -2,7 +2,6 @@ import { Request, Response, NextFunction } from "express";
 import * as dotenv from "dotenv";
 const JsonWebToken = require("jsonwebtoken"); 
 
-import { default as Alumno } from "../models/Alumno";
 import * as AlumnoDataSource from "../datasources/AlumnoDataSource";
 
 dotenv.config({ path: ".env" });

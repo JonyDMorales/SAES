@@ -14,6 +14,9 @@ const alumnoSchema = new mongoose.Schema({
 	periodo_inicio: String,
 	creditos_obtenidos: Number,
 	periodos_cursados: Number,
+	promedio_general: Number,
+	numero_unidades_reprobadas: Number,
+
 
 	unidades_cursadas: [
 		{

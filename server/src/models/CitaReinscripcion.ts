@@ -2,11 +2,9 @@ import * as mongoose from "mongoose";
 
 const citaReinscripcionSchema = new mongoose.Schema({
   
-	id: {type: String, unique: true},
-	id_alumno: Number,
-	periodo: String,
+	boleta_alumno: {type: Number, unique: true},
 	fecha_inicio: Number,
-	fecha_fin: Number
+	fecha_limite: Number
 
 }, { timestamps: false });
 

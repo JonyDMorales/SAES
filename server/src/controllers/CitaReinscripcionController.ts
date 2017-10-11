@@ -1,31 +1,28 @@
 import { Request, Response, NextFunction } from "express";
 
-import { default as CitaReinscripcion } from "../models/CitaReinscripcion";
+import * as CitasReinscripcionDataSource from "../datasources/CitasReinscripcionDataSource";
+import * as GenerarCitas from "../usecases/GenerarCitas";
 
-export let store = (req: Request, res: Response) => {
-  let startDate = req.body.inicio;
-  let endDate = req.body.fin;
 
-  //cita cada 5 min
-  //cuantos alumnos
-  //promedio
-  //reprobadas
+export let store = async (req: Request, res: Response) => {
+  let startDate = req.body.startDate;
+  let endDate = req.body.endDate;
 
-  //asigno inicio
-  //asigno fin
+  let citas = await GenerarCitas.execute(startDate, endDate);
+  res.json(citas).end();
 };
 
 export let index = (req: Request, res: Response) => {
- 	let query = CitaReinscripcion.find();
- 	
- 	query.exec()
- 	.then((citasReinscripcion) => res.json(citasReinscripcion).end())
- 	.catch((err) => console.log(err));
-
+	
 };
 
-export let show = (req: Request, res: Response) => {
- 	
+export let show = async (req: Request, res: Response) => {
+ 	try {
+		let cita = await CitasReinscripcionDataSource.getCitaByBoleta(req.params.boleta);
+		res.json(cita).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
 export let update = (req: Request, res: Response) => {

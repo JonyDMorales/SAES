@@ -29,6 +29,31 @@ export let alumno = (n: number) => {
 	}
 }
 
+export let alumnoWithTrayectory = (n: number) => {
+	while(n--) {
+		let email = Faker.internet.email().toLowerCase();
+		let name = Faker.name.firstName();
+		let _name = name.toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace(' ','')
+		let data = {
+			nombres: name,
+			apellido_paterno: Faker.name.lastName(),
+			apellido_materno: Faker.name.lastName(),
+			boleta: Faker.random.number({min: 2000000000, max: 2010000000}),
+			password: Faker.internet.password(),
+			email: _name + String(Faker.random.number({min: 100, max: 999})) + email.substring(email.indexOf('@'), email.length),
+
+			promedio_general: parseFloat(String(Faker.random.number({min: 5, max: 9})) + '.' + String(Faker.random.number({min: 0, max: 9}))),
+			numero_unidades_reprobadas: Faker.random.number({min: 0, max: 6})
+		}
+
+		let alumno = new Alumno(data);
+
+	  alumno.save()
+	  .then(() => console.log("Alumno Factory => Data => Success"))
+	  .catch((err) => console.log(err));
+	}
+}
+
 export let profesor = (n: number) => {
 	while(n--) {
 		let email = Faker.internet.email().toLowerCase();
