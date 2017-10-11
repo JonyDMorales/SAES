@@ -10,60 +10,61 @@ dotenv.config({ path: ".env" });
 export let store = async (req: Request, res: Response) => {
 	try {
 		let alumno = await AlumnoDataSource.saveAlumno(req.body);
-		res.json({ alumno: alumno }).end()
+		res.json(alumno).end()
 	} catch(e) {
 		res.json({ status: "error" }).end()
 	}
 };
 
-export let index = (req: Request, res: Response) => {
- 	let query = Alumno.find();
- 	
- 	query.exec()
- 	.then((alumnos) => res.json(alumnos).end())
- 	.catch((err) => console.log(err));
-
+export let index = async (req: Request, res: Response) => {
+	try {
+		let alumnos = await AlumnoDataSource.getAllAlumnos();
+		res.json(alumnos).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
-export let show = (req: Request, res: Response) => {
- 	let query = Alumno.findOne({ boleta: req.params.boleta });
-
- 	query.exec()
- 	.then((alumno) => res.json(alumno).end())
- 	.catch((err) => console.log(err));
+export let show = async (req: Request, res: Response) => {
+	try {
+		let alumno = await AlumnoDataSource.getAlumnoByBoleta(req.params.boleta);
+		res.json(alumno).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
 export let update = (req: Request, res: Response) => {
  	
 };
 
-export let destroy = (req: Request, res: Response) => {
-	let query = Alumno.remove({ boleta : req.params.boleta });
-
- 	query.exec()
- 	.then((alumno) => res.json({ status: "OK"}).end())
- 	.catch((err) => console.log(err));
+export let destroy = async (req: Request, res: Response) => {
+	try {
+		let result = await AlumnoDataSource.deleteAlumnoByBoleta(req.params.boleta);
+		res.json({ status: "OK"}).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
 export let search = (req: Request, res: Response) => {
 	
 };
 
-export let login = (req: Request, res: Response) => {
-	let boleta = req.body.boleta;
-	let password = req.body.password;
-
-	let query = Alumno.findOne().and([{ boleta: boleta }, { password: password }]);
-
-	query.exec()
- 	.then((alumno) => {
- 		if(alumno) {
+export let login = async (req: Request, res: Response) => {
+	try {
+		let boleta = req.body.boleta;
+		let password = req.body.password;
+		
+		let alumno = await AlumnoDataSource.getAlumnoByBoletaAndPassword(boleta, password);
+		if(alumno) {
  			res.json({alumno: alumno, token: loginToken(alumno.toJSON()), status: "ok"}).end();
  		} else {
  			res.json({status: "error", errors: ['Los datos son incorrectos']}).end();
  		}
- 	})
- 	.catch((err) => console.log(err));
+	} catch(e) {
+		res.json({status: "error"}).end();
+	}
 };
 
 let loginToken = (alumno: any) => {
