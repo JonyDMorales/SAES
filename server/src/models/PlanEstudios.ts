@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 
 const planEstudiosSchema = new mongoose.Schema({
 	
-  id: {type: String, unique: true},
+  id: {type: Number, unique: true},
   nombre: String,
 	version: Number,
 	carrera: String,

@@ -55,7 +55,7 @@ export let profesor = (n: number) => {
 export let planEstudios = (n: number) => {
 	while(n--) {
 		let data = {
-			id: "PEESCPM2009",
+			id: 1,
 		  nombre: "ESCOM2009",
 			version: 2,
 			carrera: "Ing. Sistemas Computacionales",
@@ -110,155 +110,355 @@ export let unidadAprendizaje = (n: number) => {
 export let unidadesAprendizajeEscom = () => {
 	let isc_escom = [
 		{
-		  "id": "UAIEYS1",
-		  "id_plan_estudios": "PEESCPM2009",
-			"nombre": "Ingeniería Ética y Sociedad",
-			"semestre": 1,
-			"creditos": 4.39,
-			"optativa": false
-		},
-		{
-		  "id": "UAAV1",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 1,
+		  "id_plan_estudios": 1,
 			"nombre": "Análisis Vectorial",
 			"semestre": 1,
 			"creditos": 4.39,
 			"optativa": false
 		},
 		{
-		  "id": "UAC1",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 2,
+		  "id_plan_estudios": 1,
 			"nombre": "Cálculo",
 			"semestre": 1,
 			"creditos": 4.45,
 			"optativa": false
-		},
+		},		
 		{
-		  "id": "UAMD1",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 3,
+		  "id_plan_estudios": 1,
 			"nombre": "Matemáticas Discretas",
 			"semestre": 1,
 			"creditos": 5.85,
 			"optativa": false
 		},
 		{
-		  "id": "UAAYPE1",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 4,
+		  "id_plan_estudios": 1,
 			"nombre": "Algoritmia y Programación Estructurada",
 			"semestre": 1,
 			"creditos": 4.45,
 			"optativa": false
 		},
 		{
-		  "id": "UAF1",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 5,
+		  "id_plan_estudios": 1,
 			"nombre": "Física",
 			"semestre": 1,
 			"creditos": 4.39,
 			"optativa": false
 		},
 		{
-		  "id": "UAECD2",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 6,
+		  "id_plan_estudios": 1,
+			"nombre": "Ingeniería Ética y Sociedad",
+			"semestre": 1,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 7,
+		  "id_plan_estudios": 1,
 			"nombre": "Ecuaciones Diferenciales",
 			"semestre": 2,
 			"creditos": 4.39,
 			"optativa": false
 		},
 		{
-		  "id": "UAAL2",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 8,
+		  "id_plan_estudios": 1,
 			"nombre": "Álgebra Lineal",
 			"semestre": 2,
 			"creditos": 4.39,
 			"optativa": false
 		},
 		{
-		  "id": "UACA2",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 9,
+		  "id_plan_estudios": 1,
 			"nombre": "Cálculo Aplicado",
 			"semestre": 2,
 			"creditos": 4.44,
 			"optativa": false
 		},
 		{
-		  "id": "UAED2",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 10,
+		  "id_plan_estudios": 1,
 			"nombre": "Estructuras de Datos",
 			"semestre": 2,
 			"creditos": 4.39,
 			"optativa": false
 		},
 		{
-		  "id": "UACOYE2",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 11,
+		  "id_plan_estudios": 1,
 			"nombre": "Comunicación Oral y Escrita",
 			"semestre": 2,
 			"creditos": 4.39,
 			"optativa": false
 		},
 		{
-		  "id": "UAAFDC2",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 12,
+		  "id_plan_estudios": 1,
 			"nombre": "Análisis Fundamental de Circuitos",
 			"semestre": 2,
 			"creditos": 4.33,
 			"optativa": false
 		},
 		{
-		  "id": "UAMAPLI3",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 13,
+		  "id_plan_estudios": 1,
 			"nombre": "Matemáticas Avanzadas para la Ingeniería",
 			"semestre": 3,
 			"creditos": 4.45,
 			"optativa": false
 		},
 		{
-		  "id": "UAFE3",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 14,	  
+		  "id_plan_estudios": 1,
 			"nombre": "Fundamentos Económicos",
 			"semestre": 3,
 			"creditos": 4.33,
 			"optativa": false
 		},
 		{
-		  "id": "UAFDDD3",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 15,
+		  "id_plan_estudios": 1,
 			"nombre": "Fundamentos de Diseño Digital",
 			"semestre": 3,
 			"creditos": 4.48,
 			"optativa": false
 		},
 		{
-		  "id": "UATC3",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 16,	  
+		  "id_plan_estudios": 1,
 			"nombre": "Teoría Computacional",
 			"semestre": 3,
 			"creditos": 4.36,
 			"optativa": false
 		},
 		{
-		  "id": "UABD3",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 17,  
+		  "id_plan_estudios": 1,
 			"nombre": "Bases de Datos",
 			"semestre": 3,
 			"creditos": 4.44,
 			"optativa": false
 		},
 		{
-		  "id": "UAPOAO3",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 18,
+		  "id_plan_estudios": 1,
 			"nombre": "Programación Orientada a Objectos",
 			"semestre": 3,
 			"creditos": 4.44,
 			"optativa": false
 		},
 		{
-		  "id": "UAIEYS",
-		  "id_plan_estudios": "PEESCPM2009",
+		  "id": 19,
+		  "id_plan_estudios": 1,
 			"nombre": "Electrónica Analógica",
 			"semestre": 3,
 			"creditos": 4.35,
+			"optativa": false
+		},
+		{
+		  "id": 20,
+		  "id_plan_estudios": 1,
+			"nombre": "Redes de Cómputadoras",
+			"semestre": 4,
+			"creditos": 4.46,
+			"optativa": false
+		},
+		{
+		  "id": 21,
+		  "id_plan_estudios": 1,
+			"nombre": "Diseño de Sistemas Digitales",
+			"semestre": 4,
+			"creditos": 4.50,
+			"optativa": false
+		},
+		{
+		  "id": 22,
+		  "id_plan_estudios": 1,
+			"nombre": "Probabilidad y Estadística",
+			"semestre": 4,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 23,
+		  "id_plan_estudios": 1,
+			"nombre": "Sistemas Operativos",
+			"semestre": 4,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 24,
+		  "id_plan_estudios": 1,
+			"nombre": "Análisis y Diseño Orientado a Objectos",
+			"semestre": 4,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 25,
+		  "id_plan_estudios": 1,
+			"nombre": "Tecnologías Web",
+			"semestre": 4,
+			"creditos": 4.49,
+			"optativa": false
+		},
+		{
+		  "id": 26,
+		  "id_plan_estudios": 1,
+			"nombre": "Administración Financiera",
+			"semestre": 4,
+			"creditos": 4.36,
+			"optativa": false
+		},
+		{
+		  "id": 27,
+		  "id_plan_estudios": 1,
+			"nombre": "Arquitectura de Computadoras",
+			"semestre": 5,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 28,
+		  "id_plan_estudios": 1,
+			"nombre": "Optativa A",
+			"semestre": 5,
+			"creditos": 4.39,
+			"optativa": true
+		},
+		{
+		  "id": 29,
+		  "id_plan_estudios": 1,
+			"nombre": "Análisis de Algoritmos",
+			"semestre": 5,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 30,
+		  "id_plan_estudios": 1,
+			"nombre": "Optativa B",
+			"semestre": 5,
+			"creditos": 4.39,
+			"optativa": true
+		},
+		{
+		  "id": 31,
+		  "id_plan_estudios": 1,
+			"nombre": "Ingeniería de Software",
+			"semestre": 5,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 32,
+		  "id_plan_estudios": 1,
+			"nombre": "Administración de Proyectos",
+			"semestre": 5,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 33,
+		  "id_plan_estudios": 1,
+			"nombre": "Instrumentación",
+			"semestre": 5,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 34,
+		  "id_plan_estudios": 1,
+			"nombre": "Teoría de Comunicaciones y Señales",
+			"semestre": 6,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 35,
+		  "id_plan_estudios": 1,
+			"nombre": "Aplicaciones para Comunicaciones en Red",
+			"semestre": 6,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 36,
+		  "id_plan_estudios": 1,
+			"nombre": "Métodos Cuantitativos para la Toma de Decisiones",
+			"semestre": 6,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 37,
+		  "id_plan_estudios": 1,
+			"nombre": "Introducción a los Microcontroladores",
+			"semestre": 6,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 38,
+		  "id_plan_estudios": 1,
+			"nombre": "Compiladores",
+			"semestre": 6,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 39,
+		  "id_plan_estudios": 1,
+			"nombre": "Optativa C",
+			"semestre": 6,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 40,
+		  "id_plan_estudios": 1,
+			"nombre": "Optativa D",
+			"semestre": 6,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 41,
+		  "id_plan_estudios": 1,
+			"nombre": "Desarrollo de Sistemas Distribuidos",
+			"semestre": 7,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 42,
+		  "id_plan_estudios": 1,
+			"nombre": "Administración de Servicios en Red",
+			"semestre": 7,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 43,
+		  "id_plan_estudios": 1,
+			"nombre": "Gestión Empresarial",
+			"semestre": 7,
+			"creditos": 4.39,
+			"optativa": false
+		},
+		{
+		  "id": 44,
+		  "id_plan_estudios": 1,
+			"nombre": "Liderazgo",
+			"semestre": 7,
+			"creditos": 4.39,
 			"optativa": false
 		}
 	];
