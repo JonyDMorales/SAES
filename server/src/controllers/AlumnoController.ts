@@ -3,16 +3,17 @@ import * as dotenv from "dotenv";
 const JsonWebToken = require("jsonwebtoken"); 
 
 import { default as Alumno } from "../models/Alumno";
+import * as AlumnoDataSource from "../datasources/AlumnoDataSource";
 
 dotenv.config({ path: ".env" });
 
-export let store = (req: Request, res: Response) => {
-  let alumno = new Alumno(req.body);
-
-  alumno.save()
-  .then(() => res.json({ status: "OK"}).end())
-  .catch((err) => console.log(err));
-  
+export let store = async (req: Request, res: Response) => {
+	try {
+		let alumno = await AlumnoDataSource.saveAlumno(req.body);
+		res.json({ alumno: alumno }).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
 export let index = (req: Request, res: Response) => {
