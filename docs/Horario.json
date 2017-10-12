@@ -1,0 +1,23 @@
+{
+	"profesor": "Idalia Maldonado Castillo",
+	"id_unidad_aprendizaje": 31,
+	"unidad_aprendizaje": "Ingeniería de Software",
+	"grupo": "3CM1",
+	"horarios": [
+		{
+			"dia": "Lunes",
+			"hora_inicio": "10:30",
+			"hora_fin": "12:00"
+		},
+		{
+			"dia": "Martes",
+			"hora_inicio": "8:30",
+			"hora_fin": "10:00"
+		},
+		{
+			"dia": "Jueves",
+			"hora_inicio": "10:30",
+			"hora_fin": "12:00"
+		}
+	]
+}
