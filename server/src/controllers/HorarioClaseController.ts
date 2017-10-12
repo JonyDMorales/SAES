@@ -47,7 +47,7 @@ export let search = (req: Request, res: Response) => {
 	
 };
 
-export let hardcore = async (req: Request, res: Response) => {
+export let make = async (req: Request, res: Response) => {
 	res.json({ status: "OK"}).end();
 
 

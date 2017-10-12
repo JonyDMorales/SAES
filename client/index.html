@@ -4,9 +4,50 @@
     <meta charset="utf-8">
     <title>SAES</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" integrity="sha256-/Z28yXtfBv/6/alw+yZuODgTbKZm86IKbPE/5kjO/xY=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/transition.min.css" integrity="sha256-bSb6pJ43fUijYws3XiwQGyv2rotKPWk3MPIytWpVjNA=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/popup.min.css" integrity="sha256-WbJeIxr8rNxRcdCRFVrr8VxsPoA9UJ2updKZBd5R4XU=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui-calendar@0.0.8/dist/calendar.min.css" />
   </head>
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/transition.min.js" integrity="sha256-sT+wvKMKmErLJqH+T4Wb1F0WzavTDAgPZotFA0yMr1A=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/popup.min.js" integrity="sha256-4qXxQxHWDAy2mIrLYhQZMk72v21R2iYYtlGk/t3wGkA=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/semantic-ui-calendar@0.0.8/dist/calendar.min.js"></script>
+
+    <script type="text/javascript">
+      $( document ).ready(function() {
+        $('#calendarStartDate').calendar({
+          type: 'datetime',
+          minDate:  new Date(),
+          startMode: 'day',
+          text: {
+            days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Hoy',
+            now: 'Actual',
+            am: 'AM',
+            pm: 'PM'
+          }
+        });
+
+        $('#calendarEndDate').calendar({
+          type: 'datetime',
+          minDate:  new Date(),
+          startMode: 'day',
+          text: {
+            days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
+            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
+            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
+            today: 'Hoy',
+            now: 'Actual',
+            am: 'AM',
+            pm: 'PM'
+          }
+        });
+      });
+    </script>
   </body>
 </html>

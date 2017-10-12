@@ -52,11 +52,13 @@ app.get("/plan_estudios/:id", planEstudiosController.show);
 app.delete("/plan_estudios/:id", planEstudiosController.destroy);
 app.put("/plan_estudios/:id", planEstudiosController.update);
 
-app.get("/horario_clases", horarioClaseController.hardcore);
+app.get("/horario_clases", horarioClaseController.index);
 app.post("/horario_clases", horarioClaseController.store);
 app.get("/horario_clases/:id", horarioClaseController.show);
 app.delete("/horario_clases/:id", horarioClaseController.destroy);
 app.put("/horario_clases/:id", horarioClaseController.update);
+
+app.post("/crear_horarios", horarioClaseController.make);
 
 app.post("/cita_reinscripcion", citaReinscripcionController.store);
 app.get("/cita_reinscripcion/:boleta", citaReinscripcionController.show);
