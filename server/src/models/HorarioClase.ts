@@ -3,10 +3,10 @@ import * as mongoose from "mongoose";
 const horarioClaseSchema = new mongoose.Schema({
   
   id: String,
-	periodo: String,
 	id_profesor: String,
 	profesor: String,
-	id_unidad_aprendizaje: String,
+	unidad_aprendizaje: String,
+	id_unidad_aprendizaje: Number,
 	grupo: String,
 	lugares_disponibles: Number,
 	alumnos_inscritos: Number,

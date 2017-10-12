@@ -52,7 +52,7 @@ app.get("/plan_estudios/:id", planEstudiosController.show);
 app.delete("/plan_estudios/:id", planEstudiosController.destroy);
 app.put("/plan_estudios/:id", planEstudiosController.update);
 
-app.get("/horario_clases", horarioClaseController.index);
+app.get("/horario_clases", horarioClaseController.hardcore);
 app.post("/horario_clases", horarioClaseController.store);
 app.get("/horario_clases/:id", horarioClaseController.show);
 app.delete("/horario_clases/:id", horarioClaseController.destroy);
