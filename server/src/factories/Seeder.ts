@@ -13,6 +13,7 @@ mongoose.connect(process.env.MONGOLAB_URI, { useMongoClient: true })
 function run() 
 {
 	//Factory.profesor(80);
-	Factory.alumnoWithTrayectory(30);
+	//Factory.alumnoWithTrayectory(30);
+	Factory.horariosClase();
 }
 

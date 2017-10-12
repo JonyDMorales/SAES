@@ -3,12 +3,12 @@ import Api from '@/services/Api'
 export default {
   index () {
     return Api().get('horario_clases')
-  }
-  /*
-  show (boleta) {
-    return Api().get('alumno/${boleta}')
   },
 
+  makeSchedules (clases) {
+    return Api().post('crear_horarios', clases)
+  }
+  /*
   update (alumno) {
     return Api().put('alumno/${alumno.boleta}')
   },

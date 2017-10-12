@@ -13,11 +13,11 @@
       Kardex
     </a>
     <div class="right menu">
-      <a class="ui item">
+      <a class="ui item" v-if="!$store.state.isAlumnoLoggedIn">
         <i class="sign in icon"></i>
         Entrar
       </a>
-       <a class="ui item">
+       <a class="ui item" v-if="$store.state.isAlumnoLoggedIn" @click="logout">
         <i class="sign out icon"></i>
         Salir
       </a>
@@ -28,7 +28,16 @@
 <script>
 export default {
 
-  name: 'headerAlumno'
+  name: 'headerAlumno',
+  methods: {
+    logout () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setAlumno', null)
+      this.$router.push({
+        name: 'login'
+      })
+    }
+  }
 
 }
 
