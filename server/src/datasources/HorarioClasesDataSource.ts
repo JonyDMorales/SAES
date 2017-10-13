@@ -1,7 +1,7 @@
 import { default as HorarioClase } from "../models/HorarioClase";
 
 export let getAllHorarios = () => {
-	let query = HorarioClase.find();
+	let query = HorarioClase.find({});
  	return query.exec();
 }
 

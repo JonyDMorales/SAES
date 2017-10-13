@@ -19,3 +19,8 @@ export let deleteUnidadAprendizajeById = (id: number) => {
 	let query = UnidadAprendizaje.remove({ id: id });
  	return query.exec();
 }
+
+export let modifyUnidadAprendizaje = (id: number, newUnidadAprendizajeData: any) => {
+	let query = UnidadAprendizaje.update({id: id}, newUnidadAprendizajeData);
+	return query.exec();
+}

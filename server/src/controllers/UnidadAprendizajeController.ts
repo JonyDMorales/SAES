@@ -29,8 +29,13 @@ export let show = async (req: Request, res: Response) => {
 	}
 };
 
-export let update = (req: Request, res: Response) => {
- 	
+export let update = async (req: Request, res: Response) => {
+ 	try {
+		let result = await UnidadAprendizajeDataSource.modifyUnidadAprendizaje(req.params.id, req.body);
+		res.json({ status: "ok" }).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
 export let destroy = async (req: Request, res: Response) => {
