@@ -48,6 +48,9 @@ export default {
         if (response.data.status === 'ok') {
           this.$store.dispatch('setToken', response.data.token)
           this.$store.dispatch('setAlumno', response.data.alumno)
+          this.$router.push({
+            name: 'horarios'
+          })
         } else {
           this.error = true
           this.errors = response.data.errors

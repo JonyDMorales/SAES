@@ -4,14 +4,16 @@
       <i class="home icon"></i>
       Inicio
     </a>
-    <a class="item">
+    <a class="item" v-if="$store.state.isAlumnoLoggedIn">
       <i class="calendar icon"></i>
       Horarios
     </a>
-    <a class="item">
+    <!--
+    <a class="item" v-if="$store.state.isAlumnoLoggedIn">
       <i class="file icon"></i>
       Kardex
     </a>
+    -->
     <div class="right menu">
       <a class="ui item" v-if="!$store.state.isAlumnoLoggedIn">
         <i class="sign in icon"></i>

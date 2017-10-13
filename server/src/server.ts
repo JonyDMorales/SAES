@@ -4,12 +4,14 @@ import * as dotenv from "dotenv";
 import * as mongoose from "mongoose";
 var cors = require('cors');
 
-import * as mainController from "./controllers/MainController";
-import * as alumnoController from "./controllers/AlumnoController";
-import * as unidadAprendizajeController from "./controllers/UnidadAprendizajeController";
-import * as horarioClaseController from "./controllers/HorarioClaseController";
-import * as planEstudiosController from "./controllers/PlanEstudiosController";
-import * as citaReinscripcionController from "./controllers/CitaReinscripcionController";
+import * as MainController from "./controllers/MainController";
+import * as AlumnoController from "./controllers/AlumnoController";
+import * as UnidadAprendizajeController from "./controllers/UnidadAprendizajeController";
+import * as HorarioClaseController from "./controllers/HorarioClaseController";
+import * as PlanEstudiosController from "./controllers/PlanEstudiosController";
+import * as CitaReinscripcionController from "./controllers/CitaReinscripcionController";
+import * as AnalistaController from "./controllers/AnalistaController";
+import * as ProfesorController from "./controllers/ProfesorController";
 
 dotenv.config({ path: ".env" });
 
@@ -31,36 +33,50 @@ app.listen(app.get("port"), () => {
   console.log("Press ctrl-c to stop\n");
 });
 
-app.get("/", mainController.index);
+app.get("/", MainController.index);
 
-app.get("/alumno", alumnoController.index);
-app.post("/alumno", alumnoController.store);
-app.get("/alumno/:boleta", alumnoController.show);
-app.delete("/alumno/:boleta", alumnoController.destroy);
-app.put("/alumno/:boleta", alumnoController.update);
-app.post("/alumno/login", alumnoController.login);
+app.get("/alumno", AlumnoController.index);
+app.post("/alumno", AlumnoController.store);
+app.get("/alumno/:boleta", AlumnoController.show);
+app.delete("/alumno/:boleta", AlumnoController.destroy);
+app.put("/alumno/:boleta", AlumnoController.update);
+app.post("/alumno/login", AlumnoController.login);
 
-app.get("/unidad_aprendizaje", unidadAprendizajeController.index);
-app.post("/unidad_aprendizaje", unidadAprendizajeController.store);
-app.get("/unidad_aprendizaje/:id", unidadAprendizajeController.show);
-app.delete("/unidad_aprendizaje/:id", unidadAprendizajeController.destroy);
-app.put("/unidad_aprendizaje/:id", unidadAprendizajeController.update);
+app.get("/analista", AnalistaController.index);
+app.post("/analista", AnalistaController.store);
+app.get("/analista/:id", AnalistaController.show);
+app.delete("/analista/:id", AnalistaController.destroy);
+app.put("/analista/:id", AnalistaController.update);
+app.post("/analista/id", AnalistaController.login);
 
-app.get("/plan_estudios", planEstudiosController.index);
-app.post("/plan_estudios", planEstudiosController.store);
-app.get("/plan_estudios/:id", planEstudiosController.show);
-app.delete("/plan_estudios/:id", planEstudiosController.destroy);
-app.put("/plan_estudios/:id", planEstudiosController.update);
+app.get("/profesor", ProfesorController.index);
+app.post("/profesor", ProfesorController.store);
+app.get("/profesor/:id", ProfesorController.show);
+app.delete("/profesor/:id", ProfesorController.destroy);
+app.put("/profesor/:id", ProfesorController.update);
+app.post("/profesor/login", ProfesorController.login);
 
-app.get("/horario_clases", horarioClaseController.index);
+app.get("/unidad_aprendizaje", UnidadAprendizajeController.index);
+app.post("/unidad_aprendizaje", UnidadAprendizajeController.store);
+app.get("/unidad_aprendizaje/:id", UnidadAprendizajeController.show);
+app.delete("/unidad_aprendizaje/:id", UnidadAprendizajeController.destroy);
+app.put("/unidad_aprendizaje/:id", UnidadAprendizajeController.update);
+
+app.get("/plan_estudios", PlanEstudiosController.index);
+app.post("/plan_estudios", PlanEstudiosController.store);
+app.get("/plan_estudios/:id", PlanEstudiosController.show);
+app.delete("/plan_estudios/:id", PlanEstudiosController.destroy);
+app.put("/plan_estudios/:id", PlanEstudiosController.update);
+
+app.get("/horario_clases", HorarioClaseController.index);
 //app.post("/horario_clases", horarioClaseController.store);
 //app.get("/horario_clases/:id", horarioClaseController.show);
 //app.delete("/horario_clases/:id", horarioClaseController.destroy);
 //app.put("/horario_clases/:id", horarioClaseController.update);
 
-app.post("/crear_horarios", horarioClaseController.make);
+app.post("/crear_horarios", HorarioClaseController.make);
 
-app.post("/cita_reinscripcion", citaReinscripcionController.store);
-app.get("/cita_reinscripcion/:boleta", citaReinscripcionController.show);
+app.post("/cita_reinscripcion", CitaReinscripcionController.store);
+app.get("/cita_reinscripcion/:boleta", CitaReinscripcionController.show);
 
 module.exports = app;

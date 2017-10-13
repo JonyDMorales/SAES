@@ -1,43 +1,45 @@
 import { Request, Response, NextFunction } from "express";
 
-import { default as UnidadAprendizaje } from "../models/UnidadAprendizaje";
+import * as UnidadAprendizajeDataSource from "../datasources/UnidadAprendizajeDataSource";
 
-export let store = (req: Request, res: Response) => {
-  let unidadAprendizaje = new UnidadAprendizaje(req.body);
-
-  unidadAprendizaje.save()
-  .then(() => res.json({ status: "OK"}).end())
-  .catch((err) => console.log(err));
-  
+export let store = async (req: Request, res: Response) => {
+	try {
+		let unidadAprendizaje = await UnidadAprendizajeDataSource.saveUnidadAprendizaje(req.body);
+		res.json(unidadAprendizaje).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
-export let index = (req: Request, res: Response) => {
- 	let query = UnidadAprendizaje.find();
- 	
- 	query.exec()
- 	.then((unidadesAprendizaje) => res.json(unidadesAprendizaje).end())
- 	.catch((err) => console.log(err));
-
+export let index = async (req: Request, res: Response) => {
+	try {
+		let unidadadesAprendizaje = await UnidadAprendizajeDataSource.getAllUnidadAprendizajes();
+		res.json(unidadadesAprendizaje).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
-export let show = (req: Request, res: Response) => {
- 	let query = UnidadAprendizaje.findOne({ id: req.params.id });
-
- 	query.exec()
- 	.then((unidadAprendizaje) => res.json(unidadAprendizaje).end())
- 	.catch((err) => console.log(err));
+export let show = async (req: Request, res: Response) => {
+	try {
+		let unidadAprendizaje = await UnidadAprendizajeDataSource.getUnidadAprendizajeById(req.params.id);
+		res.json(unidadAprendizaje).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
 export let update = (req: Request, res: Response) => {
  	
 };
 
-export let destroy = (req: Request, res: Response) => {
-	let query = UnidadAprendizaje.remove({ id : req.params.id });
-
- 	query.exec()
- 	.then((unidadAprendizaje) => res.json({ status: "OK"}).end())
- 	.catch((err) => console.log(err));
+export let destroy = async (req: Request, res: Response) => {
+	try {
+		let result = await UnidadAprendizajeDataSource.deleteUnidadAprendizajeById(req.params.id);
+		res.json({ status: "ok"}).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
 export let search = (req: Request, res: Response) => {

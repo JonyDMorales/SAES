@@ -1,6 +1,6 @@
 import * as mongoose from "mongoose";
 
-const profesorSchema = new mongoose.Schema({
+const analistaSchema = new mongoose.Schema({
   nombres: String,
 	apellido_paterno: String,
 	apellido_materno: String,
@@ -10,5 +10,5 @@ const profesorSchema = new mongoose.Schema({
 
 }, { timestamps: false });
 
-const Profesor = mongoose.model("Profesor", profesorSchema);
-export default Profesor;
+const Analista = mongoose.model("Analista", analistaSchema);
+export default Analista;
