@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui-calendar@0.0.8/dist/calendar.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/tab.min.css" integrity="sha256-pSPw/0IZc/xLaTbhPb03Y9GZYj2fF5tNegW+JgfucbA=" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/dropdown.min.css" integrity="sha256-wGcJSUdmr9aebCX4lfCvIAWRCcLnB2GoNnipXwvYPws=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/dimmer.min.css" integrity="sha256-zJFbj9sg4kVT6Lz/S2By6sy3IRLD0rS1sZy4Actm+2Q=" crossorigin="anonymous" />
   </head>
   <body>
     <div id="app"></div>
@@ -19,6 +20,7 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/semantic-ui-calendar@0.0.8/dist/calendar.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/tab.min.js" integrity="sha256-CZFfdHLXxud2TTJCmnr863zOUGZtBFEJm2g2uaWpFDE=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/dropdown.min.js" integrity="sha256-xJoQE6TUzZWtf9DRTx8nHvk7UUE6cZ1YwJfca1vXxoE=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/dimmer.min.js" integrity="sha256-4x4i+9ta5otG/9mvVWV8Q6WfRYyJX4cxqY4eCqS3rUk=" crossorigin="anonymous"></script>
 
     <script type="text/javascript">
       $( document ).ready(function() {
@@ -58,6 +60,9 @@
 
         $('#dropDownUAs').dropdown();
         $('#dropDownGroups').dropdown();
+
+
+        $('#loaderPage').dimmer('show');
       });
     </script>
   </body>

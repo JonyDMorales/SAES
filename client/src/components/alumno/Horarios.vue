@@ -1,5 +1,6 @@
 <template>
   <div>
+  <div class="ui active centered inline loader" v-if="!isReady"></div>
   <div class="ui main container" v-if="isHorariosGenerated">
     <table class="ui small orange celled table" v-for="schedule in schedules">
       <thead>
@@ -232,6 +233,7 @@ export default {
       this.groups = groups.values()
       this.UAs = uas.values()
       this.currentGroup = this.groups[0]
+      this.isReady = true
     },
     activateSelectHorario () {
       if (this.makeSchedule) {
@@ -290,7 +292,8 @@ export default {
       selectedClasses: [],
       msgButton: 'Crear Lista de Clases',
       isHorariosGenerated: false,
-      schedules: null
+      schedules: null,
+      isReady: false
     }
   },
   mounted () {
