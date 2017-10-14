@@ -1,5 +1,46 @@
 <template>
-  <div class="ui main container">
+  <div>
+  <div class="ui main container" v-if="isHorariosGenerated">
+    <table class="ui small orange celled table" v-for="schedule in schedules">
+      <thead>
+        <tr class="center aligned">
+          <th>Grupo</th>
+          <th>Unidad Aprendizaje</th>
+          <th>Profesor</th>
+          <th>Lunes</th>
+          <th>Martes</th>
+          <th>Miércoles</th>
+          <th>Jueves</th>
+          <th>Viernes</th>
+          <th>Lugares</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="s in schedule" class="center aligned">
+          <td class="collapsing">{{ s.grupo }}</td>
+          <td class="collapsing">{{ s.unidad_aprendizaje }}</td>
+          <td class="collapsing">{{ s.profesor }}</td>
+          <td class="collapsing" >{{ s.horarios[0].hora_inicio  + ' - ' + s.horarios[0].hora_fin }}</td>
+          <td class="collapsing">{{ s.horarios[1].hora_inicio  + ' - ' + s.horarios[1].hora_fin }}</td>
+          <td class="collapsing">{{ s.horarios[2].hora_inicio  + ' - ' + s.horarios[2].hora_fin }}</td>
+          <td class="collapsing">{{ s.horarios[3].hora_inicio  + ' - ' + s.horarios[3].hora_fin }}</td>
+          <td class="collapsing">{{ s.horarios[4].hora_inicio  + ' - ' + s.horarios[4].hora_fin }}</td>
+          <td class="collapsing">{{ s.lugares_disponibles }}</td>
+        </tr>
+      </tbody>
+      <tfoot class="full-width">
+        <tr>
+          <th></th>
+          <th colspan="8">
+            <div class="ui right floated small primary labeled icon button">
+              <i class="bookmark icon"></i> Agregar a Marcadores
+            </div>
+          </th>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  <div class="ui main container" v-if="!isHorariosGenerated">
     <div class="ui horizontal divider">
     Horarios
     </div>
@@ -13,7 +54,7 @@
       <div class="two wide column">
         <div class="ui form">
           <div class="field">
-            <select class="ui fluid dropdown" v-model="groupSelected">
+            <select class="ui fluid dropdown" v-model="groupSelected" id="dropDownGroups">
               <option value="">Grupo</option>
               <option v-for="namegroup in namegroups">{{ namegroup }}</option>
             </select>
@@ -23,7 +64,7 @@
       <div class="six wide column">
         <div class="ui form">
           <div class="field">
-            <select class="ui fluid dropdown" v-model="uaSelected">
+            <select class="ui fluid dropdown" v-model="uaSelected" id="dropDownUAs">
               <option value="">Unidad de Aprendizaje</option>
               <option v-for="nameUA in nameUAs">{{ nameUA }}</option>
             </select>
@@ -90,7 +131,7 @@
       <table class="ui small orange celled table" v-if="isByGroup">
         <thead>
           <tr class="center aligned">
-            <th>Asignatura</th>
+            <th>Unidad Aprendizaje</th>
             <th>Profesor</th>
             <th>Lunes</th>
             <th>Martes</th>
@@ -153,10 +194,12 @@
       </table>
     </div>
   </div>
+</div>
 </template>
 
 <script>
 import HorariosService from '@/services/HorariosService'
+import Bucket from 'buckets-js'
 
 export default {
 
@@ -165,31 +208,44 @@ export default {
   {
     async getHorarios () {
       const response = await HorariosService.index()
-      this.namegroups = response.data.namegroups
-      this.groups = response.data.groups
-      this.currentGroup = response.data.groups[0].clases
-      this.nameUAs = response.data.nameUAs
-      this.UAs = response.data.uas
+      this.horarios = response.data
+      var namegroups = new Bucket.Set()
+      var nameUAs = new Bucket.Set()
+      var groups = new Bucket.Dictionary()
+      var uas = new Bucket.Dictionary()
+      this.horarios.forEach((horario) => {
+        namegroups.add(horario.grupo)
+        nameUAs.add(horario.unidad_aprendizaje)
+        if (groups.get(horario.grupo)) {
+          groups.get(horario.grupo).push(horario)
+        } else {
+          groups.set(horario.grupo, [horario])
+        }
+        if (uas.get(horario.unidad_aprendizaje)) {
+          uas.get(horario.unidad_aprendizaje).push(horario)
+        } else {
+          uas.set(horario.unidad_aprendizaje, [horario])
+        }
+      })
+      this.namegroups = namegroups.toArray()
+      this.nameUAs = nameUAs.toArray()
+      this.groups = groups.values()
+      this.UAs = uas.values()
+      this.currentGroup = this.groups[0]
     },
     activateSelectHorario () {
       if (this.makeSchedule) {
         this.msgButton = 'Crear Lista de Clases'
       } else {
-        this.msgButton = 'Borrar Todo'
+        this.msgButton = 'Cancelar'
         this.selectedClasses = []
       }
       this.makeSchedule = !this.makeSchedule
     },
     addClase (id, group) {
-      // console.log('Added => ' + id + ' - ' + group)
-      for (var i = this.groups.length - 1; i >= 0; i--) {
-        if (this.groups[i].grupo === group) {
-          for (var j = this.groups[i].clases.length - 1; j >= 0; j--) {
-            if (this.groups[i].clases[j].id === id) {
-              this.selectedClasses.push(this.groups[i].clases[j])
-              break
-            }
-          }
+      for (var i = this.horarios.length - 1; i >= 0; i--) {
+        if (this.horarios[i].id === id) {
+          this.selectedClasses.push(this.horarios[i])
           break
         }
       }
@@ -205,12 +261,20 @@ export default {
       this.selectedClasses.splice(idx, 1)
     },
     async getSchedules () {
+      console.log(this.selectedClasses)
       const response = await HorariosService.makeSchedules(this.selectedClasses)
+      this.schedules = response.data
+      this.isHorariosGenerated = true
       console.log(response.data)
+    },
+    back () {
+      console.log('back')
+      this.isHorariosGenerated = false
     }
   },
   data () {
     return {
+      horarios: [],
       groups: [],
       UAs: [],
       namegroups: [],
@@ -224,7 +288,9 @@ export default {
       currentSchedule: 'Grupo: 1CM1',
       makeSchedule: false,
       selectedClasses: [],
-      msgButton: 'Crear Lista de Clases'
+      msgButton: 'Crear Lista de Clases',
+      isHorariosGenerated: false,
+      schedules: null
     }
   },
   mounted () {
@@ -234,8 +300,8 @@ export default {
     groupSelected: function (val) {
       this.currentSchedule = 'Grupo: ' + this.groupSelected
       for (var i = this.groups.length - 1; i >= 0; i--) {
-        if (this.groups[i].grupo === val) {
-          this.currentGroup = this.groups[i].clases
+        if (this.groups[i][0].grupo === val) {
+          this.currentGroup = this.groups[i]
           break
         }
       }
@@ -245,8 +311,8 @@ export default {
     uaSelected: function (val) {
       this.currentSchedule = 'Unidad de Aprendizaje: ' + this.uaSelected
       for (var i = this.UAs.length - 1; i >= 0; i--) {
-        if (this.UAs[i].unidad_aprendizaje === val) {
-          this.currentGroupUa = this.UAs[i].clases
+        if (this.UAs[i][0].unidad_aprendizaje === val) {
+          this.currentGroupUa = this.UAs[i]
           break
         }
       }

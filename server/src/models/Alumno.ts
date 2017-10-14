@@ -18,37 +18,13 @@ const alumnoSchema = new mongoose.Schema({
 	numero_unidades_reprobadas: Number,
 
 
-	unidades_cursadas: [
-		{
-			id_unidad_aprendizaje: String,
-			calificacion: Number,
-			periodo: String
-		}
-	],
+	unidades_cursadas: [],
 
-	unidades_aprobadas: [
-		{
-			id_unidad_aprendizaje: String,
-			calificacion: Number,
-			periodo: String,
-			forma_evaluacion: String
-		}
-	],
+	unidades_aprobadas: [],
 
-	unidades_no_aprobadas: [
-		{
-			id_unidad_aprendizaje: String,
-			calificacion: Number,
-			periodo: String
-		}
-	],
+	unidades_no_aprobadas: [],
 	
-	horarios: [
-		{
-			periodo: String,
-			clases: [String]
-		}
-	]
+	horarios: []
 
 }, { timestamps: false });
 

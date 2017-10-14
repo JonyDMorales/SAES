@@ -2,7 +2,7 @@ import * as mongoose from "mongoose";
 
 const horarioClaseSchema = new mongoose.Schema({
   
-  id: String,
+  id: Number,
 	profesor: String,
 	unidad_aprendizaje: String,
 	id_unidad_aprendizaje: Number,
@@ -10,14 +10,7 @@ const horarioClaseSchema = new mongoose.Schema({
 	lugares_disponibles: Number,
 	alumnos_inscritos: Number,
 
-	horarios: 
-	[
-		{
-			dia: String,
-			hora_inicio: String,
-			hora_fin: String
-		}
-	]
+	horarios: []
 
 }, { timestamps: false });
 

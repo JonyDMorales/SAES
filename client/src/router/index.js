@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Hello from '@/components/Hello'
 
-import Alumnos from '@/components/Alumnos'
+import Alumnos from '@/components/alumno/Alumnos'
 import Login from '@/components/Login'
-import Horarios from '@/components/Horarios'
-import Kardex from '@/components/Kardex'
+import Horarios from '@/components/alumno/Horarios'
+import Kardex from '@/components/alumno/Kardex'
 import GenerarCitas from '@/components/GenerarCitas'
 
 Vue.use(Router)
