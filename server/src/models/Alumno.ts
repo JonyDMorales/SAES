@@ -1,9 +1,7 @@
 import * as mongoose from "mongoose";
 
 const alumnoSchema = new mongoose.Schema({
-  nombres: String,
-	apellido_paterno: String,
-	apellido_materno: String,
+  nombre: String,
 	boleta: {type: Number, unique: true},
 	password: String,
 	email: {type: String, unique: true},

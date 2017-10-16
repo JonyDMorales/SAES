@@ -1,17 +1,17 @@
 <template>
   <div id="app">
-    <header-alumno />
+    <global-header />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
-import HeaderAlumno from '@/components/HeaderAlumno.vue'
+import GlobalHeader from '@/components/GlobalHeader.vue'
 
 export default {
   name: 'app',
   components: {
-    HeaderAlumno
+    GlobalHeader
   }
 }
 </script>

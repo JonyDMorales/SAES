@@ -8,45 +8,441 @@ import { default as HorarioClase } from "../models/HorarioClase";
 
 Faker.locale = "es";
 
-export let alumno = (n: number) => {
-	while(n--) {
-		let email = Faker.internet.email().toLowerCase();
-		let name = Faker.name.firstName();
-		let _name = name.toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace(' ','')
-		let data = {
-			nombres: name,
-			apellido_paterno: Faker.name.lastName(),
-			apellido_materno: Faker.name.lastName(),
-			boleta: Faker.random.number({min: 2000000000, max: 2010000000}),
-			password: Faker.internet.password(),
-			email: _name + String(Faker.random.number({min: 100, max: 999})) + email.substring(email.indexOf('@'), email.length)
-		}
-
-		let alumno = new Alumno(data);
-
-	  alumno.save()
-	  .then(() => console.log("Alumno Factory => Data => Success"))
-	  .catch((err) => console.log(err));
-	}
-}
+let isc_escom = [
+      {
+        "id": 1,
+        "id_plan_estudios": 1,
+        "nombre": "Análisis Vectorial",
+        "semestre": 1,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 2,
+        "id_plan_estudios": 1,
+        "nombre": "Cálculo",
+        "semestre": 1,
+        "creditos": 4.45,
+        "optativa": false
+      },    
+      {
+        "id": 3,
+        "id_plan_estudios": 1,
+        "nombre": "Matemáticas Discretas",
+        "semestre": 1,
+        "creditos": 5.85,
+        "optativa": false
+      },
+      {
+        "id": 4,
+        "id_plan_estudios": 1,
+        "nombre": "Algoritmia y Programación Estructurada",
+        "semestre": 1,
+        "creditos": 4.45,
+        "optativa": false
+      },
+      {
+        "id": 5,
+        "id_plan_estudios": 1,
+        "nombre": "Física",
+        "semestre": 1,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 6,
+        "id_plan_estudios": 1,
+        "nombre": "Ingeniería Ética y Sociedad",
+        "semestre": 1,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 7,
+        "id_plan_estudios": 1,
+        "nombre": "Ecuaciones Diferenciales",
+        "semestre": 2,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 8,
+        "id_plan_estudios": 1,
+        "nombre": "Álgebra Lineal",
+        "semestre": 2,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 9,
+        "id_plan_estudios": 1,
+        "nombre": "Cálculo Aplicado",
+        "semestre": 2,
+        "creditos": 4.44,
+        "optativa": false
+      },
+      {
+        "id": 10,
+        "id_plan_estudios": 1,
+        "nombre": "Estructuras de Datos",
+        "semestre": 2,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 11,
+        "id_plan_estudios": 1,
+        "nombre": "Comunicación Oral y Escrita",
+        "semestre": 2,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 12,
+        "id_plan_estudios": 1,
+        "nombre": "Análisis Fundamental de Circuitos",
+        "semestre": 2,
+        "creditos": 4.33,
+        "optativa": false
+      },
+      {
+        "id": 13,
+        "id_plan_estudios": 1,
+        "nombre": "Matemáticas Avanzadas para la Ingeniería",
+        "semestre": 3,
+        "creditos": 4.45,
+        "optativa": false
+      },
+      {
+        "id": 14,    
+        "id_plan_estudios": 1,
+        "nombre": "Fundamentos Económicos",
+        "semestre": 3,
+        "creditos": 4.33,
+        "optativa": false
+      },
+      {
+        "id": 15,
+        "id_plan_estudios": 1,
+        "nombre": "Fundamentos de Diseño Digital",
+        "semestre": 3,
+        "creditos": 4.48,
+        "optativa": false
+      },
+      {
+        "id": 16,    
+        "id_plan_estudios": 1,
+        "nombre": "Teoría Computacional",
+        "semestre": 3,
+        "creditos": 4.36,
+        "optativa": false
+      },
+      {
+        "id": 17,  
+        "id_plan_estudios": 1,
+        "nombre": "Bases de Datos",
+        "semestre": 3,
+        "creditos": 4.44,
+        "optativa": false
+      },
+      {
+        "id": 18,
+        "id_plan_estudios": 1,
+        "nombre": "Programación Orientada a Objectos",
+        "semestre": 3,
+        "creditos": 4.44,
+        "optativa": false
+      },
+      {
+        "id": 19,
+        "id_plan_estudios": 1,
+        "nombre": "Electrónica Analógica",
+        "semestre": 3,
+        "creditos": 4.35,
+        "optativa": false
+      },
+      {
+        "id": 20,
+        "id_plan_estudios": 1,
+        "nombre": "Redes de Cómputadoras",
+        "semestre": 4,
+        "creditos": 4.46,
+        "optativa": false
+      },
+      {
+        "id": 21,
+        "id_plan_estudios": 1,
+        "nombre": "Diseño de Sistemas Digitales",
+        "semestre": 4,
+        "creditos": 4.50,
+        "optativa": false
+      },
+      {
+        "id": 22,
+        "id_plan_estudios": 1,
+        "nombre": "Probabilidad y Estadística",
+        "semestre": 4,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 23,
+        "id_plan_estudios": 1,
+        "nombre": "Sistemas Operativos",
+        "semestre": 4,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 24,
+        "id_plan_estudios": 1,
+        "nombre": "Análisis y Diseño Orientado a Objectos",
+        "semestre": 4,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 25,
+        "id_plan_estudios": 1,
+        "nombre": "Tecnologías Web",
+        "semestre": 4,
+        "creditos": 4.49,
+        "optativa": false
+      },
+      {
+        "id": 26,
+        "id_plan_estudios": 1,
+        "nombre": "Administración Financiera",
+        "semestre": 4,
+        "creditos": 4.36,
+        "optativa": false
+      },
+      {
+        "id": 27,
+        "id_plan_estudios": 1,
+        "nombre": "Arquitectura de Computadoras",
+        "semestre": 5,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 28,
+        "id_plan_estudios": 1,
+        "nombre": "Optativa A",
+        "semestre": 5,
+        "creditos": 4.39,
+        "optativa": true
+      },
+      {
+        "id": 29,
+        "id_plan_estudios": 1,
+        "nombre": "Análisis de Algoritmos",
+        "semestre": 5,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 30,
+        "id_plan_estudios": 1,
+        "nombre": "Optativa B",
+        "semestre": 5,
+        "creditos": 4.39,
+        "optativa": true
+      },
+      {
+        "id": 31,
+        "id_plan_estudios": 1,
+        "nombre": "Ingeniería de Software",
+        "semestre": 5,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 32,
+        "id_plan_estudios": 1,
+        "nombre": "Administración de Proyectos",
+        "semestre": 5,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 33,
+        "id_plan_estudios": 1,
+        "nombre": "Instrumentación",
+        "semestre": 5,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 34,
+        "id_plan_estudios": 1,
+        "nombre": "Teoría de Comunicaciones y Señales",
+        "semestre": 6,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 35,
+        "id_plan_estudios": 1,
+        "nombre": "Aplicaciones para Comunicaciones en Red",
+        "semestre": 6,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 36,
+        "id_plan_estudios": 1,
+        "nombre": "Métodos Cuantitativos para la Toma de Decisiones",
+        "semestre": 6,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 37,
+        "id_plan_estudios": 1,
+        "nombre": "Introducción a los Microcontroladores",
+        "semestre": 6,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 38,
+        "id_plan_estudios": 1,
+        "nombre": "Compiladores",
+        "semestre": 6,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 39,
+        "id_plan_estudios": 1,
+        "nombre": "Optativa C",
+        "semestre": 6,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 40,
+        "id_plan_estudios": 1,
+        "nombre": "Optativa D",
+        "semestre": 6,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 41,
+        "id_plan_estudios": 1,
+        "nombre": "Desarrollo de Sistemas Distribuidos",
+        "semestre": 7,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 42,
+        "id_plan_estudios": 1,
+        "nombre": "Administración de Servicios en Red",
+        "semestre": 7,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 43,
+        "id_plan_estudios": 1,
+        "nombre": "Gestión Empresarial",
+        "semestre": 7,
+        "creditos": 4.39,
+        "optativa": false
+      },
+      {
+        "id": 44,
+        "id_plan_estudios": 1,
+        "nombre": "Liderazgo",
+        "semestre": 7,
+        "creditos": 4.39,
+        "optativa": false
+      }];
 
 export let alumnoWithTrayectory = (n: number) => {
 	while(n--) {
 		let email = Faker.internet.email().toLowerCase();
 		let name = Faker.name.firstName();
 		let _name = name.toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace(' ','')
-		let data = {
-			nombres: name,
-			apellido_paterno: Faker.name.lastName(),
-			apellido_materno: Faker.name.lastName(),
+		var data = {
+			nombre: name + ' ' + Faker.name.lastName() + ' ' + Faker.name.lastName(),
 			boleta: Faker.random.number({min: 2000000000, max: 2010000000}),
-			password: Faker.internet.password(),
+			password: _name,
 			email: _name + String(Faker.random.number({min: 100, max: 999})) + email.substring(email.indexOf('@'), email.length),
 
-			promedio_general: parseFloat(String(Faker.random.number({min: 5, max: 9})) + '.' + String(Faker.random.number({min: 0, max: 9}))),
-			numero_unidades_reprobadas: Faker.random.number({min: 0, max: 6})
+			promedio_general: 0,
+			numero_unidades_reprobadas: 0,
+      
+      unidades_cursadas: [],
+      unidades_aprobadas: [],
+      unidades_no_aprobadas: []
 		}
 
+
+    let unidades_cursadas = Faker.random.number({min: 6, max: 44})
+    let nperiodos = Math.ceil(unidades_cursadas / 6)
+    var periods = []
+    var initPeriod = String(Faker.random.number({min: 10, max: 20})) + '/' + String(Faker.random.number({min: 1, max: 2}));
+    
+    periods.push(initPeriod)
+    for (var i = 1; i < nperiodos; i++) {
+      periods.push(getNextPeriod(periods[i-1]))
+    }
+    var no_aprobadas = 0;
+    for (var i = 1; i <= unidades_cursadas; i++) {
+      let calificacion = Faker.random.number({min: 0, max: 10})
+      var periodo;
+      if(i%6 ===  0) {
+        periodo = periods[Math.floor(i / 6) - 1]
+      } else {
+        periodo = periods[Math.floor(i / 6)]
+      }
+      data.unidades_cursadas.push({
+        id_unidad_aprendizaje: i,
+        unidad_aprendizaje: getUAName(i),
+        calificacion: calificacion,
+        periodo: periodo
+      })
+      
+      if(calificacion < 6) {
+        if(Faker.random.boolean()) { // recurse
+          data.unidades_aprobadas.push({
+            id_unidad_aprendizaje: i,
+            unidad_aprendizaje: getUAName(i),
+            calificacion: Faker.random.number({min: 6, max: 10}),
+            periodo: getNextPeriod(periodo),
+            forma_evaluacion: Faker.random.boolean() ? 'REC' : 'ETS'
+          })
+        } else {
+          data.unidades_no_aprobadas.push({
+            id_unidad_aprendizaje: i,
+            unidad_aprendizaje: getUAName(i),
+            calificacion: calificacion,
+            periodo: periodo
+          })
+          no_aprobadas++;
+        }
+      } else {
+        data.unidades_aprobadas.push({
+          id_unidad_aprendizaje: i,
+          unidad_aprendizaje: getUAName(i),
+          calificacion: calificacion,
+          periodo: periodo,
+          forma_evaluacion: Faker.random.boolean() ? 'ORD' : 'EXT'
+        })
+      }
+    }
+    
+    data.promedio_general = ((data.unidades_aprobadas.reduce((total, idx) => total + idx.calificacion, 0))
+    + (data.unidades_no_aprobadas.reduce((total, idx) => total + idx.calificacion, 0)))
+    / (data.unidades_aprobadas.length + data.unidades_no_aprobadas.length)
+
+    data.numero_unidades_reprobadas = no_aprobadas;
+
+    //console.log(JSON.stringify(data,null,2))
 		let alumno = new Alumno(data);
 
 	  alumno.save()
@@ -61,9 +457,7 @@ export let profesor = (n: number) => {
 		let name = Faker.name.firstName();
 		let _name = name.toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace(' ','')
 		let data = {
-			nombres: name,
-			apellido_paterno: Faker.name.lastName(),
-			apellido_materno: Faker.name.lastName(),
+			nombres: name + ' ' + Faker.name.lastName() + ' ' + Faker.name.lastName(),
 			id_escuela: "ESCOM",
 			id: Faker.random.number({min: 2000000000, max: 2010000000}),
 			password: Faker.internet.password(),
@@ -14605,360 +14999,7 @@ export let horariosClase = () => {
 		}
 	}
 
-	export let unidadesAprendizajeEscom = () => {
-		let isc_escom = [
-			{
-			  "id": 1,
-			  "id_plan_estudios": 1,
-				"nombre": "Análisis Vectorial",
-				"semestre": 1,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 2,
-			  "id_plan_estudios": 1,
-				"nombre": "Cálculo",
-				"semestre": 1,
-				"creditos": 4.45,
-				"optativa": false
-			},		
-			{
-			  "id": 3,
-			  "id_plan_estudios": 1,
-				"nombre": "Matemáticas Discretas",
-				"semestre": 1,
-				"creditos": 5.85,
-				"optativa": false
-			},
-			{
-			  "id": 4,
-			  "id_plan_estudios": 1,
-				"nombre": "Algoritmia y Programación Estructurada",
-				"semestre": 1,
-				"creditos": 4.45,
-				"optativa": false
-			},
-			{
-			  "id": 5,
-			  "id_plan_estudios": 1,
-				"nombre": "Física",
-				"semestre": 1,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 6,
-			  "id_plan_estudios": 1,
-				"nombre": "Ingeniería Ética y Sociedad",
-				"semestre": 1,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 7,
-			  "id_plan_estudios": 1,
-				"nombre": "Ecuaciones Diferenciales",
-				"semestre": 2,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 8,
-			  "id_plan_estudios": 1,
-				"nombre": "Álgebra Lineal",
-				"semestre": 2,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 9,
-			  "id_plan_estudios": 1,
-				"nombre": "Cálculo Aplicado",
-				"semestre": 2,
-				"creditos": 4.44,
-				"optativa": false
-			},
-			{
-			  "id": 10,
-			  "id_plan_estudios": 1,
-				"nombre": "Estructuras de Datos",
-				"semestre": 2,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 11,
-			  "id_plan_estudios": 1,
-				"nombre": "Comunicación Oral y Escrita",
-				"semestre": 2,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 12,
-			  "id_plan_estudios": 1,
-				"nombre": "Análisis Fundamental de Circuitos",
-				"semestre": 2,
-				"creditos": 4.33,
-				"optativa": false
-			},
-			{
-			  "id": 13,
-			  "id_plan_estudios": 1,
-				"nombre": "Matemáticas Avanzadas para la Ingeniería",
-				"semestre": 3,
-				"creditos": 4.45,
-				"optativa": false
-			},
-			{
-			  "id": 14,	  
-			  "id_plan_estudios": 1,
-				"nombre": "Fundamentos Económicos",
-				"semestre": 3,
-				"creditos": 4.33,
-				"optativa": false
-			},
-			{
-			  "id": 15,
-			  "id_plan_estudios": 1,
-				"nombre": "Fundamentos de Diseño Digital",
-				"semestre": 3,
-				"creditos": 4.48,
-				"optativa": false
-			},
-			{
-			  "id": 16,	  
-			  "id_plan_estudios": 1,
-				"nombre": "Teoría Computacional",
-				"semestre": 3,
-				"creditos": 4.36,
-				"optativa": false
-			},
-			{
-			  "id": 17,  
-			  "id_plan_estudios": 1,
-				"nombre": "Bases de Datos",
-				"semestre": 3,
-				"creditos": 4.44,
-				"optativa": false
-			},
-			{
-			  "id": 18,
-			  "id_plan_estudios": 1,
-				"nombre": "Programación Orientada a Objectos",
-				"semestre": 3,
-				"creditos": 4.44,
-				"optativa": false
-			},
-			{
-			  "id": 19,
-			  "id_plan_estudios": 1,
-				"nombre": "Electrónica Analógica",
-				"semestre": 3,
-				"creditos": 4.35,
-				"optativa": false
-			},
-			{
-			  "id": 20,
-			  "id_plan_estudios": 1,
-				"nombre": "Redes de Cómputadoras",
-				"semestre": 4,
-				"creditos": 4.46,
-				"optativa": false
-			},
-			{
-			  "id": 21,
-			  "id_plan_estudios": 1,
-				"nombre": "Diseño de Sistemas Digitales",
-				"semestre": 4,
-				"creditos": 4.50,
-				"optativa": false
-			},
-			{
-			  "id": 22,
-			  "id_plan_estudios": 1,
-				"nombre": "Probabilidad y Estadística",
-				"semestre": 4,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 23,
-			  "id_plan_estudios": 1,
-				"nombre": "Sistemas Operativos",
-				"semestre": 4,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 24,
-			  "id_plan_estudios": 1,
-				"nombre": "Análisis y Diseño Orientado a Objectos",
-				"semestre": 4,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 25,
-			  "id_plan_estudios": 1,
-				"nombre": "Tecnologías Web",
-				"semestre": 4,
-				"creditos": 4.49,
-				"optativa": false
-			},
-			{
-			  "id": 26,
-			  "id_plan_estudios": 1,
-				"nombre": "Administración Financiera",
-				"semestre": 4,
-				"creditos": 4.36,
-				"optativa": false
-			},
-			{
-			  "id": 27,
-			  "id_plan_estudios": 1,
-				"nombre": "Arquitectura de Computadoras",
-				"semestre": 5,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 28,
-			  "id_plan_estudios": 1,
-				"nombre": "Optativa A",
-				"semestre": 5,
-				"creditos": 4.39,
-				"optativa": true
-			},
-			{
-			  "id": 29,
-			  "id_plan_estudios": 1,
-				"nombre": "Análisis de Algoritmos",
-				"semestre": 5,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 30,
-			  "id_plan_estudios": 1,
-				"nombre": "Optativa B",
-				"semestre": 5,
-				"creditos": 4.39,
-				"optativa": true
-			},
-			{
-			  "id": 31,
-			  "id_plan_estudios": 1,
-				"nombre": "Ingeniería de Software",
-				"semestre": 5,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 32,
-			  "id_plan_estudios": 1,
-				"nombre": "Administración de Proyectos",
-				"semestre": 5,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 33,
-			  "id_plan_estudios": 1,
-				"nombre": "Instrumentación",
-				"semestre": 5,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 34,
-			  "id_plan_estudios": 1,
-				"nombre": "Teoría de Comunicaciones y Señales",
-				"semestre": 6,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 35,
-			  "id_plan_estudios": 1,
-				"nombre": "Aplicaciones para Comunicaciones en Red",
-				"semestre": 6,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 36,
-			  "id_plan_estudios": 1,
-				"nombre": "Métodos Cuantitativos para la Toma de Decisiones",
-				"semestre": 6,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 37,
-			  "id_plan_estudios": 1,
-				"nombre": "Introducción a los Microcontroladores",
-				"semestre": 6,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 38,
-			  "id_plan_estudios": 1,
-				"nombre": "Compiladores",
-				"semestre": 6,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 39,
-			  "id_plan_estudios": 1,
-				"nombre": "Optativa C",
-				"semestre": 6,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 40,
-			  "id_plan_estudios": 1,
-				"nombre": "Optativa D",
-				"semestre": 6,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 41,
-			  "id_plan_estudios": 1,
-				"nombre": "Desarrollo de Sistemas Distribuidos",
-				"semestre": 7,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 42,
-			  "id_plan_estudios": 1,
-				"nombre": "Administración de Servicios en Red",
-				"semestre": 7,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 43,
-			  "id_plan_estudios": 1,
-				"nombre": "Gestión Empresarial",
-				"semestre": 7,
-				"creditos": 4.39,
-				"optativa": false
-			},
-			{
-			  "id": 44,
-			  "id_plan_estudios": 1,
-				"nombre": "Liderazgo",
-				"semestre": 7,
-				"creditos": 4.39,
-				"optativa": false
-			}];
+export let unidadesAprendizajeEscom = () => {
 
 	isc_escom.forEach((ua) => {
 		let unidadAprendizaje = new UnidadAprendizaje(ua);
@@ -14967,4 +15008,25 @@ export let horariosClase = () => {
 	  .then(() => console.log("UnidadAprendizaje Factory => Data => Success"))
 	  .catch((err) => console.log(err));
 	})
+}
+
+let getUAName = (id: number) => {
+  var name = '';
+  for (var i = isc_escom.length - 1; i >= 0; i--) {
+    if(isc_escom[i].id === id) {
+      name = isc_escom[i].nombre;
+    }
+  }
+  return name;
+}
+
+let getNextPeriod = (periodo: string) => {
+  let year = periodo.split('/')[0]
+  let n = periodo.split('/')[1]
+
+  if(n === '1') {
+    return year + '/2';
+  } else {
+    return String(parseInt(year) +  1) + '/1';
+  }
 }
