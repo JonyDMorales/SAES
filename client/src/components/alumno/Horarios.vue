@@ -1,5 +1,25 @@
 <template>
-  <div>
+<div>
+  <div class="ui main container" v-if="!isAuthorized">
+    <div class="ui two column centered grid">
+      <div class="four column centered row">
+        <i class="massive red warning sign icon"></i>
+      </div>
+      <div class="two column centered row">
+        <div class="column">
+          <div class="ui huge red statistic">
+            <div class="value">
+              Accesso NO Autorizado
+            </div>
+            <div class="label">
+              *
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--
   <div class="ui active centered inline loader" v-if="!isReady"></div>
   <div class="ui main container" v-if="isHorariosGenerated">
     <table class="ui small orange celled table" v-for="schedule in schedules">
@@ -41,7 +61,8 @@
       </tfoot>
     </table>
   </div>
-  <div class="ui main container" v-if="!isHorariosGenerated">
+  -->
+  <div class="ui main container"  v-if="isAuthorized">
     <div class="ui horizontal divider">
     Horarios
     </div>
@@ -208,32 +229,36 @@ export default {
   methods:
   {
     async getHorarios () {
-      const response = await HorariosService.index()
-      this.horarios = response.data
-      var namegroups = new Bucket.Set()
-      var nameUAs = new Bucket.Set()
-      var groups = new Bucket.Dictionary()
-      var uas = new Bucket.Dictionary()
-      this.horarios.forEach((horario) => {
-        namegroups.add(horario.grupo)
-        nameUAs.add(horario.unidad_aprendizaje)
-        if (groups.get(horario.grupo)) {
-          groups.get(horario.grupo).push(horario)
-        } else {
-          groups.set(horario.grupo, [horario])
-        }
-        if (uas.get(horario.unidad_aprendizaje)) {
-          uas.get(horario.unidad_aprendizaje).push(horario)
-        } else {
-          uas.set(horario.unidad_aprendizaje, [horario])
-        }
-      })
-      this.namegroups = namegroups.toArray()
-      this.nameUAs = nameUAs.toArray()
-      this.groups = groups.values()
-      this.UAs = uas.values()
-      this.currentGroup = this.groups[0]
-      this.isReady = true
+      try {
+        const response = await HorariosService.index()
+        this.horarios = response.data
+        var namegroups = new Bucket.Set()
+        var nameUAs = new Bucket.Set()
+        var groups = new Bucket.Dictionary()
+        var uas = new Bucket.Dictionary()
+        this.horarios.forEach((horario) => {
+          namegroups.add(horario.grupo)
+          nameUAs.add(horario.unidad_aprendizaje)
+          if (groups.get(horario.grupo)) {
+            groups.get(horario.grupo).push(horario)
+          } else {
+            groups.set(horario.grupo, [horario])
+          }
+          if (uas.get(horario.unidad_aprendizaje)) {
+            uas.get(horario.unidad_aprendizaje).push(horario)
+          } else {
+            uas.set(horario.unidad_aprendizaje, [horario])
+          }
+        })
+        this.namegroups = namegroups.toArray()
+        this.nameUAs = nameUAs.toArray()
+        this.groups = groups.values()
+        this.UAs = uas.values()
+        this.currentGroup = this.groups[0]
+        this.isReady = true
+        this.isAuthorized = true
+      } catch (err) {
+      }
     },
     activateSelectHorario () {
       if (this.makeSchedule) {
@@ -293,7 +318,8 @@ export default {
       msgButton: 'Crear Lista de Clases',
       isHorariosGenerated: false,
       schedules: null,
-      isReady: false
+      isReady: false,
+      isAuthorized: false
     }
   },
   mounted () {

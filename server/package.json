@@ -20,6 +20,8 @@
     "hashmap": "^2.3.0",
     "jsonwebtoken": "^8.1.0",
     "mongoose": "^4.12.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.0",
     "pusher": "^1.5.1"
   },
   "devDependencies": {
@@ -27,6 +29,8 @@
     "@types/body-parser": "^1.16.5",
     "@types/cors": "^2.8.1",
     "@types/dotenv": "^4.0.1",
-    "@types/mongoose": "^4.7.23"
+    "@types/mongoose": "^4.7.23",
+    "@types/passport": "^0.3.4",
+    "@types/passport-jwt": "^2.0.24"
   }
 }

@@ -2,6 +2,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 import * as dotenv from "dotenv";
 import * as mongoose from "mongoose";
+import * as passport from "passport";
 var cors = require('cors');
 
 import * as MainController from "./controllers/MainController";
@@ -12,6 +13,8 @@ import * as PlanEstudiosController from "./controllers/PlanEstudiosController";
 import * as CitaReinscripcionController from "./controllers/CitaReinscripcionController";
 import * as AnalistaController from "./controllers/AnalistaController";
 import * as ProfesorController from "./controllers/ProfesorController";
+
+import * as Middleware from "./config";
 
 dotenv.config({ path: ".env" });
 
@@ -68,7 +71,7 @@ app.get("/plan_estudios/:id", PlanEstudiosController.show);
 app.delete("/plan_estudios/:id", PlanEstudiosController.destroy);
 app.put("/plan_estudios/:id", PlanEstudiosController.update);
 
-app.get("/horario_clases", HorarioClaseController.index);
+app.get("/horario_clases", Middleware.isAlumnoAuthenticated, HorarioClaseController.index);
 //app.post("/horario_clases", horarioClaseController.store);
 //app.get("/horario_clases/:id", horarioClaseController.show);
 //app.delete("/horario_clases/:id", horarioClaseController.destroy);

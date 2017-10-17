@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import * as dotenv from "dotenv";
-const JsonWebToken = require("jsonwebtoken"); 
+const JsonWebToken = require("jsonwebtoken");
 
 import * as AlumnoDataSource from "../datasources/AlumnoDataSource";
 
