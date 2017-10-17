@@ -72,5 +72,5 @@ export let login = async (req: Request, res: Response) => {
 };
 
 let loginToken = (alumno: any) => {
-	return JsonWebToken.sign(alumno, process.env.JWT_SECRET, {expiresIn: 60 * 60 * 24 * 7});
+	return JsonWebToken.sign(alumno, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 * 7 });
 }

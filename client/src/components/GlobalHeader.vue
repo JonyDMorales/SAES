@@ -28,7 +28,7 @@
           <a class="item"><i class="edit icon"></i> Reinscripción</a>
         </div>
       </div>
-      <a class="ui item">
+      <a class="ui item" @click="logout()">
         <i class="sign out icon"></i>
         Salir
       </a>

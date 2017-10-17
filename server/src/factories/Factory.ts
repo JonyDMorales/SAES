@@ -367,7 +367,7 @@ export let alumnoWithTrayectory = (n: number) => {
 		let email = Faker.internet.email().toLowerCase();
 		let name = Faker.name.firstName();
 		let _name = name.toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace(' ','')
-		var data = {
+		var data: any = {
 			nombre: name + ' ' + Faker.name.lastName() + ' ' + Faker.name.lastName(),
 			boleta: Faker.random.number({min: 2000000000, max: 2010000000}),
 			password: _name,
@@ -436,8 +436,8 @@ export let alumnoWithTrayectory = (n: number) => {
       }
     }
     
-    data.promedio_general = ((data.unidades_aprobadas.reduce((total, idx) => total + idx.calificacion, 0))
-    + (data.unidades_no_aprobadas.reduce((total, idx) => total + idx.calificacion, 0)))
+    data.promedio_general = ((data.unidades_aprobadas.reduce((total: number, idx: any) => total + idx.calificacion, 0))
+    + (data.unidades_no_aprobadas.reduce((total: number, idx: any) => total + idx.calificacion, 0)))
     / (data.unidades_aprobadas.length + data.unidades_no_aprobadas.length)
 
     data.numero_unidades_reprobadas = no_aprobadas;
