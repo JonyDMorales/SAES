@@ -3,68 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>SAES</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css" integrity="sha256-/Z28yXtfBv/6/alw+yZuODgTbKZm86IKbPE/5kjO/xY=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/transition.min.css" integrity="sha256-bSb6pJ43fUijYws3XiwQGyv2rotKPWk3MPIytWpVjNA=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/popup.min.css" integrity="sha256-WbJeIxr8rNxRcdCRFVrr8VxsPoA9UJ2updKZBd5R4XU=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui-calendar@0.0.8/dist/calendar.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/tab.min.css" integrity="sha256-pSPw/0IZc/xLaTbhPb03Y9GZYj2fF5tNegW+JgfucbA=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/dropdown.min.css" integrity="sha256-wGcJSUdmr9aebCX4lfCvIAWRCcLnB2GoNnipXwvYPws=" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/dimmer.min.css" integrity="sha256-zJFbj9sg4kVT6Lz/S2By6sy3IRLD0rS1sZy4Actm+2Q=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Roboto:300,400,500,700,400italic">
+    <link rel="stylesheet" href="//fonts.googleapis.com/icon?family=Material+Icons">
   </head>
   <body>
     <div id="app"></div>
-    <!-- built files will be auto injected -->
-    <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/transition.min.js" integrity="sha256-sT+wvKMKmErLJqH+T4Wb1F0WzavTDAgPZotFA0yMr1A=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/popup.min.js" integrity="sha256-4qXxQxHWDAy2mIrLYhQZMk72v21R2iYYtlGk/t3wGkA=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/semantic-ui-calendar@0.0.8/dist/calendar.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/tab.min.js" integrity="sha256-CZFfdHLXxud2TTJCmnr863zOUGZtBFEJm2g2uaWpFDE=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/dropdown.min.js" integrity="sha256-xJoQE6TUzZWtf9DRTx8nHvk7UUE6cZ1YwJfca1vXxoE=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/components/dimmer.min.js" integrity="sha256-4x4i+9ta5otG/9mvVWV8Q6WfRYyJX4cxqY4eCqS3rUk=" crossorigin="anonymous"></script>
-
-    <script type="text/javascript">
-      $( document ).ready(function() {
-        $('#calendarStartDate').calendar({
-          type: 'datetime',
-          minDate:  new Date(),
-          startMode: 'day',
-          text: {
-            days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
-            today: 'Hoy',
-            now: 'Actual',
-            am: 'AM',
-            pm: 'PM'
-          }
-        });
-
-        $('#calendarEndDate').calendar({
-          type: 'datetime',
-          minDate:  new Date(),
-          startMode: 'day',
-          text: {
-            days: ['Dom', 'Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab'],
-            months: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
-            monthsShort: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dec'],
-            today: 'Hoy',
-            now: 'Actual',
-            am: 'AM',
-            pm: 'PM'
-          }
-        });
-
-        $('#loginTabAlumno').tab();
-        $('#loginTabProfesor').tab();
-        $('#loginTabAdmin').tab();
-
-        $('#dropDownUAs').dropdown();
-        $('#dropDownGroups').dropdown();
-
-        $('#dropdownMenuAlumno').dropdown();
-        $('#dropdownMenuAcademica').dropdown();
-        $('#dropdownMenuInscripcion').dropdown();
-      });
-    </script>
   </body>
 </html>

@@ -1,71 +1,36 @@
 <template>
-  <div class="ui main container">
-    <br><br>
-    <div class="ui three column centered grid">
-      <div class="column">
-        <div class="ui raised segment">
+  <md-layout md-align="center" md-gutter>
+    <md-layout md-flex="35">
+      <md-tabs md-centered>
+        <md-tab id="alumno" md-label="Alumno">
+          <form novalidate @submit.stop.prevent="submit">
+            <md-input-container>
+              <md-icon>account_circle</md-icon>
+              <label>No. Boleta</label>
+              <md-input placeholder="2014872367" v-model="boleta"></md-input>
+            </md-input-container>
+            <md-input-container md-has-password>
+              <md-icon>lock</md-icon>
+              <label>Contraseña</label>
+              <md-input type="password" v-model="password"></md-input>
+            </md-input-container>
+            <md-button class="md-raised md-primary" @click="login">Entrar</md-button>
+          </form>
+          <div class="has-ripple red" v-if="error">
+            <div v-for="err in errors"><md-ink-ripple/> {{ err }} <br></md-ink-ripple></div>
+          </div>
+        </md-tab>
 
-          <div class="ui top attached tabular menu">
-            <a class="item active" data-tab="first" id="loginTabAlumno">Alumno</a>
-            <a class="item" data-tab="second" id="loginTabProfesor">Profesor</a>
-            <a class="item" data-tab="third" id="loginTabAdmin">Administrador</a>
-          </div>
-          <div class="ui bottom attached tab segment active" data-tab="first">
-            <div class="ui form error">
-              <div class="field">
-                <label>No. Boleta</label>
-                <input type="text" name="boleta" placeholder="2016257670" v-model="boleta">
-              </div>
-              <div class="field">
-                <label>Contraseña</label>
-                <input type="Password" name="password" placeholder="Contraseña" v-model="password">
-              </div>
-              <button class="medium ui orange button" @click="login">Ingresar</button>
-              <div class="ui error message" v-if="error">
-                <div class="header">:(</div>
-                <p v-for="error in errors">{{ error }}</p>
-              </div>
-            </div>
-          </div>
-          <div class="ui bottom attached tab segment" data-tab="second">
-            <div class="ui form error">
-              <div class="field">
-                <label>Id</label>
-                <input type="text" name="boleta" placeholder="2016257670" v-model="boleta">
-              </div>
-              <div class="field">
-                <label>Contraseña</label>
-                <input type="Password" name="password" placeholder="Contraseña" v-model="password">
-              </div>
-              <button class="medium ui orange button" @click="login">Ingresar</button>
-              <div class="ui error message" v-if="error">
-                <div class="header">:(</div>
-                <p v-for="error in errors">{{ error }}</p>
-              </div>
-            </div>
-          </div>
-          <div class="ui bottom attached tab segment" data-tab="third">
-            <div class="ui form error">
-              <div class="field">
-                <label>Id</label>
-                <input type="text" name="boleta" placeholder="2016257670" v-model="boleta">
-              </div>
-              <div class="field">
-                <label>Contraseña</label>
-                <input type="Password" name="password" placeholder="Contraseña" v-model="password">
-              </div>
-              <button class="medium ui orange button" @click="login">Ingresar</button>
-              <div class="ui error message" v-if="error">
-                <div class="header">:(</div>
-                <p v-for="error in errors">{{ error }}</p>
-              </div>
-            </div>
-          </div>
+        <md-tab id="profesor" md-label="Profesor">
+         
+        </md-tab>
 
-        </div>
-      </div>
-    </div>
-  </div>
+        <md-tab id="administrador" md-label="Administrador">
+
+        </md-tab>
+      </md-tabs>
+    </md-layout>
+  </md-layout>
 </template>
 
 <script>
@@ -118,4 +83,30 @@ export default {
 }
 
 </script>
+
+<style type="text/css">
+  .has-ripple {
+    margin-bottom: 16px;
+    padding: 20px;
+    display: inline-block;
+    position: relative;
+  }
+
+  .blue {
+    color: #2196F3;
+  }
+
+  .purple {
+    color: #9C27B0;
+  }
+
+  .red {
+    color: #F44336;
+  }
+
+  .card-ripple {
+    width: 300px;
+    margin-top: 24px;
+  }
+</style>
 
