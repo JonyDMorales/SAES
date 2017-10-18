@@ -4,19 +4,16 @@ export default {
   index () {
     return Api().get('alumno')
   },
-
   store (alumno) {
     return Api().post('alumno')
   },
-
   login (credentials) {
     return Api().post('alumno/login', credentials)
+  },
+  kardex (boleta) {
+    return Api().get('alumno/' + boleta + '/kardex')
   }
   /*
-  show (boleta) {
-    return Api().get('alumno/${boleta}')
-  },
-
   update (alumno) {
     return Api().put('alumno/${alumno.boleta}')
   },

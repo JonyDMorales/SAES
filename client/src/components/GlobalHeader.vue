@@ -9,7 +9,7 @@
         Alumno <i class="dropdown icon"></i>
         <div class="menu">
           <a class="item"><i class="id card icon"></i> Información General</a>
-          <a class="item"><i class="sitemap icon"></i> Kardex</a>
+          <a class="item" @click="goToKardex()"><i class="sitemap icon"></i> Kardex</a>
           <a class="item"><i class="lock icon"></i> Cambiar Constraseña</a>
         </div>
       </div>
@@ -23,7 +23,7 @@
       <div class="ui dropdown item" id="dropdownMenuAcademica">
         Académica <i class="dropdown icon"></i>
         <div class="menu">
-          <a class="item"><i class="tasks icon"></i> Horarios</a>
+          <a class="item" @click="goToHorarios()"><i class="tasks icon"></i> Horarios</a>
           <a class="item"><i class="bookmark icon"></i> Marcadores</a>
           <a class="item"><i class="edit icon"></i> Reinscripción</a>
         </div>
@@ -46,6 +46,17 @@ export default {
       this.$store.dispatch('setAlumno', null)
       this.$router.push({
         name: 'login'
+      })
+    },
+    goToKardex () {
+      this.$router.push({
+        name: 'kardex'
+      })
+    },
+    goToHorarios () {
+      console.log('GO TO HORARIOS')
+      this.$router.push({
+        name: 'horarios'
       })
     }
   }

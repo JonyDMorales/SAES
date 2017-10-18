@@ -1,11 +1,21 @@
 import { default as Alumno } from "../models/Alumno";
 
-let visisibleData = { 
+let visisible = { 
 	boleta: 1, 
-	nombres : 1,
-	apellido_paterno: 1, 
-	apellido_materno: 1,
+	nombre : 1,
 	email: 1, 
+	_id: 0
+}
+
+let kardexData = { 
+	status: 1, 
+	creditos_obtenidos: 1, 
+	promedio_general: 1, 
+	periodos_cursados: 1,
+	numero_unidades_reprobadas: 1,
+	unidades_cursadas: 1,
+	unidades_aprobadas: 1,
+	unidades_no_aprobadas: 1, 
 	_id: 0
 }
 
@@ -15,12 +25,12 @@ export let saveAlumno = (alumnoData: any) => {
 }
 
 export let getAllAlumnos = () => {
-	let query = Alumno.find({}, visisibleData);
+	let query = Alumno.find({}, visisible);
  	return query.exec();
 }
 
 export let getAlumnoByBoleta = (boleta: number) => {
-	let query = Alumno.findOne({ boleta: boleta }, visisibleData);
+	let query = Alumno.findOne({ boleta: boleta }, visisible);
  	return query.exec();
 }
 
@@ -29,13 +39,18 @@ export let deleteAlumnoByBoleta = (boleta: number) => {
  	return query.exec();
 }
 
-export let getAlumnoByBoletaAndPassword = (boleta: number, password: string) => {
-	let query = Alumno.findOne().and([{ boleta: boleta }, { password: password }]);
+export let getAlumnoForLogin = (boleta: number, password: string) => {
+	let query = Alumno.findOne({}, visisible).and([{ boleta: boleta }, { password: password }]);
 	return query.exec();
 }
 
 export let getAlumnosSorted = () => {
-	let query = Alumno.find({}, visisibleData).sort({numero_unidades_reprobadas: 1, promedio_general: -1});
+	let query = Alumno.find({}, visisible).sort({numero_unidades_reprobadas: 1, promedio_general: -1});
+	return query.exec();
+}
+
+export let getKardexData = (boleta: number) => {
+	let query = Alumno.findOne({ boleta: boleta }, kardexData);
 	return query.exec();
 }
 

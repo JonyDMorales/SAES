@@ -42,6 +42,15 @@ export let update = async (req: Request, res: Response) => {
 	}
 };
 
+export let kardex = async (req: Request, res: Response) => {
+ 	try {
+		let kardexData = await AlumnoDataSource.getKardexData(req.params.boleta);
+		res.json(kardexData).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
+};
+
 export let destroy = async (req: Request, res: Response) => {
 	try {
 		let result = await AlumnoDataSource.deleteAlumnoByBoleta(req.params.boleta);
@@ -60,7 +69,7 @@ export let login = async (req: Request, res: Response) => {
 		let boleta = req.body.boleta;
 		let password = req.body.password;
 		
-		let alumno = await AlumnoDataSource.getAlumnoByBoletaAndPassword(boleta, password);
+		let alumno = await AlumnoDataSource.getAlumnoForLogin(boleta, password);
 		if(alumno) {
  			res.json({alumno: alumno, token: loginToken(alumno.toJSON()), status: "ok"}).end();
  		} else {

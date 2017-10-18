@@ -1,5 +1,6 @@
 <template>
 <div>
+  <!--
   <div class="ui main container" v-if="!isAuthorized">
     <div class="ui two column centered grid">
       <div class="four column centered row">
@@ -19,6 +20,7 @@
       </div>
     </div>
   </div>
+  -->
   <!--
   <div class="ui active centered inline loader" v-if="!isReady"></div>
   <div class="ui main container" v-if="isHorariosGenerated">
@@ -62,7 +64,8 @@
     </table>
   </div>
   -->
-  <div class="ui main container"  v-if="isAuthorized">
+  <div class="ui main container">
+    <div class="ui active centered inline loader" v-if="!isReady"></div>
     <div class="ui horizontal divider">
     Horarios
     </div>
