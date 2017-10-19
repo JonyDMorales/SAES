@@ -1,5 +1,4 @@
 <template>
-<div>
   <!--
   <div class="ui main container" v-if="!isAuthorized">
     <div class="ui two column centered grid">
@@ -64,6 +63,8 @@
     </table>
   </div>
   -->
+
+  <!-- HAHAHHA
   <div class="ui main container">
     <div class="ui active centered inline loader" v-if="!isReady"></div>
     <div class="ui horizontal divider">
@@ -219,7 +220,140 @@
       </table>
     </div>
   </div>
-</div>
+  -->
+  <div>
+    <br>
+    <md-layout md-align="center" v-if="!isReady">
+      <md-spinner :md-size="20" md-indeterminate></md-spinner>
+    </md-layout>
+
+    <md-layout md-align="center">
+      <md-layout md-flex="30">
+        <md-input-container>
+          <label for="groupSelected">Grupo</label>
+          <md-select name="groupSelected" id="groupSelected" v-model="groupSelected" @change="onChangeGroup">
+            <md-option v-for="namegroup in namegroups" :key="namegroup" :value="namegroup">{{ namegroup }}</md-option>
+          </md-select>
+        </md-input-container>
+      </md-layout>
+
+      <md-layout md-flex="30" md-flex-offset="10">
+        <md-input-container>
+          <label for="uaSelected">Unidad de Aprendizaje</label>
+          <md-select name="uaSelected" id="uaSelected" v-model="uaSelected"  @change="onChangeUA">
+            <md-option v-for="nameUA in nameUAs" :key="nameUA" :value="nameUA">{{ nameUA }}</md-option>
+          </md-select>
+        </md-input-container>
+      </md-layout>
+    </md-layout>
+
+    <md-layout md-align="center">
+      <md-chip class="md-primary">{{ currentSchedule }}</md-chip>
+    </md-layout>
+
+    <md-layout md-align="center">
+      <md-table v-if="makeSchedule">
+        <md-table-header>
+          <md-table-row>
+            <md-table-head>Grupo</md-table-head>
+            <md-table-head>Unidad Aprendizaje</md-table-head>
+            <md-table-head>Profesor</md-table-head>
+            <md-table-head>Lunes</md-table-head>
+            <md-table-head>Martes</md-table-head>
+            <md-table-head>Miércoles</md-table-head>
+            <md-table-head>Jueves</md-table-head>
+            <md-table-head>Viernes</md-table-head>
+            <md-table-head>Lugares</md-table-head>
+            <md-table-head v-if="makeSchedule">Quitar</md-table-head>
+          </md-table-row>
+        </md-table-header>
+        <md-table-body>
+          <md-table-row v-for="clase in selectedClasses" :key="clase.id">
+            <md-table-cell>{{ clase.grupo }}</md-table-cell>
+            <md-table-cell>{{ clase.unidad_aprendizaje }}</md-table-cell>
+            <md-table-cell>{{ clase.profesor }}</md-table-cell>
+            <md-table-cell>{{ clase.horarios[0].hora_inicio  + ' - ' + clase.horarios[0].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ clase.horarios[1].hora_inicio  + ' - ' + clase.horarios[1].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ clase.horarios[2].hora_inicio  + ' - ' + clase.horarios[2].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ clase.horarios[3].hora_inicio  + ' - ' + clase.horarios[3].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ clase.horarios[4].hora_inicio  + ' - ' + clase.horarios[4].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ clase.lugares_disponibles }}</md-table-cell>
+            <md-table-cell v-if="makeSchedule">
+              <md-button md-theme="purple" class="md-fab" @click="removeFromSelected(clase.id)">
+                <md-icon>dialpad</md-icon>
+              </md-button>
+            </md-table-cell>
+          </md-table-row>
+        </md-table-body>
+      </md-table>
+
+      <md-table v-if="isByGroup">
+        <md-table-header>
+          <md-table-row>
+            <md-table-head>Unidad Aprendizaje</md-table-head>
+            <md-table-head>Profesor</md-table-head>
+            <md-table-head>Lunes</md-table-head>
+            <md-table-head>Martes</md-table-head>
+            <md-table-head>Miércoles</md-table-head>
+            <md-table-head>Jueves</md-table-head>
+            <md-table-head>Viernes</md-table-head>
+            <md-table-head>Lugares</md-table-head>
+            <md-table-head v-if="makeSchedule">Quitar</md-table-head>
+          </md-table-row>
+        </md-table-header>
+        <md-table-body>
+          <md-table-row v-for="group in currentGroup" :key="group.id">
+            <md-table-cell>{{ group.unidad_aprendizaje }}</md-table-cell>
+            <md-table-cell>{{ group.profesor }}</md-table-cell>
+            <md-table-cell>{{ group.horarios[0].hora_inicio  + ' - ' + group.horarios[0].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ group.horarios[1].hora_inicio  + ' - ' + group.horarios[1].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ group.horarios[2].hora_inicio  + ' - ' + group.horarios[2].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ group.horarios[3].hora_inicio  + ' - ' + group.horarios[3].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ group.horarios[4].hora_inicio  + ' - ' + group.horarios[4].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ group.lugares_disponibles }}</md-table-cell>
+            <md-table-cell v-if="makeSchedule">
+              <md-button md-theme="purple" class="md-fab" @click="addClase(group.id,group.grupo)">
+                <md-icon>dialpad</md-icon>
+              </md-button>
+            </md-table-cell>
+          </md-table-row>
+        </md-table-body>
+      </md-table>
+
+      <md-table v-if="isByUAs">
+        <md-table-header>
+          <md-table-row>
+            <md-table-head>Grupo</md-table-head>
+            <md-table-head>Profesor</md-table-head>
+            <md-table-head>Lunes</md-table-head>
+            <md-table-head>Martes</md-table-head>
+            <md-table-head>Miércoles</md-table-head>
+            <md-table-head>Jueves</md-table-head>
+            <md-table-head>Viernes</md-table-head>
+            <md-table-head>Lugares</md-table-head>
+            <md-table-head v-if="makeSchedule">Quitar</md-table-head>
+          </md-table-row>
+        </md-table-header>
+        <md-table-body>
+          <md-table-row v-for="ua in currentGroupUa" :key="ua.id">
+            <md-table-cell>{{ ua.grupo }}</md-table-cell>
+            <md-table-cell>{{ ua.profesor }}</md-table-cell>
+            <md-table-cell>{{ ua.horarios[0].hora_inicio  + ' - ' + ua.horarios[0].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ ua.horarios[1].hora_inicio  + ' - ' + ua.horarios[1].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ ua.horarios[2].hora_inicio  + ' - ' + ua.horarios[2].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ ua.horarios[3].hora_inicio  + ' - ' + ua.horarios[3].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ ua.horarios[4].hora_inicio  + ' - ' + ua.horarios[4].hora_fin }}</md-table-cell>
+            <md-table-cell>{{ ua.lugares_disponibles }}</md-table-cell>
+            <md-table-cell v-if="makeSchedule">
+              <md-button md-theme="purple" class="md-fab" @click="addClase(ua.id, ua.grupo)">
+                <md-icon>dialpad</md-icon>
+              </md-button>
+            </md-table-cell>
+          </md-table-row>
+        </md-table-body>
+      </md-table>
+    </md-layout>
+  </div>
 </template>
 
 <script>
@@ -258,6 +392,8 @@ export default {
         this.groups = groups.values()
         this.UAs = uas.values()
         this.currentGroup = this.groups[0]
+        this.groupSelected = '1CM1'
+        this.uaSelected = ''
         this.isReady = true
         this.isAuthorized = true
       } catch (err) {
@@ -291,15 +427,38 @@ export default {
       this.selectedClasses.splice(idx, 1)
     },
     async getSchedules () {
-      console.log(this.selectedClasses)
       const response = await HorariosService.makeSchedules(this.selectedClasses)
       this.schedules = response.data
       this.isHorariosGenerated = true
-      console.log(response.data)
     },
     back () {
-      console.log('back')
       this.isHorariosGenerated = false
+    },
+    onChangeGroup (val) {
+      this.currentSchedule = 'Grupo: ' + val
+      for (var i = this.groups.length - 1; i >= 0; i--) {
+        if (this.groups[i][0].grupo === val) {
+          this.currentGroup = this.groups[i]
+          break
+        }
+      }
+      this.isByGroup = true
+      this.isByUAs = false
+      this.groupSelected = val
+      this.uaSelected = ''
+    },
+    onChangeUA (val) {
+      for (var i = this.UAs.length - 1; i >= 0; i--) {
+        if (this.UAs[i][0].unidad_aprendizaje === val) {
+          this.currentGroupUa = this.UAs[i]
+          break
+        }
+      }
+      this.isByGroup = false
+      this.isByUAs = true
+      this.groupSelected = ''
+      this.uaSelected = val
+      this.currentSchedule = 'Unidad de Aprendizaje: ' + val
     }
   },
   data () {
@@ -327,30 +486,6 @@ export default {
   },
   mounted () {
     this.getHorarios()
-  },
-  watch: {
-    groupSelected: function (val) {
-      this.currentSchedule = 'Grupo: ' + this.groupSelected
-      for (var i = this.groups.length - 1; i >= 0; i--) {
-        if (this.groups[i][0].grupo === val) {
-          this.currentGroup = this.groups[i]
-          break
-        }
-      }
-      this.isByGroup = true
-      this.isByUAs = false
-    },
-    uaSelected: function (val) {
-      this.currentSchedule = 'Unidad de Aprendizaje: ' + this.uaSelected
-      for (var i = this.UAs.length - 1; i >= 0; i--) {
-        if (this.UAs[i][0].unidad_aprendizaje === val) {
-          this.currentGroupUa = this.UAs[i]
-          break
-        }
-      }
-      this.isByGroup = false
-      this.isByUAs = true
-    }
   }
 
 }

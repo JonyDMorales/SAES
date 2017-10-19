@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueMaterial from 'vue-material'
+// import Vuetify from 'vuetify'
+// import 'vuetify/dist/vuetify.min.css'
 import 'vue-material/dist/vue-material.css'
 import { sync } from 'vuex-router-sync'
 import store from '@/store/store'
@@ -11,6 +13,7 @@ import store from '@/store/store'
 Vue.config.productionTip = false
 
 Vue.use(VueMaterial)
+// Vue.use(Vuetify)
 sync(store, router)
 
 Vue.material.registerTheme({

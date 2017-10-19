@@ -1,81 +1,45 @@
 <template>
-	<div class="ui main container">
-		<!--
-		<div class="ui equal width center aligned padded grid">
-		  <div class="row">
-		    <div class="column">
-		    	<div class="ui olive inverted raised segment">
-		    		<div class="ui olive label">Análisis Vectorial</div>
-		    	</div>
-		    </div>
-		    <div class="column">
-		    	<div class="ui olive inverted raised segment">
-		    		<div class="ui olive label">Cálculo</div>
-		    	</div>
-		    </div>
-		    <div class="column">
-		    	<div class="ui olive inverted raised segment">
-		    		<div class="ui olive label">Matemáticas Discretas</div>
-		    	</div>
-		    </div>
-		    <div class="column">
-		    	<div class="ui grey inverted raised segment">
-		    		<div class="ui grey label">Algoritmia y Programación Estructurada</div>
-		    	</div>
-		    </div>
-		    <div class="column">
-		    	<div class="ui olive inverted raised segment">
-		    		<div class="ui olive label">Física</div>
-		    	</div>
-		    </div>
-		    <div class="column">
-		    	<div class="ui olive inverted raised segment">
-		    		<div class="ui olive label">Ingeniería Ética y Sociedad</div>
-		    	</div>
-		    </div>
-		  </div>
-		</div>
-		-->
-    <div class="row">
-      <table class="ui small very compact green celled table">
-        <thead>
-          <tr class="center aligned">
-            <th>Unidad de Aprendizaje</th>
-            <th>Periodo</th>
-            <th>Forma Evaluación</th>
-            <th>Calificación</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="uaa in uasAprobadas" class="center aligned">
-            <td class="collapsing">{{ uaa.unidad_aprendizaje }}</td>
-            <td class="collapsing">{{ uaa.periodo }}</td>
-            <td class="collapsing">{{ uaa.forma_evaluacion }}</td>
-            <td class="collapsing">{{ uaa.calificacion }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+  <div>
+    <md-layout md-align="center">
+      <md-table>
+        <md-table-header>
+          <md-table-row>
+            <md-table-head>Unidad de Aprendizaje</md-table-head>
+            <md-table-head>Periodo</md-table-head>
+            <md-table-head>Forma Evaluación</md-table-head>
+            <md-table-head>Calificación</md-table-head>
+          </md-table-row>
+        </md-table-header>
+        <md-table-body>
+          <md-table-row  v-for="uaa in uasAprobadas" :key="uaa.id">
+            <md-table-cell>{{ uaa.unidad_aprendizaje }}</md-table-cell>
+            <md-table-cell>{{ uaa.periodo }}</md-table-cell>
+            <md-table-cell>{{ uaa.forma_evaluacion }}</md-table-cell>
+            <md-table-cell>{{ uaa.calificacion }}</md-table-cell>
+          </md-table-row>
+        </md-table-body>
+      </md-table>
+    </md-layout>
 
-    <div class="row">
-      <table class="ui small very compact red celled table">
-        <thead>
-          <tr class="center aligned">
-            <th>Unidad de Aprendizaje</th>
-            <th>Periodo</th>
-            <th>Calificación</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="uar in uasReprobadas" class="center aligned">
-            <td class="collapsing">{{ uar.unidad_aprendizaje }}</td>
-            <td class="collapsing">{{ uar.periodo }}</td>
-            <td class="collapsing">{{ uar.calificacion }}</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-	</div>
+    <md-layout md-align="center">
+      <md-table>
+        <md-table-header>
+          <md-table-row>
+            <md-table-head>Unidad de Aprendizaje</md-table-head>
+            <md-table-head>Periodo</md-table-head>
+            <md-table-head>Calificación</md-table-head>
+          </md-table-row>
+        </md-table-header>
+        <md-table-body>
+          <md-table-row  v-for="uar in uasReprobadas" :key="uar.id">
+            <md-table-cell>{{ uar.unidad_aprendizaje }}</md-table-cell>
+            <md-table-cell>{{ uar.periodo }}</md-table-cell>
+            <md-table-cell>{{ uar.calificacion }}</md-table-cell>
+          </md-table-row>
+        </md-table-body>
+      </md-table>
+    </md-layout>
+  </div>
 </template>
 
 <script>

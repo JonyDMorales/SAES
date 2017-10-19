@@ -1,22 +1,23 @@
 <template>
   <div>
-  <table class="ui celled striped table">
-    <thead>
-      <tr><th colspan="5">
-        Alumnos
-      </th>
-    </tr>
-    </thead>
-    <tbody>
-      <tr v-for="alumnos in alumnos">
-        <td>{{ alumnos.boleta }}</td>
-        <td>{{ alumnos.nombres }}</td>
-        <td>{{ alumnos.apellido_paterno }}</td>
-        <td>{{ alumnos.apellido_materno }}</td>
-        <td>{{ alumnos.email }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <md-layout md-align="center">
+    <md-table>
+      <md-table-header>
+        <md-table-row>
+          <md-table-head>Boleta</md-table-head>
+          <md-table-head>Nombre</md-table-head>
+          <md-table-head>E-mail</md-table-head>
+        </md-table-row>
+      </md-table-header>
+      <md-table-body>
+        <md-table-row  v-for="alumno in alumnos" :key="alumno.boleta">
+          <md-table-cell>{{ alumno.boleta }}</md-table-cell>
+          <md-table-cell>{{ alumno.nombre }}</md-table-cell>
+          <md-table-cell>{{ alumno.email }}</md-table-cell>
+        </md-table-row>
+      </md-table-body>
+    </md-table>
+  </md-layout>
   </div>
 </template>
 

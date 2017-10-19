@@ -1,4 +1,5 @@
 <template>
+  <!--
   <div class="ui container">
     <div class="ui horizontal divider">
     Generar Citas Reinscripción
@@ -43,6 +44,14 @@
         </tr>
       </tbody>
     </table>
+  </div>
+-->
+  <div>
+    <md-layout md-align="center" md-gutter>
+      <md-layout md-align="center" md-gutter>
+         
+      </md-layout>
+    </md-layout>
   </div>
 </template>
 
