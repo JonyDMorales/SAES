@@ -13,8 +13,6 @@
  
  ** Servidor **
  
- * Renombrar saes/server/.env.example a .env
- 
   ```bash
  saes$ cd server
  saes/server$ npm install
@@ -29,17 +27,6 @@
  saes/client$ npm install
  saes/client$ npm run dev
  ```
- 
- **Si todo salío bien abran esta ruta http://localhost:8080/#/alumnos y deberían ver esto ** 
- ![alt text](example.png)
-
- 
-**Seeder**
- 
-  ```bash
- saes$ cd server
- saes/server$ npm run seed
- ```
 
  ## Estructura del proyecto servidor (backend) => saes/server
 
@@ -53,7 +40,7 @@
 | **src/validators**       | Directorio para validar los parámetros de cada petición                                       |
 | **src/models**           | Directorio que contiene los modelos de mongo db                                               |
 | **src**/server.ts        | Express app                                                                                   |
-| .env.example             | Variables del proyecto  (renombra => .env)                                                    |
+| .env             | Variables del proyecto                                               |
 | tsconfig.json            | Opciones de configuración para TypeScript                                                     |
 
 
