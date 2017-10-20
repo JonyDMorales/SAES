@@ -30,7 +30,7 @@
                       label="Contraseña"
                       v-model="password"
                       prepend-icon="lock"
-                      :append-icon="e1 ? 'visibility' : 'visibility_off'"
+                      :append-icon="e1 ? 'visibility_off' : 'visibility'"
                       :append-icon-cb="passwordIcon"
                       :type="e1 ? 'tex' : 'password'"
                       counter
