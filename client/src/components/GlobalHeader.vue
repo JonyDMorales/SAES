@@ -1,0 +1,89 @@
+<template>
+  <v-toolbar dark color="primary">
+    <v-toolbar-title>SAES::ESCOM</v-toolbar-title>
+    <v-spacer></v-spacer>
+    <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
+    <v-toolbar-items class="hidden-sm-and-down" v-if="$store.state.isAlumnoLoggedIn">
+      <v-menu offset-y>
+        <v-btn color="primary" flat class="white--text" slot="activator">Alumno</v-btn>
+        <v-list>
+          <v-list-tile @click="">
+            <v-icon>account_circle</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Información General</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="goToKardex()">
+            <v-icon>assignment</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Kardex</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="">
+            <v-icon>lock</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Cambiar Contraseña</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-menu offset-y>
+        <v-btn color="primary" flat class="white--text" slot="activator">Inscripción Actual</v-btn>
+        <v-list>
+          <v-list-tile @click="">
+            <v-icon>schedule</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Horario</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="">
+            <v-icon>grade</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Calificaciones</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-menu offset-y>
+        <v-btn color="primary" flat class="white--text" slot="activator">Académica</v-btn>
+        <v-list>
+          <v-list-tile @click="goToHorarios()">
+            <v-icon>schedule</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Horarios</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="">
+            <v-icon>bookmark</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Marcadores</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="">
+            <v-icon>border_color</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Reinscripción</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-btn flat @click="logout()">
+        Salir
+        <v-icon right>exit_to_app</v-icon>
+      </v-btn>
+    </v-toolbar-items>
+  </v-toolbar>
+</template>
+
+<script>
+export default {
+
+  name: 'globalHeader',
+  methods: {
+    logout () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setAlumno', null)
+      this.$router.push({
+        name: 'login'
+      })
+    },
+    goToKardex () {
+      this.$router.push({
+        name: 'kardex'
+      })
+    },
+    goToHorarios () {
+      console.log('GO TO HORARIOS')
+      this.$router.push({
+        name: 'horarios'
+      })
+    }
+  }
+}
+
+</script>
+
