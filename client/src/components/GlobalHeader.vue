@@ -3,6 +3,7 @@
     <v-toolbar-title>SAES::ESCOM</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
+    <!-- Alumno -->
     <v-toolbar-items class="hidden-sm-and-down" v-if="$store.state.isAlumnoLoggedIn">
       <v-menu offset-y>
         <v-btn color="primary" flat class="white--text" slot="activator">Alumno</v-btn>
@@ -56,6 +57,39 @@
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
     </v-toolbar-items>
+    <!-- Admin -->
+    <v-toolbar-items class="hidden-sm-and-down">
+      <v-menu offset-y>
+        <v-btn color="primary" flat class="white--text" slot="activator">Administrar</v-btn>
+        <v-list>
+          <v-list-tile @click="">
+            <v-icon>list</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Alumnos</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="">
+            <v-icon>list</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Profesores</v-list-tile-title>
+          </v-list-tile>
+          <v-list-tile @click="">
+            <v-icon>list</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Horarios</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-menu offset-y>
+        <v-btn color="primary" flat class="white--text" slot="activator">Reinscripción</v-btn>
+        <v-list>
+          <v-list-tile @click="">
+            <v-icon>account_circle</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Alumno</v-list-tile-title>
+          </v-list-tile>
+        </v-list>
+      </v-menu>
+      <v-btn flat @click="logout()">
+        Salir
+        <v-icon right>exit_to_app</v-icon>
+      </v-btn>
+    </v-toolbar-items>
   </v-toolbar>
 </template>
 
@@ -77,7 +111,6 @@ export default {
       })
     },
     goToHorarios () {
-      console.log('GO TO HORARIOS')
       this.$router.push({
         name: 'horarios'
       })

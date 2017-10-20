@@ -17,19 +17,19 @@
           </v-tabs-bar>
           <v-tabs-items>
             <v-tabs-content id="'tab-alumno">
-              <v-card flat>
+              <v-card>
                 <v-card-text>
                   <v-flex xs12>
                     <v-text-field
                       label="No. Boleta"
                       v-model="boleta"
                       hint="Ex. 2014630270"
-                      prepend-icon="account_box"
+                      prepend-icon="account_circle"
                     ></v-text-field>
                     <v-text-field
                       label="Contraseña"
                       v-model="password"
-                      prepend-icon="lock"
+                      prepend-icon="vpn_key"
                       :append-icon="e1 ? 'visibility_off' : 'visibility'"
                       :append-icon-cb="passwordIcon"
                       :type="e1 ? 'tex' : 'password'"
@@ -37,7 +37,7 @@
                     ></v-text-field>
                     <v-btn color="primary" @click="login">Entrar</v-btn>
                     <v-alert class="red accent-2" icon="warning" v-if="error" value="true">
-                      <span v-for="err in errors">{{ err }}<br></span>
+                      <span v-for="err in errors" :key="err">{{ err }}<br></span>
                     </v-alert>
                   </v-flex>
                 </v-card-text>

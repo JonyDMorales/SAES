@@ -1,22 +1,15 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import Hello from '@/components/Hello'
 
-import Alumnos from '@/components/alumno/Alumnos'
 import Login from '@/components/Login'
 import Horarios from '@/components/alumno/Horarios'
 import Kardex from '@/components/alumno/Kardex'
-import GenerarCitas from '@/components/GenerarCitas'
+import Alumnos from '@/components/admin/Alumnos'
 
 Vue.use(Router)
 
 export default new Router({
   routes: [
-    {
-      path: '/hello',
-      name: 'Hello',
-      component: Hello
-    },
     {
       path: '/alumnos',
       name: 'alumnos',
@@ -36,11 +29,6 @@ export default new Router({
       path: '/kardex',
       name: 'kardex',
       component: Kardex
-    },
-    {
-      path: '/generarCitas',
-      name: 'generarCitas',
-      component: GenerarCitas
     }
   ]
 })
