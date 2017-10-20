@@ -66,5 +66,4 @@ client/bower_components
 .yarn-integrity
 
 # dotenv environment variables file
-.env
 server/package-lock.json
