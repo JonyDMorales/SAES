@@ -62,7 +62,7 @@
       <v-menu offset-y>
         <v-btn color="primary" flat class="white--text" slot="activator">Administrar</v-btn>
         <v-list>
-          <v-list-tile @click="">
+          <v-list-tile @click="goToAlumnos()">
             <v-icon>list</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Alumnos</v-list-tile-title>
           </v-list-tile>
@@ -113,6 +113,11 @@ export default {
     goToHorarios () {
       this.$router.push({
         name: 'horarios'
+      })
+    },
+    goToAlumnos () {
+      this.$router.push({
+        name: 'alumnos'
       })
     }
   }

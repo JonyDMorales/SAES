@@ -13,8 +13,8 @@
         ></v-text-field>
       </v-flex>
       <v-flex xs2 offset-xs6>
-        <v-btn color="primary" dark @click.stop="dialog = true" class="mt-3">Inscribir Alumno</v-btn>
-        <v-dialog v-model="dialog">
+        <v-btn color="primary" dark @click.stop="dialogInscribir = true" class="mt-3">Inscribir Alumno</v-btn>
+        <v-dialog v-model="dialogInscribir">
           <v-card> 
             <v-card-title class="headline">
                 Inscribir Alumno
@@ -30,7 +30,8 @@
               ></v-text-field>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="primary" flat @click.stop="dialog=false">Close</v-btn>
+              <v-btn color="accent" flat @click.stop="dialog=false">Cerrar</v-btn>
+              <v-btn color="primary" flat>Guardar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -217,7 +218,7 @@ export default {
   data () {
     return {
       search: '',
-      dialog: false,
+      dialogInscribir: false,
       dialogDetails: false,
       alumnos: [],
       alumno: {},
@@ -226,7 +227,7 @@ export default {
       pagination: { rowsPerPage: 10 },
       snackbar: false,
       notificationText: '',
-      color: 'black',
+      color: 'primary',
       alumnoHeaders: [
         {
           text: 'No. Boleta',
