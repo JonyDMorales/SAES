@@ -38,7 +38,10 @@ export let update = async (req: Request, res: Response) => {
 		let result = await AlumnoDataSource.modifyAlumno(req.params.boleta, req.body);
 		res.json({ status: "ok" }).end()
 	} catch(e) {
-		res.json({ status: "error" }).end()
+		res.json({ 
+			status: "error",
+			error: e
+		}).end()
 	}
 };
 

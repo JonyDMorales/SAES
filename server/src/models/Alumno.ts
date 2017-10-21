@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 
 const alumnoSchema = new mongoose.Schema({
-  nombre: String,
+  	nombre: String,
 	boleta: {type: Number, unique: true},
 	password: String,
 	email: {type: String, unique: true},

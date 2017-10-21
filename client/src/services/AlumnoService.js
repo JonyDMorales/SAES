@@ -12,12 +12,14 @@ export default {
   },
   kardex (boleta) {
     return Api().get('alumno/' + boleta + '/kardex')
+  },
+  show (boleta) {
+    return Api().get('alumno/' + boleta)
+  },
+  update (alumno) {
+    return Api().put('alumno/' + alumno.boleta, alumno)
   }
   /*
-  update (alumno) {
-    return Api().put('alumno/${alumno.boleta}')
-  },
-
   destroy (boleta) {
     return Api().delete('alumno/${boleta}')
   }

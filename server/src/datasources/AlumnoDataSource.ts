@@ -30,7 +30,7 @@ export let getAllAlumnos = () => {
 }
 
 export let getAlumnoByBoleta = (boleta: number) => {
-	let query = Alumno.findOne({ boleta: boleta }, visisible);
+	let query = Alumno.findOne({ boleta: boleta });
  	return query.exec();
 }
 
