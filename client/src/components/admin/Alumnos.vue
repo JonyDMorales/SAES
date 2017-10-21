@@ -59,7 +59,7 @@
         </template>
         </v-data-table>
         <div class="text-xs-center pt-2">
-          <v-pagination v-model="pagination.page" :length="pages"></v-pagination>
+          <v-pagination v-model="pagination.page" :length="pages" circle></v-pagination>
         </div>
         <br>
       </v-flex>
@@ -103,12 +103,7 @@
                 ></v-text-field>
               </v-flex>
               <v-flex xs2 offset-xs1>
-                <v-checkbox
-                  color="primary"
-                  label="Modo Edición"
-                  v-model="edit"
-                  class="mt-4"
-                >
+                <v-switch color="primary" label="Modo Edición" v-model="edit"></v-switch>
                 </v-checkbox>
               </v-flex>
             </v-layout>
