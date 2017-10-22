@@ -164,6 +164,44 @@
       </v-flex>
     </v-layout>
     </v-card>
+    <v-dialog v-model="dialogSchedules" fullscreen transition="dialog-bottom-transition" :overlay=false>
+      <v-card>
+        <v-toolbar dark color="primary">
+          <v-btn icon dark>
+            <v-icon>account_circle</v-icon>
+          </v-btn>
+          <v-toolbar-title>Horarios Generados</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-btn icon @click.native="dialogSchedules = false" dark>
+            <v-icon>close</v-icon>
+          </v-btn>
+        </v-toolbar>
+        <v-card-text>
+          <v-container fluid>
+            <v-layout row v-for="schedule in schedules">
+              <v-data-table
+                v-bind:headers="scheduleHeader"
+                :items="schedule"
+                hide-actions
+                class="elevation-2"
+              >
+              <template slot="items" slot-scope="props">
+                <td>{{ props.item.grupo }}</td>
+                <td>{{ props.item.unidad_aprendizaje }}</td>
+                <td>{{ props.item.profesor }}</td>
+                <td>{{ props.item.horarios[0].hora_inicio  + ' - ' + props.item.horarios[0].hora_fin }}</td>
+                <td>{{ props.item.horarios[1].hora_inicio  + ' - ' + props.item.horarios[1].hora_fin }}</td>
+                <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
+                <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
+                <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
+                <td>{{ props.item.lugares_disponibles }}</td>
+              </template>
+              </v-data-table>
+            </v-layout>
+          </v-container>
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </v-container>
 </template>
 
@@ -249,10 +287,8 @@ export default {
     async getSchedules () {
       const response = await HorariosService.makeSchedules(this.selectedClasses)
       this.schedules = response.data
+      this.dialogSchedules = true
       this.isHorariosGenerated = true
-    },
-    back () {
-      this.isHorariosGenerated = false
     },
     onSearch () {
       this.isGlobal = true
@@ -275,6 +311,7 @@ export default {
       makeSchedule: false,
       selectedClasses: [],
       isHorariosGenerated: false,
+      dialogSchedules: false,
       schedules: null,
       isReady: false,
       isAuthorized: false,
@@ -432,6 +469,58 @@ export default {
         }
       ],
       gloabalHeader: [
+        {
+          text: 'Grupo',
+          value: 'grupo',
+          align: 'left'
+        },
+        {
+          text: 'Unidad de Aprendizaje',
+          value: 'ua',
+          align: 'left'
+        },
+        {
+          text: 'Profesor',
+          value: 'profesor',
+          align: 'left'
+        },
+        {
+          text: 'Lunes',
+          value: 'Lunes',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Martes',
+          value: 'Martes',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Miércoles',
+          value: 'Miércoles',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Jueves',
+          value: 'Jueves',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Viernes',
+          value: 'Viernes',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Lugares',
+          value: 'lugares_disponibles',
+          align: 'left'
+        }
+      ],
+      scheduleHeader: [
         {
           text: 'Grupo',
           value: 'grupo',

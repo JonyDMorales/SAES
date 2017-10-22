@@ -9381,6 +9381,7 @@ let horarios: any[] = [{
 {
   "profesor": "CHAVARRIA BAEZ LORENA",
   "unidad_aprendizaje": "DATA BASE SELECTED TOPICS",
+  "id_unidad_aprendizaje": 45,
   "grupo": "3CM1",
   "horarios": [
     {
@@ -9446,6 +9447,7 @@ let horarios: any[] = [{
 {
   "profesor": "HERNANDEZ RUBIO ERIKA",
   "unidad_aprendizaje": "DATA MINING",
+  "id_unidad_aprendizaje": 46,
   "grupo": "3CM1",
   "horarios": [
     {
@@ -9544,6 +9546,7 @@ let horarios: any[] = [{
 {
   "profesor": "MOSSO GARCIA M. EN C. IVAN GIOVANNY",
   "unidad_aprendizaje": "ARTIFICIAL INTELLIGENCE",
+  "id_unidad_aprendizaje": 47,
   "grupo": "3CM10",
   "horarios": [
     {
@@ -9576,6 +9579,7 @@ let horarios: any[] = [{
 {
   "profesor": "MOSSO GARCIA M. EN C. IVAN GIOVANNY",
   "unidad_aprendizaje": "APPLICATION DEVELOPMENT FOR MOBILE DEVICES",
+  "id_unidad_aprendizaje": 49,
   "grupo": "3CM10",
   "horarios": [
     {
@@ -9608,6 +9612,7 @@ let horarios: any[] = [{
 {
   "profesor": "MOSSO GARCIA M. EN C. IVAN GIOVANNY",
   "unidad_aprendizaje": "COMPUTING SELECTED TOPICS",
+  "id_unidad_aprendizaje": 51,
   "grupo": "3CM10",
   "horarios": [
     {
@@ -9640,6 +9645,7 @@ let horarios: any[] = [{
 {
   "profesor": "MOSSO GARCIA M. EN C. IVAN GIOVANNY",
   "unidad_aprendizaje": "IMAGE ANALYSIS",
+  "id_unidad_aprendizaje": 52,
   "grupo": "3CM10",
   "horarios": [
     {
@@ -9672,6 +9678,7 @@ let horarios: any[] = [{
 {
   "profesor": "MOSSO GARCIA M. EN C. IVAN GIOVANNY",
   "unidad_aprendizaje": "WEB SECURITY",
+  "id_unidad_aprendizaje": 53,
   "grupo": "3CM10",
   "horarios": [
     {
@@ -9704,6 +9711,7 @@ let horarios: any[] = [{
 {
   "profesor": "MOSSO GARCIA M. EN C. IVAN GIOVANNY",
   "unidad_aprendizaje": "PARALLEL AND CONCURRENT PROGRAMMING",
+  "id_unidad_aprendizaje": 48,
   "grupo": "3CM10",
   "horarios": [
     {
@@ -9736,6 +9744,7 @@ let horarios: any[] = [{
 {
   "profesor": "MOSSO GARCIA M. EN C. IVAN GIOVANNY",
   "unidad_aprendizaje": "DIGITAL CONTROL",
+  "id_unidad_aprendizaje": 50,
   "grupo": "3CM10",
   "horarios": [
     {
@@ -9867,6 +9876,7 @@ let horarios: any[] = [{
 {
   "profesor": "MORENO ARMENDARIZ MARCO ANTONIO",
   "unidad_aprendizaje": "NEURAL NETWORKS",
+  "id_unidad_aprendizaje": 54,
   "grupo": "3CM2",
   "horarios": [
     {
@@ -9965,6 +9975,7 @@ let horarios: any[] = [{
 {
   "profesor": "SALINAS LUGO SERGIO",
   "unidad_aprendizaje": "DISTRIBUTED DATA BASE",
+  "id_unidad_aprendizaje": 55,
   "grupo": "3CM2",
   "horarios": [
     {
@@ -10063,6 +10074,7 @@ let horarios: any[] = [{
 {
   "profesor": "CIFUENTES ALVAREZ ALEJANDRO SIGFRIDO",
   "unidad_aprendizaje": "WEB SECURITY",
+  "id_unidad_aprendizaje": 53,
   "grupo": "3CM3",
   "horarios": [
     {
@@ -10227,6 +10239,7 @@ let horarios: any[] = [{
 {
   "profesor": "CIFUENTES ALVAREZ ALEJANDRO SIGFRIDO",
   "unidad_aprendizaje": "APPLICATION DEVELOPMENT FOR MOBILE DEVICES",
+  "id_unidad_aprendizaje": 49,
   "grupo": "3CM4",
   "horarios": [
     {
@@ -10358,6 +10371,7 @@ let horarios: any[] = [{
 {
   "profesor": "PEREDO VALDERRAMA RUBEN",
   "unidad_aprendizaje": "WEB APPLICATION DEVELOPMENT",
+  "id_unidad_aprendizaje": 56,
   "grupo": "3CM4",
   "horarios": [
     {
@@ -10456,6 +10470,7 @@ let horarios: any[] = [{
 {
   "profesor": "CORTEZ DUARTE NIDIA ASUNCIÓN",
   "unidad_aprendizaje": "CRYPTOGRAPHY",
+  "id_unidad_aprendizaje": 57,
   "grupo": "3CM5",
   "horarios": [
     {
@@ -10488,6 +10503,7 @@ let horarios: any[] = [{
 {
   "profesor": "CRUZ MEZA MARIA ELENA",
   "unidad_aprendizaje": "IMAGE ANALYSIS",
+  "id_unidad_aprendizaje": 52,
   "grupo": "3CM5",
   "horarios": [
     {
@@ -10685,6 +10701,7 @@ let horarios: any[] = [{
 {
   "profesor": "JUAREZ MARTINEZ GENARO",
   "unidad_aprendizaje": "COMPUTING SELECTED TOPICS",
+  "id_unidad_aprendizaje": 51,
   "grupo": "3CM6",
   "horarios": [
     {
@@ -10750,6 +10767,7 @@ let horarios: any[] = [{
 {
   "profesor": "MORALES GUITRON SANDRA LUZ",
   "unidad_aprendizaje": "GENETIC ALGORITHMS",
+  "id_unidad_aprendizaje": 58,
   "grupo": "3CM6",
   "horarios": [
     {
@@ -10914,6 +10932,7 @@ let horarios: any[] = [{
 {
   "profesor": "GUZMAN FLORES JESSIE PAULINA",
   "unidad_aprendizaje": "IT GOVERNANCE",
+  "id_unidad_aprendizaje": 59,
   "grupo": "3CM7",
   "horarios": [
     {
@@ -10979,6 +10998,7 @@ let horarios: any[] = [{
 {
   "profesor": "MORALES GONZALEZ ANGEL",
   "unidad_aprendizaje": "ECONOMIC ENGINEERING",
+  "id_unidad_aprendizaje": 60,
   "grupo": "3CM7",
   "horarios": [
     {
@@ -11275,6 +11295,7 @@ let horarios: any[] = [{
 {
   "profesor": "CRUZ MEZA MARIA ELENA",
   "unidad_aprendizaje": "PATTERN RECOGNITION",
+  "id_unidad_aprendizaje": 62,
   "grupo": "3CM9",
   "horarios": [
     {
@@ -11307,6 +11328,7 @@ let horarios: any[] = [{
 {
   "profesor": "HERNÀNDEZ CRUZ MACARIO",
   "unidad_aprendizaje": "ARTIFICIAL INTELLIGENCE",
+  "id_unidad_aprendizaje": 47,
   "grupo": "3CM9",
   "horarios": [
     {
@@ -11339,6 +11361,7 @@ let horarios: any[] = [{
 {
   "profesor": "PEREDO VALDERRAMA RUBEN",
   "unidad_aprendizaje": "WEB APPLICATION DEVELOPMENT",
+  "id_unidad_aprendizaje": 56,
   "grupo": "3CM9",
   "horarios": [
     {
@@ -11371,6 +11394,7 @@ let horarios: any[] = [{
 {
   "profesor": "LOPEZ ROJAS ARIEL",
   "unidad_aprendizaje": "HIGH TECHNOLOGY ENTERPRISE MANAGEMENT",
+  "id_unidad_aprendizaje": 61,
   "grupo": "3CM9",
   "horarios": [
     {
@@ -11403,6 +11427,7 @@ let horarios: any[] = [{
 {
   "profesor": "CATALAN SALGADO EDGAR ARMANDO",
   "unidad_aprendizaje": "ARTIFICIAL INTELLIGENCE",
+  "id_unidad_aprendizaje": 47,
   "grupo": "3CV1",
   "horarios": [
     {
@@ -11600,6 +11625,7 @@ let horarios: any[] = [{
 {
   "profesor": "DIAZ SANTIAGO SANDRA",
   "unidad_aprendizaje": "CRYPTOGRAPHY",
+  "id_unidad_aprendizaje": 57,
   "grupo": "3CV2",
   "horarios": [
     {
@@ -11797,6 +11823,7 @@ let horarios: any[] = [{
 {
   "profesor": "HERNANDEZ CONTRERAS EULER",
   "unidad_aprendizaje": "DISTRIBUTED DATA BASE",
+  "id_unidad_aprendizaje": 55,
   "grupo": "3CV3",
   "horarios": [
     {
@@ -11862,6 +11889,7 @@ let horarios: any[] = [{
 {
   "profesor": "SILVA GARCIA VICTOR MANUEL",
   "unidad_aprendizaje": "CRYPTOGRAPHY",
+  "id_unidad_aprendizaje": 57,
   "grupo": "3CV3",
   "horarios": [
     {
@@ -12026,6 +12054,7 @@ let horarios: any[] = [{
 {
   "profesor": "BOTELLO CASTILLO ALEJANDRO",
   "unidad_aprendizaje": "DATA BASE SELECTED TOPICS",
+  "id_unidad_aprendizaje": 45,
   "grupo": "3CV4",
   "horarios": [
     {
@@ -12190,6 +12219,7 @@ let horarios: any[] = [{
 {
   "profesor": "GALIÑANES RODRIGUEZ MARIA GABRIELA",
   "unidad_aprendizaje": "IT GOVERNANCE",
+  "id_unidad_aprendizaje": 59,
   "grupo": "3CV5",
   "horarios": [
     {
@@ -12453,6 +12483,7 @@ let horarios: any[] = [{
 {
   "profesor": "ROSAS TRIGUEROS JORGE LUIS",
   "unidad_aprendizaje": "BIOINFORMATICS",
+  "id_unidad_aprendizaje": 63,
   "grupo": "3CV6",
   "horarios": [
     {
@@ -12650,6 +12681,7 @@ let horarios: any[] = [{
 {
   "profesor": "PALMA OROZCO ROSAURA",
   "unidad_aprendizaje": "COMPUTATIONAL GEOMETRY",
+  "id_unidad_aprendizaje": 64,
   "grupo": "3CV7",
   "horarios": [
     {
@@ -12682,6 +12714,7 @@ let horarios: any[] = [{
 {
   "profesor": "SERRANO TALAMANTES J. FELIX",
   "unidad_aprendizaje": "PATTERN RECOGNITION",
+  "id_unidad_aprendizaje": 62,
   "grupo": "3CV7",
   "horarios": [
     {
@@ -12780,6 +12813,7 @@ let horarios: any[] = [{
 {
   "profesor": "PALACIOS SOLANO ROCIO",
   "unidad_aprendizaje": "IT GOVERNANCE",
+  "id_unidad_aprendizaje": 59,
   "grupo": "3CV8",
   "horarios": [
     {
@@ -12878,6 +12912,7 @@ let horarios: any[] = [{
 {
   "profesor": "VELEZ SALDAÑA ULISES",
   "unidad_aprendizaje": "SOFTWARE ENGINEERING FOR MOBILE DEVICES",
+  "id_unidad_aprendizaje": 65,
   "grupo": "3CV8",
   "horarios": [
     {
@@ -12910,6 +12945,7 @@ let horarios: any[] = [{
 {
   "profesor": "MORALES GUITRON SANDRA LUZ",
   "unidad_aprendizaje": "ANALYSIS AND DESIGN OF PARALLEL ALGORITHMS",
+  "id_unidad_aprendizaje": 66,
   "grupo": "3CV9",
   "horarios": [
     {
@@ -13008,6 +13044,7 @@ let horarios: any[] = [{
 {
   "profesor": "ENRIQUEZ ZARATE JOSE ASUNCION",
   "unidad_aprendizaje": "WEB APPLICATION DEVELOPMENT",
+  "id_unidad_aprendizaje": 56,
   "grupo": "3CV9",
   "horarios": [
     {
@@ -15048,3 +15085,27 @@ let getNextPeriod = (periodo: string) => {
     return String(parseInt(year) +  1) + '/1';
   }
 }
+
+// Data Base selected topics 45
+// data mining 46
+// artificial intelligence 47
+//parallel and concurrent programming 48
+// application development for mobile devices 49
+// digital control 50
+// computing selected topics 51
+// image analysis 52
+// web security 53
+// neural networks 54
+// distributed data bases 55
+// web application development 56
+//cryptography 57
+// genetic algorithms 58
+// it governance 59
+// economic enginering 60
+// high technology enterpri 61
+// pattern recognition 62
+// bioinformatics 63
+// computational geometry 64
+// software eng for mobile dev 65
+// analysis and design of parellel algo 66
+

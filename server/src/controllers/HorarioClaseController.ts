@@ -4,8 +4,6 @@ import * as HorarioClasesDataSource from "../datasources/HorarioClasesDataSource
 
 import * as GenerarHorariosAlumno from "../usecases/GenerarHorariosAlumno";
 
-const HashMap = require('hashmap');
-
 export let index = async (req: Request, res: Response) => {
  	try {
 		var horarios = await HorarioClasesDataSource.getHorariosSorted();
@@ -15,8 +13,7 @@ export let index = async (req: Request, res: Response) => {
 	}
 };
 
-export let make = async (req: Request, res: Response) => {
-	// console.log(JSON.stringify(req.body, null, 2));
-	let schedules  = await GenerarHorariosAlumno.execute(req.body);
+export let make = (req: Request, res: Response) => {
+	let schedules = GenerarHorariosAlumno.execute(req.body);
 	res.json(schedules).end();
 };
