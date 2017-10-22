@@ -178,7 +178,7 @@
         </v-toolbar>
         <v-card-text>
           <v-container fluid>
-            <v-layout row v-for="schedule in schedules">
+            <v-layout row v-for="schedule in schedules" :key="schedule">
               <v-data-table
                 v-bind:headers="scheduleHeader"
                 :items="schedule"
@@ -197,6 +197,7 @@
                 <td>{{ props.item.lugares_disponibles }}</td>
               </template>
               </v-data-table>
+              <br>
             </v-layout>
           </v-container>
         </v-card-text>
@@ -317,260 +318,58 @@ export default {
       isAuthorized: false,
       horariosSheet: false,
       groupHeaders: [
-        {
-          text: 'Unidad Aprendizaje',
-          value: 'unidad_aprendizaje',
-          align: 'left'
-        },
-        {
-          text: 'Profesor',
-          value: 'profesor',
-          align: 'left'
-        },
-        {
-          text: 'Lunes',
-          value: 'Lunes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Martes',
-          value: 'Martes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Miércoles',
-          value: 'Miércoles',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Jueves',
-          value: 'Jueves',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Viernes',
-          value: 'Viernes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Lugares',
-          value: 'lugares_disponibles',
-          align: 'left'
-        }
+        { text: 'Unidad Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
+        { text: 'Profesor', value: 'profesor', align: 'left' },
+        { text: 'Lunes', value: 'Lunes', align: 'left', sortable: false },
+        { text: 'Martes', value: 'Martes', align: 'left', sortable: false },
+        { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
+        { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
+        { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
+        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' }
       ],
       uaHeaders: [
-        {
-          text: 'Grupo',
-          value: 'grupo',
-          align: 'left'
-        },
-        {
-          text: 'Profesor',
-          value: 'profesor',
-          align: 'left'
-        },
-        {
-          text: 'Lunes',
-          value: 'Lunes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Martes',
-          value: 'Martes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Miércoles',
-          value: 'Miércoles',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Jueves',
-          value: 'Jueves',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Viernes',
-          value: 'Viernes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Lugares',
-          value: 'lugares_disponibles',
-          align: 'left'
-        }
+        { text: 'Grupo', value: 'grupo', align: 'left' },
+        { text: 'Profesor', value: 'profesor', align: 'left' },
+        { text: 'Lunes', value: 'Lunes', align: 'left', sortable: false },
+        { text: 'Martes', value: 'Martes', align: 'left', sortable: false },
+        { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
+        { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
+        { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
+        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' }
       ],
       selectedClassesHeaders: [
-        {
-          text: 'Grupo',
-          value: 'grupo',
-          align: 'left'
-        },
-        {
-          text: 'Unidad de Aprendizaje',
-          value: 'ua',
-          align: 'left'
-        },
-        {
-          text: 'Profesor',
-          value: 'profesor',
-          align: 'left'
-        },
-        {
-          text: 'Lunes',
-          value: 'Lunes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Martes',
-          value: 'Martes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Miércoles',
-          value: 'Miércoles',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Jueves',
-          value: 'Jueves',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Viernes',
-          value: 'Viernes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Lugares',
-          value: 'lugares_disponibles',
-          align: 'left'
-        },
-        {
-          text: 'Quitar',
-          value: 'quitar',
-          align: 'left',
-          sortable: false
-        }
+        { text: 'Grupo', value: 'grupo', align: 'left' },
+        { text: 'Unidad Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
+        { text: 'Profesor', value: 'profesor', align: 'left' },
+        { text: 'Lunes', value: 'Lunes', align: 'left', sortable: false },
+        { text: 'Martes', value: 'Martes', align: 'left', sortable: false },
+        { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
+        { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
+        { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
+        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' },
+        { text: 'Quitar', value: 'quitar', align: 'left', sortable: false }
       ],
       gloabalHeader: [
-        {
-          text: 'Grupo',
-          value: 'grupo',
-          align: 'left'
-        },
-        {
-          text: 'Unidad de Aprendizaje',
-          value: 'ua',
-          align: 'left'
-        },
-        {
-          text: 'Profesor',
-          value: 'profesor',
-          align: 'left'
-        },
-        {
-          text: 'Lunes',
-          value: 'Lunes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Martes',
-          value: 'Martes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Miércoles',
-          value: 'Miércoles',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Jueves',
-          value: 'Jueves',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Viernes',
-          value: 'Viernes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Lugares',
-          value: 'lugares_disponibles',
-          align: 'left'
-        }
+        { text: 'Grupo', value: 'grupo', align: 'left' },
+        { text: 'Unidad Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
+        { text: 'Profesor', value: 'profesor', align: 'left' },
+        { text: 'Lunes', value: 'Lunes', align: 'left', sortable: false },
+        { text: 'Martes', value: 'Martes', align: 'left', sortable: false },
+        { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
+        { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
+        { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
+        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' }
       ],
       scheduleHeader: [
-        {
-          text: 'Grupo',
-          value: 'grupo',
-          align: 'left'
-        },
-        {
-          text: 'Unidad de Aprendizaje',
-          value: 'ua',
-          align: 'left'
-        },
-        {
-          text: 'Profesor',
-          value: 'profesor',
-          align: 'left'
-        },
-        {
-          text: 'Lunes',
-          value: 'Lunes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Martes',
-          value: 'Martes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Miércoles',
-          value: 'Miércoles',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Jueves',
-          value: 'Jueves',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Viernes',
-          value: 'Viernes',
-          align: 'left',
-          sortable: false
-        },
-        {
-          text: 'Lugares',
-          value: 'lugares_disponibles',
-          align: 'left'
-        }
+        { text: 'Grupo', value: 'grupo', align: 'left' },
+        { text: 'Unidad Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
+        { text: 'Profesor', value: 'profesor', align: 'left' },
+        { text: 'Lunes', value: 'Lunes', align: 'left', sortable: false },
+        { text: 'Martes', value: 'Martes', align: 'left', sortable: false },
+        { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
+        { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
+        { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
+        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' }
       ]
     }
   },
