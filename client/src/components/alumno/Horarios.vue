@@ -7,7 +7,7 @@
     </v-layout>
     <v-card>
     <v-layout row>
-      <v-flex xs3>
+      <v-flex xs2>
         <v-text-field
         prepend-icon="search"
         label="Buscar"
@@ -15,9 +15,10 @@
         hide-details
         v-model="search"
         class="ml-4"
+        @input="onSearch"
         ></v-text-field>
       </v-flex>
-      <v-flex xs3 offset-xs1>
+      <v-flex xs1 offset-xs1>
         <v-select
           v-bind:items="namegroups"
           v-model="groupSelected"
@@ -26,7 +27,7 @@
           bottom
         ></v-select>
       </v-flex>
-      <v-flex xs3 offset-xs1>
+      <v-flex xs4 offset-xs1>
         <v-select
           v-bind:items="nameUAs"
           v-model="uaSelected"
@@ -35,13 +36,87 @@
           bottom
         ></v-select>
       </v-flex>
+      <v-flex xs2 offset-xs1>
+        <v-tooltip top>
+          <v-btn small dark fab color="primary" class="mt-3" slot="activator" @click="activateSelectHorario()">
+            <v-icon v-if="!makeSchedule">list</v-icon>
+            <v-icon v-else>cancel</v-icon>
+          </v-btn>
+          <span v-if="!makeSchedule">Crear Nueva Lista</span>
+          <span v-else>Cancelar</span>
+        </v-tooltip>
+        <v-tooltip top v-if="makeSchedule">
+          <v-btn small dark fab color="primary" class="mt-3" slot="activator" @click="horariosSheet = true">
+            <v-icon>remove_red_eye</v-icon>
+          </v-btn>
+          <span>Ver Lista</span>
+        </v-tooltip>
+        <v-tooltip top v-if="makeSchedule">
+          <v-btn small dark fab color="primary" class="mt-3" slot="activator" @click="getSchedules()">
+            <v-icon>schedule</v-icon>
+          </v-btn>
+          <span>Generar Horarios</span>
+        </v-tooltip>
+      </v-flex>
     </v-layout>
     <v-layout row>
       <v-flex xs12>
+
+        <v-bottom-sheet v-model="horariosSheet">
+          <v-data-table
+            v-bind:headers="selectedClassesHeaders"
+            :items="selectedClasses"
+            hide-actions
+            class="elevation-2"
+          >
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.grupo }}</td>
+            <td>{{ props.item.unidad_aprendizaje }}</td>
+            <td>{{ props.item.profesor }}</td>
+            <td>{{ props.item.horarios[0].hora_inicio  + ' - ' + props.item.horarios[0].hora_fin }}</td>
+            <td>{{ props.item.horarios[1].hora_inicio  + ' - ' + props.item.horarios[1].hora_fin }}</td>
+            <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
+            <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
+            <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
+            <td>{{ props.item.lugares_disponibles }}</td>
+            <td>
+              <v-btn dark color="red darken-1" class="mt-3" small fab @click="removeFromSelected(props.item.id)">
+                <v-icon>remove</v-icon>
+              </v-btn>
+            </td>
+          </template>
+        </v-data-table>
+        </v-bottom-sheet>
+
+        <v-data-table
+          v-bind:headers="gloabalHeader"
+          :items="horarios"
+          v-bind:search="search"
+          hide-actions
+          class="elevation-2"
+          v-if="isGlobal"
+        >
+        <template slot="items" slot-scope="props">
+          <td>{{ props.item.grupo }}</td>
+          <td>{{ props.item.unidad_aprendizaje }}</td>
+          <td>{{ props.item.profesor }}</td>
+          <td>{{ props.item.horarios[0].hora_inicio  + ' - ' + props.item.horarios[0].hora_fin }}</td>
+          <td>{{ props.item.horarios[1].hora_inicio  + ' - ' + props.item.horarios[1].hora_fin }}</td>
+          <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
+          <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
+          <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
+          <td>{{ props.item.lugares_disponibles }}</td>
+          <td v-if="makeSchedule">
+            <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
+              <v-icon>add</v-icon>
+            </v-btn>
+          </td>
+        </template>
+       </v-data-table>
+
         <v-data-table
           v-bind:headers="groupHeaders"
           :items="currentGroup"
-          v-bind:search="search"
           hide-actions
           class="elevation-2"
           v-if="isByGroup"
@@ -55,13 +130,17 @@
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
           <td>{{ props.item.lugares_disponibles }}</td>
+          <td v-if="makeSchedule">
+            <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
+              <v-icon>add</v-icon>
+            </v-btn>
+          </td>
         </template>
        </v-data-table>
 
        <v-data-table
           v-bind:headers="uaHeaders"
           :items="currentGroupUa"
-          v-bind:search="search"
           hide-actions
           class="elevation-2"
           v-if="isByUAs"
@@ -75,6 +154,11 @@
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
           <td>{{ props.item.lugares_disponibles }}</td>
+          <td v-if="makeSchedule">
+            <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
+              <v-icon>add</v-icon>
+            </v-btn>
+          </td>
         </template>
        </v-data-table>
       </v-flex>
@@ -105,21 +189,51 @@ export default {
       }
     },
     activateSelectHorario () {
+      this.makeSchedule = !this.makeSchedule
       if (this.makeSchedule) {
-        this.msgButton = 'Crear Lista de Clases'
+        this.uaHeaders.push({
+          text: 'Agregar',
+          value: 'agregar',
+          align: 'left',
+          sortable: false
+        })
+        this.groupHeaders.push({
+          text: 'Agregar',
+          value: 'agregar',
+          align: 'left',
+          sortable: false
+        })
+        this.gloabalHeader.push({
+          text: 'Agregar',
+          value: 'agregar',
+          align: 'left',
+          sortable: false
+        })
       } else {
-        this.msgButton = 'Cancelar'
+        this.uaHeaders.pop()
+        this.groupHeaders.pop()
+        this.gloabalHeader.pop()
         this.selectedClasses = []
       }
-      this.makeSchedule = !this.makeSchedule
     },
     addClase (id, group) {
       for (var i = this.horarios.length - 1; i >= 0; i--) {
         if (this.horarios[i].id === id) {
-          this.selectedClasses.push(this.horarios[i])
+          var found = false
+          for (var j = this.selectedClasses.length - 1; j >= 0; j--) {
+            if (this.selectedClasses[j].id === this.horarios[i].id) {
+              found = true
+              break
+            }
+          }
+          if (!found) {
+            this.selectedClasses.push(this.horarios[i])
+            break
+          }
           break
         }
       }
+      this.horariosSheet = true
     },
     removeFromSelected (id) {
       var idx = 0
@@ -130,6 +244,7 @@ export default {
         }
       }
       this.selectedClasses.splice(idx, 1)
+      this.horariosSheet = true
     },
     async getSchedules () {
       const response = await HorariosService.makeSchedules(this.selectedClasses)
@@ -138,6 +253,11 @@ export default {
     },
     back () {
       this.isHorariosGenerated = false
+    },
+    onSearch () {
+      this.isGlobal = true
+      this.isByGroup = false
+      this.isByUAs = false
     }
   },
   data () {
@@ -150,14 +270,15 @@ export default {
       currentGroupUa: [],
       isByGroup: true,
       isByUAs: false,
+      isGlobal: false,
       currentSchedule: 'Grupo: 1CM1',
       makeSchedule: false,
       selectedClasses: [],
-      msgButton: 'Crear Lista de Clases',
       isHorariosGenerated: false,
       schedules: null,
       isReady: false,
       isAuthorized: false,
+      horariosSheet: false,
       groupHeaders: [
         {
           text: 'Unidad Aprendizaje',
@@ -172,27 +293,32 @@ export default {
         {
           text: 'Lunes',
           value: 'Lunes',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Martes',
           value: 'Martes',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Miércoles',
           value: 'Miércoles',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Jueves',
           value: 'Jueves',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Viernes',
           value: 'Viernes',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Lugares',
@@ -214,27 +340,142 @@ export default {
         {
           text: 'Lunes',
           value: 'Lunes',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Martes',
           value: 'Martes',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Miércoles',
           value: 'Miércoles',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Jueves',
           value: 'Jueves',
-          align: 'left'
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Viernes',
           value: 'Viernes',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Lugares',
+          value: 'lugares_disponibles',
           align: 'left'
+        }
+      ],
+      selectedClassesHeaders: [
+        {
+          text: 'Grupo',
+          value: 'grupo',
+          align: 'left'
+        },
+        {
+          text: 'Unidad de Aprendizaje',
+          value: 'ua',
+          align: 'left'
+        },
+        {
+          text: 'Profesor',
+          value: 'profesor',
+          align: 'left'
+        },
+        {
+          text: 'Lunes',
+          value: 'Lunes',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Martes',
+          value: 'Martes',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Miércoles',
+          value: 'Miércoles',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Jueves',
+          value: 'Jueves',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Viernes',
+          value: 'Viernes',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Lugares',
+          value: 'lugares_disponibles',
+          align: 'left'
+        },
+        {
+          text: 'Quitar',
+          value: 'quitar',
+          align: 'left',
+          sortable: false
+        }
+      ],
+      gloabalHeader: [
+        {
+          text: 'Grupo',
+          value: 'grupo',
+          align: 'left'
+        },
+        {
+          text: 'Unidad de Aprendizaje',
+          value: 'ua',
+          align: 'left'
+        },
+        {
+          text: 'Profesor',
+          value: 'profesor',
+          align: 'left'
+        },
+        {
+          text: 'Lunes',
+          value: 'Lunes',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Martes',
+          value: 'Martes',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Miércoles',
+          value: 'Miércoles',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Jueves',
+          value: 'Jueves',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Viernes',
+          value: 'Viernes',
+          align: 'left',
+          sortable: false
         },
         {
           text: 'Lugares',
@@ -249,24 +490,28 @@ export default {
   },
   watch: {
     groupSelected () {
+      this.search = ''
+      this.uaSelected = ''
       for (var i = this.groups.length - 1; i >= 0; i--) {
         if (this.groups[i][0].grupo === this.groupSelected) {
           this.currentGroup = this.groups[i]
           break
         }
       }
-      this.uaSelected = ''
+      this.isGlobal = false
       this.isByUAs = false
       this.isByGroup = true
     },
     uaSelected () {
+      this.search = ''
+      this.groupSelected = ''
       for (var i = this.UAs.length - 1; i >= 0; i--) {
         if (this.UAs[i][0].unidad_aprendizaje === this.uaSelected) {
           this.currentGroupUa = this.UAs[i]
           break
         }
       }
-      this.groupSelected = ''
+      this.isGlobal = false
       this.isByGroup = false
       this.isByUAs = true
     }
@@ -313,4 +558,3 @@ export default {
 }
 
 </script>
-

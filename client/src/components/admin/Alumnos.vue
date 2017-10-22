@@ -52,7 +52,7 @@
           <td>{{ props.item.nombre }}</td>
           <td>{{ props.item.email }}</td>
           <td>
-            <v-btn color="blue darken-1" fab small dark  @click="seeDetails(props.item.boleta)">
+            <v-btn color="primary" fab small dark  @click="seeDetails(props.item.boleta)">
               <v-icon>list</v-icon>
             </v-btn>
           </td>

@@ -2,8 +2,8 @@
   <v-container fluid>
     <v-layout row>
       <v-flex xs4 offset-xs4>
-        <v-tabs dark fixed centered>
-          <v-tabs-bar class="blue darken-2">
+        <v-tabs dark fixed centered >
+          <v-tabs-bar class="primary">
             <v-tabs-slider class="white"></v-tabs-slider>
             <v-tabs-item href="'#tab-alumno">
               Alumno
