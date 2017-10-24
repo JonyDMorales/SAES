@@ -21,6 +21,9 @@ export default {
   },
   addBookmark (boleta, schedule) {
     return Api().post('alumno/' + boleta + '/horario', schedule)
+  },
+  bookmarks (boleta) {
+    return Api().get('alumno/' + boleta + '/horario')
   }
   /*
   destroy (boleta) {

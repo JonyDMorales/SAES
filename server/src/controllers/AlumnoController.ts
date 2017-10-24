@@ -3,6 +3,8 @@ import * as dotenv from "dotenv";
 const JsonWebToken = require("jsonwebtoken");
 
 import * as AlumnoDataSource from "../datasources/AlumnoDataSource";
+import * as GetBookmarks from "../usecases/GetBookmarks";
+
 
 dotenv.config({ path: ".env" });
 
@@ -94,15 +96,8 @@ export let storeBookmark = async (req: Request, res: Response) => {
 
 
 export let bookmarks = async (req: Request, res: Response) => {
-	try {
-		let result = await AlumnoDataSource.modifyAlumno(req.params.boleta, req.body);
-		res.json({ status: "ok" }).end()
-	} catch(e) {
-		res.json({ 
-			status: "error",
-			error: e
-		}).end()
-	}
+	let result = await GetBookmarks.execute(req.params.boleta);
+	res.json(result).end()
 };
 
 let loginToken = (alumno: any) => {

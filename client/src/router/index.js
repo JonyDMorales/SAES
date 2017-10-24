@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Horarios from '@/components/alumno/Horarios'
 import Kardex from '@/components/alumno/Kardex'
 import Alumnos from '@/components/admin/Alumnos'
+import Marcadores from '@/components/alumno/Marcadores'
 
 Vue.use(Router)
 
@@ -29,6 +30,11 @@ export default new Router({
       path: '/kardex',
       name: 'kardex',
       component: Kardex
+    },
+    {
+      path: '/marcadores',
+      name: 'marcadores',
+      component: Marcadores
     }
   ]
 })

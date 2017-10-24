@@ -42,7 +42,7 @@
             <v-icon>schedule</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Horarios</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click="">
+          <v-list-tile @click="goMarcadores()">
             <v-icon>bookmark</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Marcadores</v-list-tile-title>
           </v-list-tile>
@@ -118,6 +118,11 @@ export default {
     goToAlumnos () {
       this.$router.push({
         name: 'alumnos'
+      })
+    },
+    goMarcadores () {
+      this.$router.push({
+        name: 'marcadores'
       })
     }
   }

@@ -39,6 +39,11 @@ export let getAlumnoByBoleta = (boleta: number) => {
  	return query.exec();
 }
 
+export let getBookmarks = (boleta: number) => {
+	let query = Alumno.findOne({ boleta: boleta }, {horarios_guardados: 1, _id: 0});
+ 	return query.exec();
+}
+
 export let deleteAlumnoByBoleta = (boleta: number) => {
 	let query = Alumno.remove({ boleta: boleta });
  	return query.exec();

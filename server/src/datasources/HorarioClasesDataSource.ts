@@ -21,3 +21,8 @@ export let getHorariosSorted = () => {
 	let query = HorarioClase.find({}, visible).sort({ grupo: 1 });
 	return query.exec();
 }
+
+export let getHorarioById = (id: number) => {
+	let query = HorarioClase.findOne({ id: id }, visible);
+ 	return query.exec();
+}
