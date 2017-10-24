@@ -5029,6 +5029,7 @@ let horarios: any[] = [{
 {
   "profesor": "CANCINO CALDERON SERGIO",
   "unidad_aprendizaje": "ELECTRONICA ANALOGICA",
+  "id_unidad_aprendizaje": 19,
   "grupo": "2CM1",
   "horarios": [
     {
@@ -5127,6 +5128,7 @@ let horarios: any[] = [{
 {
   "profesor": "GARCIA SALES JUAN VICENTE",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CM1",
   "horarios": [
     {
@@ -5258,6 +5260,7 @@ let horarios: any[] = [{
 {
   "profesor": "CORDERO LOPEZ MARTHA ROSA",
   "unidad_aprendizaje": "ANALISIS Y DISEÑO ORIENTADO A OBJETOS",
+  "id_unidad_aprendizaje": 24,
   "grupo": "2CM10",
   "horarios": [
     {
@@ -5422,6 +5425,7 @@ let horarios: any[] = [{
 {
   "profesor": "MONTES CASIANO HERMES FRANCISCO",
   "unidad_aprendizaje": "TECNOLOGIAS PARA LA WEB",
+  "id_unidad_aprendizaje": 25,
   "grupo": "2CM10",
   "horarios": [
     {
@@ -5487,6 +5491,7 @@ let horarios: any[] = [{
 {
   "profesor": "MENDEZ SEGUNDO LAURA",
   "unidad_aprendizaje": "ANALISIS Y DISEÑO ORIENTADO A OBJETOS",
+  "id_unidad_aprendizaje": 24,
   "grupo": "2CM11",
   "horarios": [
     {
@@ -5552,6 +5557,7 @@ let horarios: any[] = [{
 {
   "profesor": "MONTES CASIANO HERMES FRANCISCO",
   "unidad_aprendizaje": "TECNOLOGIAS PARA LA WEB",
+  "id_unidad_aprendizaje": 25,
   "grupo": "2CM11",
   "horarios": [
     {
@@ -5815,6 +5821,7 @@ let horarios: any[] = [{
 {
   "profesor": "CANCINO CALDERON SERGIO",
   "unidad_aprendizaje": "ELECTRONICA ANALOGICA",
+  "id_unidad_aprendizaje": 19,
   "grupo": "2CM2",
   "horarios": [
     {
@@ -5847,6 +5854,7 @@ let horarios: any[] = [{
 {
   "profesor": "CRUZ GARCIA DANIEL",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CM2",
   "horarios": [
     {
@@ -6044,6 +6052,7 @@ let horarios: any[] = [{
 {
   "profesor": "MARTINEZ DIAZ JUAN CARLOS",
   "unidad_aprendizaje": "ELECTRONICA ANALOGICA",
+  "id_unidad_aprendizaje": 19,
   "grupo": "2CM3",
   "horarios": [
     {
@@ -6175,6 +6184,7 @@ let horarios: any[] = [{
 {
   "profesor": "TECLA PARRA ROBERTO",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CM3",
   "horarios": [
     {
@@ -6207,6 +6217,7 @@ let horarios: any[] = [{
 {
   "profesor": "DURÀN CAMARILLO EDMUNDO RENÈ",
   "unidad_aprendizaje": "ELECTRONICA ANALOGICA",
+  "id_unidad_aprendizaje": 19,
   "grupo": "2CM4",
   "horarios": [
     {
@@ -6404,6 +6415,7 @@ let horarios: any[] = [{
 {
   "profesor": "TECLA PARRA ROBERTO",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CM4",
   "horarios": [
     {
@@ -6436,6 +6448,7 @@ let horarios: any[] = [{
 {
   "profesor": "DURÀN CAMARILLO EDMUNDO RENÈ",
   "unidad_aprendizaje": "ELECTRONICA ANALOGICA",
+  "id_unidad_aprendizaje": 19,
   "grupo": "2CM5",
   "horarios": [
     {
@@ -6534,6 +6547,7 @@ let horarios: any[] = [{
 {
   "profesor": "GARCIA SALES JUAN VICENTE",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CM5",
   "horarios": [
     {
@@ -6665,6 +6679,7 @@ let horarios: any[] = [{
 {
   "profesor": "FLORES MENDOZA YAXKIN",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CM6",
   "horarios": [
     {
@@ -6796,6 +6811,7 @@ let horarios: any[] = [{
 {
   "profesor": "CIFUENTES ALVAREZ ALEJANDRO SIGFRIDO",
   "unidad_aprendizaje": "TECNOLOGIAS PARA LA WEB",
+  "id_unidad_aprendizaje": 25,
   "grupo": "2CM7",
   "horarios": [
     {
@@ -6894,6 +6910,7 @@ let horarios: any[] = [{
 {
   "profesor": "HERNANDEZ RUBIO ERIKA",
   "unidad_aprendizaje": "ANALISIS Y DISEÑO ORIENTADO A OBJETOS",
+  "id_unidad_aprendizaje": 24,
   "grupo": "2CM7",
   "horarios": [
     {
@@ -7025,6 +7042,7 @@ let horarios: any[] = [{
 {
   "profesor": "DORANTES GONZALEZ MARCO ANTONIO",
   "unidad_aprendizaje": "ANALISIS Y DISEÑO ORIENTADO A OBJETOS",
+  "id_unidad_aprendizaje": 24,
   "grupo": "2CM8",
   "horarios": [
     {
@@ -7156,6 +7174,7 @@ let horarios: any[] = [{
 {
   "profesor": "RIVERA DE LA ROSA MONICA",
   "unidad_aprendizaje": "TECNOLOGIAS PARA LA WEB",
+  "id_unidad_aprendizaje": 25,
   "grupo": "2CM8",
   "horarios": [
     {
@@ -7254,6 +7273,7 @@ let horarios: any[] = [{
 {
   "profesor": "CARRETO ARELLANO CHADWICK",
   "unidad_aprendizaje": "ANALISIS Y DISEÑO ORIENTADO A OBJETOS",
+  "id_unidad_aprendizaje": 24,
   "grupo": "2CM9",
   "horarios": [
     {
@@ -7385,6 +7405,7 @@ let horarios: any[] = [{
 {
   "profesor": "RIVERA DE LA ROSA MONICA",
   "unidad_aprendizaje": "TECNOLOGIAS PARA LA WEB",
+  "id_unidad_aprendizaje": 25,
   "grupo": "2CM9",
   "horarios": [
     {
@@ -7450,6 +7471,7 @@ let horarios: any[] = [{
 {
   "profesor": "DE LA O TORRES SAUL",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CV1",
   "horarios": [
     {
@@ -7515,6 +7537,7 @@ let horarios: any[] = [{
 {
   "profesor": "PAZ RODRIGUEZ HECTOR MANUEL",
   "unidad_aprendizaje": "ELECTRONICA ANALOGICA",
+  "id_unidad_aprendizaje": 19,
   "grupo": "2CV1",
   "horarios": [
     {
@@ -7778,6 +7801,7 @@ let horarios: any[] = [{
 {
   "profesor": "CORDERO LOPEZ MARTHA ROSA",
   "unidad_aprendizaje": "ANALISIS Y DISEÑO ORIENTADO A OBJETOS",
+  "id_unidad_aprendizaje": 24,
   "grupo": "2CV11",
   "horarios": [
     {
@@ -7876,6 +7900,7 @@ let horarios: any[] = [{
 {
   "profesor": "HERNANDEZ AGUILAR JOSE LUIS",
   "unidad_aprendizaje": "ELECTRONICA ANALOGICA",
+  "id_unidad_aprendizaje": 19,
   "grupo": "2CV2",
   "horarios": [
     {
@@ -7941,6 +7966,7 @@ let horarios: any[] = [{
 {
   "profesor": "SAUCEDO DELGADO RAFAEL NORMAN",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CV2",
   "horarios": [
     {
@@ -8039,6 +8065,7 @@ let horarios: any[] = [{
 {
   "profesor": "CERVANTES DE ANDA ISMAEL",
   "unidad_aprendizaje": "ELECTRONICA ANALOGICA",
+  "id_unidad_aprendizaje": 19,
   "grupo": "2CV3",
   "horarios": [
     {
@@ -8071,6 +8098,7 @@ let horarios: any[] = [{
 {
   "profesor": "CRUZ GARCIA DANIEL",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CV3",
   "horarios": [
     {
@@ -8268,6 +8296,7 @@ let horarios: any[] = [{
 {
   "profesor": "FLORES MENDOZA YAXKIN",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CV4",
   "horarios": [
     {
@@ -8498,6 +8527,7 @@ let horarios: any[] = [{
 {
   "profesor": "DE LA O TORRES SAUL",
   "unidad_aprendizaje": "PROGRAMACION ORIENTADA A OBJETOS",
+  "id_unidad_aprendizaje": 18,
   "grupo": "2CV5",
   "horarios": [
     {
@@ -8596,6 +8626,7 @@ let horarios: any[] = [{
 {
   "profesor": "HERNÀNDEZ CRUZ MACARIO",
   "unidad_aprendizaje": "TECNOLOGIAS PARA LA WEB",
+  "id_unidad_aprendizaje": 25,
   "grupo": "2CV6",
   "horarios": [
     {
@@ -8859,6 +8890,7 @@ let horarios: any[] = [{
 {
   "profesor": "MELARA ABARCA REYNA ELIA",
   "unidad_aprendizaje": "ANALISIS Y DISEÑO ORIENTADO A OBJETOS",
+  "id_unidad_aprendizaje": 24,
   "grupo": "2CV7",
   "horarios": [
     {
@@ -8924,6 +8956,7 @@ let horarios: any[] = [{
 {
   "profesor": "PEREDO VALDERRAMA RUBEN",
   "unidad_aprendizaje": "TECNOLOGIAS PARA LA WEB",
+  "id_unidad_aprendizaje": 25,
   "grupo": "2CV7",
   "horarios": [
     {
@@ -9022,6 +9055,7 @@ let horarios: any[] = [{
 {
   "profesor": "LOPEZ RUIZ GABRIELA DE JESUS",
   "unidad_aprendizaje": "TECNOLOGIAS PARA LA WEB",
+  "id_unidad_aprendizaje": 25,
   "grupo": "2CV8",
   "horarios": [
     {
@@ -9054,6 +9088,7 @@ let horarios: any[] = [{
 {
   "profesor": "MELARA ABARCA REYNA ELIA",
   "unidad_aprendizaje": "ANALISIS Y DISEÑO ORIENTADO A OBJETOS",
+  "id_unidad_aprendizaje": 24,
   "grupo": "2CV8",
   "horarios": [
     {
@@ -9152,6 +9187,7 @@ let horarios: any[] = [{
 {
   "profesor": "MELARA ABARCA REYNA ELIA",
   "unidad_aprendizaje": "ANALISIS Y DISEÑO ORIENTADO A OBJETOS",
+  "id_unidad_aprendizaje": 24,
   "grupo": "2CV9",
   "horarios": [
     {
@@ -9217,6 +9253,7 @@ let horarios: any[] = [{
 {
   "profesor": "ORTIZ RAMIREZ JOSE ANTONIO",
   "unidad_aprendizaje": "TECNOLOGIAS PARA LA WEB",
+  "id_unidad_aprendizaje": 25,
   "grupo": "2CV9",
   "horarios": [
     {
@@ -13143,6 +13180,7 @@ let horarios: any[] = [{
 {
   "profesor": "PEREZ VERA MONSERRAT GABRIELA",
   "unidad_aprendizaje": "LIDERAZGO Y DESARROLLO PROFESIONAL",
+  "id_unidad_aprendizaje": 44,
   "grupo": "4CM1",
   "horarios": [
     {
@@ -13305,6 +13343,7 @@ let horarios: any[] = [{
 {
   "profesor": "FERRER TENORIO JORGE",
   "unidad_aprendizaje": "LIDERAZGO Y DESARROLLO PROFESIONAL",
+  "id_unidad_aprendizaje": 44,
   "grupo": "4CM2",
   "horarios": [
     {
@@ -13469,6 +13508,7 @@ let horarios: any[] = [{
 {
   "profesor": "PEREZ VERA MONSERRAT GABRIELA",
   "unidad_aprendizaje": "LIDERAZGO Y DESARROLLO PROFESIONAL",
+  "id_unidad_aprendizaje": 44,
   "grupo": "4CM3",
   "horarios": [
     {
@@ -13566,6 +13606,7 @@ let horarios: any[] = [{
 {
   "profesor": "CELIS DOMINGUEZ ADRIANA BERENICE",
   "unidad_aprendizaje": "LIDERAZGO Y DESARROLLO PROFESIONAL",
+  "id_unidad_aprendizaje": 44,
   "grupo": "4CM4",
   "horarios": [
     {
@@ -13763,6 +13804,7 @@ let horarios: any[] = [{
 {
   "profesor": "GONZALEZ ALBARRAN GISELA",
   "unidad_aprendizaje": "LIDERAZGO Y DESARROLLO PROFESIONAL",
+  "id_unidad_aprendizaje": 44,
   "grupo": "4CV1",
   "horarios": [
     {
@@ -13926,6 +13968,7 @@ let horarios: any[] = [{
 {
   "profesor": "FLORES DELGADO RAQUEL",
   "unidad_aprendizaje": "LIDERAZGO Y DESARROLLO PROFESIONAL",
+  "id_unidad_aprendizaje": 44,
   "grupo": "4CV2",
   "horarios": [
     {
@@ -14023,6 +14066,7 @@ let horarios: any[] = [{
 {
   "profesor": "CRUZ LAZARO ING. APOLINAR FRANCISCO",
   "unidad_aprendizaje": "LIDERAZGO Y DESARROLLO PROFESIONAL",
+  "id_unidad_aprendizaje": 44,
   "grupo": "4CV3",
   "horarios": [
     {
@@ -14615,7 +14659,7 @@ let isc_escom = [
       {
         "id": 18,
         "id_plan_estudios": 1,
-        "nombre": "Programación Orientada a Objectos",
+        "nombre": "Programación Orientada a Objetos",
         "semestre": 3,
         "creditos": 4.44,
         "optativa": false
@@ -14663,7 +14707,7 @@ let isc_escom = [
       {
         "id": 24,
         "id_plan_estudios": 1,
-        "nombre": "Análisis y Diseño Orientado a Objectos",
+        "nombre": "Análisis y Diseño Orientado a Objetos",
         "semestre": 4,
         "creditos": 4.39,
         "optativa": false
@@ -14671,7 +14715,7 @@ let isc_escom = [
       {
         "id": 25,
         "id_plan_estudios": 1,
-        "nombre": "Tecnologías Web",
+        "nombre": "Tecnologías Para La Web",
         "semestre": 4,
         "creditos": 4.49,
         "optativa": false
@@ -14823,7 +14867,7 @@ let isc_escom = [
       {
         "id": 44,
         "id_plan_estudios": 1,
-        "nombre": "Liderazgo",
+        "nombre": "Liderazgo Y Desarrollo Profesional",
         "semestre": 7,
         "creditos": 4.39,
         "optativa": false
