@@ -18,6 +18,9 @@ export default {
   },
   update (alumno) {
     return Api().put('alumno/' + alumno.boleta, alumno)
+  },
+  addBookmark (boleta, schedule) {
+    return Api().post('alumno/' + boleta + '/horario', schedule)
   }
   /*
   destroy (boleta) {

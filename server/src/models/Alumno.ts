@@ -22,7 +22,9 @@ const alumnoSchema = new mongoose.Schema({
 
 	unidades_no_aprobadas: [],
 	
-	horarios: []
+	horarios: [],
+
+	horarios_guardados: []
 
 }, { timestamps: false });
 

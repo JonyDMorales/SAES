@@ -83,6 +83,28 @@ export let login = async (req: Request, res: Response) => {
 	}
 };
 
+export let storeBookmark = async (req: Request, res: Response) => {
+	try {
+		let _ = await AlumnoDataSource.addBookmark(req.params.boleta, req.body);
+		res.json({ status: "ok" }).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
+};
+
+
+export let bookmarks = async (req: Request, res: Response) => {
+	try {
+		let result = await AlumnoDataSource.modifyAlumno(req.params.boleta, req.body);
+		res.json({ status: "ok" }).end()
+	} catch(e) {
+		res.json({ 
+			status: "error",
+			error: e
+		}).end()
+	}
+};
+
 let loginToken = (alumno: any) => {
 	return JsonWebToken.sign(alumno, process.env.JWT_SECRET, { expiresIn: 60 * 60 * 24 * 7 });
 }

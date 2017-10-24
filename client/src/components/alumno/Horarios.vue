@@ -197,10 +197,44 @@
                 <td>{{ props.item.lugares_disponibles }}</td>
               </template>
               </v-data-table>
-              <br>
+              <v-tooltip top>
+                  <v-btn fab dark small color="primary" slot="activator" @click="callBookmarkDialog(schedule)">
+                    <v-icon dark>bookmark_border</v-icon>
+                  </v-btn>
+                  <span>Agregar a marcadores</span>
+              </v-tooltip>
             </v-layout>
           </v-container>
         </v-card-text>
+      </v-card>
+      <v-snackbar
+        timeout=6000
+        right=true
+        absolute
+        v-model="snackbar"
+        :color="snbColor"
+      >
+      {{ snbText }}
+      <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
+    </v-dialog>
+    <v-dialog v-model="dialogBookmark">
+      <v-card> 
+        <v-card-title class="headline">
+            Agregar a marcadores
+        </v-card-title>
+        <v-card-text>
+          <v-text-field
+            label="Nombre del horario"
+            prepend-icon="schedule"
+            v-model="nameBookmarkSchedule"
+          ></v-text-field>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="accent" flat @click.stop="dialogBookmark=false">Cerrar</v-btn>
+          <v-btn color="primary" flat @click="addScheduleToBookmarks()">Guardar</v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </v-container>
@@ -208,6 +242,7 @@
 
 <script>
 import HorariosService from '@/services/HorariosService'
+import AlumnoService from '@/services/AlumnoService'
 import Bucket from 'buckets-js'
 
 export default {
@@ -295,6 +330,30 @@ export default {
       this.isGlobal = true
       this.isByGroup = false
       this.isByUAs = false
+    },
+    callBookmarkDialog (schedule) {
+      this.dialogBookmark = true
+      this.nextBookmarSchedule = schedule
+    },
+    async addScheduleToBookmarks () {
+      var ids = this.nextBookmarSchedule.map((schedule) => schedule.id)
+      var id = ids.sort((a, b) => a > b).reduce((k, i) => (k += (String(i) + '*')), '')
+      const response = await AlumnoService.addBookmark(this.$store.state.alumno.boleta, {
+        nombre: this.nameBookmarkSchedule,
+        horario: ids,
+        id: id
+      })
+      if (response.data.status === 'ok') {
+        this.snbColor = 'green'
+        this.snbText = this.nameBookmarkSchedule + ' fue añadido a marcadores.'
+      } else {
+        this.snbColor = 'red'
+        this.snbText = 'No fue posible añadir ' + this.nameBookmarkSchedule + ' a marcadores.'
+      }
+      this.dialogBookmark = false
+      this.snackbar = true
+      this.nextBookmarSchedule = []
+      this.nameBookmarkSchedule = ''
     }
   },
   data () {
@@ -317,6 +376,12 @@ export default {
       isReady: false,
       isAuthorized: false,
       horariosSheet: false,
+      dialogBookmark: false,
+      nextBookmarSchedule: [],
+      nameBookmarkSchedule: '',
+      snackbar: false,
+      snbColor: 'black',
+      snbText: '',
       groupHeaders: [
         { text: 'Unidad Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
         { text: 'Profesor', value: 'profesor', align: 'left' },

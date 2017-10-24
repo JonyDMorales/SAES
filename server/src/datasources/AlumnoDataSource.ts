@@ -24,6 +24,11 @@ export let saveAlumno = (alumnoData: any) => {
 	return alumno.save();
 }
 
+export let addBookmark = (boleta: number, schedule: any) => {
+	let query = Alumno.findOneAndUpdate({boleta: boleta}, {$push: {"horarios_guardados": schedule}});
+	return query.exec();
+}
+
 export let getAllAlumnos = () => {
 	let query = Alumno.find({}, visisible);
  	return query.exec();
