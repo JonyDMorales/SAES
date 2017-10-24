@@ -83,6 +83,10 @@
             <v-icon>account_circle</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Alumno</v-list-tile-title>
           </v-list-tile>
+          <v-list-tile @click="goToGenerarCitas">
+            <v-icon>schedule</v-icon>&nbsp;&nbsp;
+            <v-list-tile-title>Citas</v-list-tile-title>
+          </v-list-tile>
         </v-list>
       </v-menu>
       <v-btn flat @click="logout()">
@@ -123,6 +127,11 @@ export default {
     goMarcadores () {
       this.$router.push({
         name: 'marcadores'
+      })
+    },
+    goToGenerarCitas () {
+      this.$router.push({
+        name: 'generarCitas'
       })
     }
   }

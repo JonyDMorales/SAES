@@ -2,38 +2,59 @@ import * as AlumnoDataSource from "../datasources/AlumnoDataSource";
 import * as CitasReinscripcionDataSource from "../datasources/CitasReinscripcionDataSource";
 import * as Bluebird from "bluebird";
 
-export let execute = async (startDate: number, endDate: number) => {
+export let execute = async (opts: any) => {
 
-	const Minutes: number = 1000 * 60 * 15; //Fifteen minutes
-	let totalTime: number = endDate - startDate;
-
-	let alumnos = await AlumnoDataSource.getAlumnosSorted();
-
-	let totalAlumnos = alumnos.length;
-	let rounds: number = totalTime / Minutes;
-	let alumnosPerPeriod: number = Math.ceil(totalAlumnos / rounds);
-
-	var time: number = startDate;
-
-	console.log("Se reinscriben " + alumnosPerPeriod + " alumno(s) cada " + Minutes/(1000*60) + " minutos");
+	const Second: number = 1000;
+	const Minute: number = Second * 60;
+	const Hour: number = Minute * 60;
+	const Day: number = Hour * 24;
+	const Week: number = Day * 7;
 	
-	var idx = 0;
+	let totalMiliSeconds: number = opts.endDate - opts.startDate;
+	let totalDays: number = Math.floor(totalMiliSeconds / Day);
+	console.log("TOTAL DIAS => " + totalDays)
+	let totalTimePerDay: number = opts.endTime - opts.startTime;
+	console.log("TOTAL TIME PER DAY => " + totalTimePerDay)
+	let totalPeriod = totalDays * totalTimePerDay;
+	let totalMinutes: number = Math.floor(totalPeriod / Minute);
+	console.log('TOTAL MINUTES => ' + totalMinutes)
+	let minutesFactor: number =  Math.ceil((Minute * 15) / (1000 * 60));
+	let rounds:number = Math.ceil(totalMinutes / minutesFactor);
+	console.log('ROUNDS => ' + rounds)
+	let alumnos = await AlumnoDataSource.getAlumnosSorted();
+	let alumnosPerPeriod: number = Math.ceil(alumnos.length / rounds);
+	console.log("Se reinscriben " + alumnosPerPeriod + " alumno(s) cada " + minutesFactor + " minutos");
+	
+	var idx = 1;
+	var time: number = opts.startDate;
 
-	let citas = await Bluebird.map(alumnos, async (alumno: any) => {
-		//let date = new Date(time);
-		//console.log(date.toString());
-		if(idx % alumnosPerPeriod === 0) {
-			time += Minutes;
-		}
-		
-		let cita = await CitasReinscripcionDataSource.saveCitaReinscripcion({
+	var infoCitas: any[] = []
+	var limitDay: number = opts.startDate;
+
+	//let citas = await Bluebird.map(alumnos, async (alumno: any) => {
+	//let cita = await CitasReinscripcionDataSource.saveCitaReinscripcion(
+	alumnos.forEach((alumno: any) => { 
+		infoCitas.push({
 			boleta_alumno: alumno.boleta,
-			fecha_inicio: time,
-			fecha_limite: time + (1000 * 60 * 16 * 24)
+			nombre_alumno: alumno.nombre,
+			fecha_inicio: new Date(time).toString(),
+			fecha_limite: new Date(time + (1000 * 60 * 60 * 24)).toString()
 		});
-
-		return cita; 
+		let nextLimit:number = limitDay + totalTimePerDay;
+		console.log(time + ' <***> ' + nextLimit)
+		if(time < nextLimit) {
+			if (idx % alumnosPerPeriod === 0) {
+				time += (minutesFactor * 1000 * 60);
+			}
+		} else {
+			console.log("debe entrar")
+			time += Day;
+			time -= totalTimePerDay;
+			limitDay = time;
+		}
+		idx++;
 	})
-
-	return citas;
+	
+	console.log(JSON.stringify(infoCitas, null, 2))
+	return infoCitas;
 }

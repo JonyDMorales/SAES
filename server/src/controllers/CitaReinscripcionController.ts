@@ -5,10 +5,7 @@ import * as GenerarCitas from "../usecases/GenerarCitas";
 
 
 export let store = async (req: Request, res: Response) => {
-  let startDate = req.body.startDate;
-  let endDate = req.body.endDate;
-
-  let citas = await GenerarCitas.execute(startDate, endDate);
+  let citas = await GenerarCitas.execute(req.body);
   res.json(citas).end();
 };
 
