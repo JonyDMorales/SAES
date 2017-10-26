@@ -2,6 +2,7 @@ import { default as CitaReinscripcion } from "../models/CitaReinscripcion";
 
 export let visible = {
 	boleta_alumno: 1,
+	nombre_alumno: 1,
 	fecha_inicio: 1,
 	fecha_limite: 1,
 	_id: 0
@@ -18,6 +19,6 @@ export let getCitaByBoleta = (boleta: number) => {
 }
 
 export let getAllCitas = () => {
-	let query = CitaReinscripcion.find({}, visible);
+	let query = CitaReinscripcion.find({}, visible).sort({ fecha_inicio: 1 });
  	return query.exec();
 }

@@ -12,18 +12,13 @@ export let execute = async (opts: any) => {
 	
 	let totalMiliSeconds: number = opts.endDate - opts.startDate;
 	let totalDays: number = Math.floor(totalMiliSeconds / Day);
-	console.log("TOTAL DIAS => " + totalDays)
 	let totalTimePerDay: number = opts.endTime - opts.startTime;
-	console.log("TOTAL TIME PER DAY => " + totalTimePerDay)
 	let totalPeriod = totalDays * totalTimePerDay;
 	let totalMinutes: number = Math.floor(totalPeriod / Minute);
-	console.log('TOTAL MINUTES => ' + totalMinutes)
 	let minutesFactor: number =  Math.ceil((Minute * 15) / (1000 * 60));
 	let rounds:number = Math.ceil(totalMinutes / minutesFactor);
-	console.log('ROUNDS => ' + rounds)
 	let alumnos = await AlumnoDataSource.getAlumnosSorted();
 	let alumnosPerPeriod: number = Math.ceil(alumnos.length / rounds);
-	console.log("Se reinscriben " + alumnosPerPeriod + " alumno(s) cada " + minutesFactor + " minutos");
 	
 	var idx = 1;
 	var time: number = opts.startDate;
@@ -31,23 +26,19 @@ export let execute = async (opts: any) => {
 	var infoCitas: any[] = []
 	var limitDay: number = opts.startDate;
 
-	//let citas = await Bluebird.map(alumnos, async (alumno: any) => {
-	//let cita = await CitasReinscripcionDataSource.saveCitaReinscripcion(
 	alumnos.forEach((alumno: any) => { 
 		infoCitas.push({
 			boleta_alumno: alumno.boleta,
 			nombre_alumno: alumno.nombre,
-			fecha_inicio: new Date(time).toString(),
-			fecha_limite: new Date(time + (1000 * 60 * 60 * 24)).toString()
+			fecha_inicio: time,
+			fecha_limite: time + (1000 * 60 * 60 * 24)
 		});
 		let nextLimit:number = limitDay + totalTimePerDay;
-		console.log(time + ' <***> ' + nextLimit)
 		if(time < nextLimit) {
 			if (idx % alumnosPerPeriod === 0) {
 				time += (minutesFactor * 1000 * 60);
 			}
 		} else {
-			console.log("debe entrar")
 			time += Day;
 			time -= totalTimePerDay;
 			limitDay = time;
@@ -55,6 +46,10 @@ export let execute = async (opts: any) => {
 		idx++;
 	})
 	
-	console.log(JSON.stringify(infoCitas, null, 2))
-	return infoCitas;
+	let citas = await Bluebird.map(infoCitas, async (infoCita: any) => {
+		let cita = await CitasReinscripcionDataSource.saveCitaReinscripcion(infoCita)
+		return cita;
+	})
+
+	return citas;
 }

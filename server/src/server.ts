@@ -83,6 +83,7 @@ app.get("/horario_clases", Middleware.isAlumnoAuthenticated, HorarioClaseControl
 app.post("/crear_horarios", HorarioClaseController.make);
 
 app.post("/cita_reinscripcion", CitaReinscripcionController.store);
+app.get("/cita_reinscripcion", CitaReinscripcionController.index);
 app.get("/cita_reinscripcion/:boleta", CitaReinscripcionController.show);
 
 module.exports = app;

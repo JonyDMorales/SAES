@@ -9,8 +9,13 @@ export let store = async (req: Request, res: Response) => {
   res.json(citas).end();
 };
 
-export let index = (req: Request, res: Response) => {
-	
+export let index = async (req: Request, res: Response) => {
+	try {
+		let citas = await CitasReinscripcionDataSource.getAllCitas();
+		res.json(citas).end()
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
 };
 
 export let show = async (req: Request, res: Response) => {

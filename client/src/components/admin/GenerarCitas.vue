@@ -4,8 +4,8 @@
       <v-subheader>Citas Reinscripción</v-subheader>
       <v-divider></v-divider>
       <br>
-      <v-layout row>
-        <v-flex xs4 offset-xs1>
+      <v-layout row v-if="!isReady">
+        <v-flex xs4>
           <v-dialog
             persistent
             v-model="dialogStartDate"
@@ -18,13 +18,14 @@
               v-model="startDate"
               prepend-icon="event"
               readonly
+              class="ml-4"
             ></v-text-field>
             <v-date-picker v-model="startDate" scrollable actions :first-day-of-week="1" locale="es-sp">
               <template slot-scope="{ save, cancel }">
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="save">OK</v-btn>
+                  <v-btn flat color="primary" @click="cancel">Cancelar</v-btn>
+                  <v-btn flat color="primary" @click="save">Guardar</v-btn>
                 </v-card-actions>
               </template>
             </v-date-picker>
@@ -48,8 +49,8 @@
               <template slot-scope="{ save, cancel }">
                 <v-card-actions>
                   <v-spacer></v-spacer>
-                  <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="save">OK</v-btn>
+                  <v-btn flat color="primary" @click="cancel">Cancelar</v-btn>
+                  <v-btn flat color="primary" @click="save">Guardar</v-btn>
                 </v-card-actions>
               </template>
             </v-date-picker>
@@ -57,8 +58,8 @@
         </v-flex>
       </v-layout>
 
-      <v-layout row>
-        <v-flex xs4 offset-xs1>
+      <v-layout row v-if="!isReady">
+        <v-flex xs4>
           <v-dialog
             persistent
             v-model="startTimeDialog"
@@ -71,12 +72,13 @@
               v-model="startTime"
               prepend-icon="access_time"
               readonly
+              class="ml-4"
             ></v-text-field>
             <v-time-picker v-model="startTime" format="24hr" actions>
               <template slot-scope="{ save, cancel }">
                 <v-card-actions>
-                  <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="save">Save</v-btn>
+                  <v-btn flat color="primary" @click="cancel">Cancelar</v-btn>
+                  <v-btn flat color="primary" @click="save">Guardar</v-btn>
                 </v-card-actions>
               </template>
             </v-time-picker>
@@ -99,25 +101,64 @@
             <v-time-picker v-model="endTime" format="24hr" actions>
               <template slot-scope="{ save, cancel }">
                 <v-card-actions>
-                  <v-btn flat color="primary" @click="cancel">Cancel</v-btn>
-                  <v-btn flat color="primary" @click="save">Save</v-btn>
+                  <v-btn flat color="primary" @click="cancel">Cancelar</v-btn>
+                  <v-btn flat color="primary" @click="save">Guardar</v-btn>
                 </v-card-actions>
               </template>
             </v-time-picker>
           </v-dialog>
         </v-flex>
       </v-layout>
+      <br v-if="!isReady">
       <v-layout row>
-        <v-flex offset-xs1>
-          <v-btn outline color="indigo">Generar Citas</v-btn>
+        <v-flex>
+          <v-btn v-if="!isReady" outline color="indigo" @click="generateCitas()" class="ml-5">Generar Citas</v-btn>
         </v-flex>
       </v-layout>
+      <br v-if="!isReady">
+      <v-layout row>
+        <v-flex xs12 offset-xs6  v-if="!isReady && resquestStarted">
+          <v-progress-circular indeterminate v-bind:size="40" color="primary"></v-progress-circular>
+        </v-flex>
+        <v-flex xs12>
+          <v-flex xs4>
+            <v-text-field
+            prepend-icon="search"
+            label="Buscar"
+            single-line
+            hide-details
+            v-model="search"
+            class="ml-4"
+            v-if="isReady"
+            ></v-text-field>
+          </v-flex>
+          <v-data-table
+            v-bind:headers="citaHeader"
+            :items="citas"
+            v-bind:search="search"
+            hide-actions
+            v-bind:pagination.sync="pagination"
+            v-if="isReady"
+          >
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.boleta_alumno }}</td>
+              <td>{{ props.item.nombre_alumno }}</td>
+              <td>{{ parseDateToSpanish(props.item.fecha_inicio) }}</td>
+              <td>{{ parseDateToSpanish(props.item.fecha_limite) }}</td>
+            </template>
+          </v-data-table>
+          <div class="text-xs-center pt-2" v-if="isReady">
+            <v-pagination v-model="pagination.page" :length="pages" circle></v-pagination>
+          </div>
+        </v-flex>
+      </v-layout>
+      <br>
     </v-card>
   </v-container>
 </template>
 
 <script>
-// import CitasService from '@/services/CitasService'
+import CitasService from '@/services/CitasService'
 
 export default {
 
@@ -125,17 +166,52 @@ export default {
   methods:
   {
     async generateCitas () {
-      /*
+      this.resquestStarted = true
+      let arrayStartTime = this.startTime.split(':').map((idx) => parseInt(idx))
+      let arrayEndTime = this.endTime.split(':').map((idx) => parseInt(idx))
+      let startDate = new Date(this.startDate + 'T' + this.startTime + 'Z').getTime()
+      let endDate = new Date(this.endDate + 'T' + this.endTime + 'Z').getTime()
       const response = await CitasService.store({
-        startDate: new Date(this.startDate),
-        endDate: new Date(this.endDate)
+        startDate: startDate + 1000 * 60 * 60 * 5,
+        endDate: endDate + 1000 * 60 * 60 * 5,
+        startTime: (arrayStartTime[0] * 1000 * 60 * 60) + (arrayStartTime[1] * 1000 * 60),
+        endTime: (arrayEndTime[0] * 1000 * 60 * 60) + (arrayEndTime[1] * 1000 * 60)
       })
       this.citas = response.data
-      this.endRequest = true
-      */
-      console.log(this.startDate)
-      console.log(this.endDate)
-      // console.log(new Date(this.startDate))
+      this.isReady = true
+    },
+    async getCitas () {
+      const response = await CitasService.index()
+      this.citas = response.data
+      if (this.citas.length > 0) {
+        this.isReady = true
+      }
+    },
+    parseDateToSpanish (mlDate) {
+      var date = new Date(mlDate).toString()
+      var arrayDate = date.split(' ')
+      return arrayDate[0]
+        .replace('Mon', 'Lunes')
+        .replace('Tue', 'Martes')
+        .replace('Wed', 'Miércoles')
+        .replace('Thu', 'Jueves')
+        .replace('Fri', 'Viernes') + ' ' +
+        arrayDate[2] + ' ' +
+        arrayDate[1]
+        .replace('Jan', 'Enero')
+        .replace('Feb', 'Febrero')
+        .replace('Mar', 'Marzo')
+        .replace('Apr', 'Abril')
+        .replace('May', 'Mayo')
+        .replace('Jun', 'Junio')
+        .replace('Jul', 'Julio')
+        .replace('Aug', 'Agosto')
+        .replace('Sep', 'Septiembre')
+        .replace('Oct', 'Octubre')
+        .replace('Nov', 'Noviembre')
+        .replace('Dec', 'Diciembre') + ' ' +
+        arrayDate[3] + ' ' +
+        arrayDate[4]
     }
   },
   data () {
@@ -149,8 +225,43 @@ export default {
       endTimePicker: null,
       startDatePicker: null,
       startTimePicker: null,
-      endRequest: false
+      resquestStarted: false,
+      isReady: false,
+      search: '',
+      pagination: { rowsPerPage: 10 },
+      citaHeader: [
+        {
+          text: 'No. Boleta',
+          value: 'boleta',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Nombre',
+          value: 'nombre',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Fecha Inscripción',
+          value: 'fecha_inicio',
+          align: 'left'
+        },
+        {
+          text: 'Fecha Límite',
+          value: 'fecha_fin',
+          align: 'left'
+        }
+      ]
     }
+  },
+  computed: {
+    pages () {
+      return this.pagination.rowsPerPage ? Math.ceil(this.citas.length / this.pagination.rowsPerPage) : 0
+    }
+  },
+  mounted () {
+    this.getCitas()
   }
 
 }

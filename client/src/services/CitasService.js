@@ -3,6 +3,9 @@ import Api from '@/services/Api'
 export default {
   store (cita) {
     return Api().post('cita_reinscripcion', cita)
+  },
+  index (cita) {
+    return Api().get('cita_reinscripcion')
   }
   /*
   show (boleta) {
