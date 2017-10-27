@@ -6,15 +6,15 @@
       </v-flex>
     </v-layout>
     <v-card>
-      <v-container fluid v-for="bookmark in bookmarks" :key="bookmark">
+      <v-container fluid v-for="bookmark in bookmarks" :key="bookmark.id">
         <v-layout row>
           <v-chip color="blue" text-color="white">
               <v-avatar class="blue darken-2">{{ bookmark.nombre[0].toUpperCase() }}</v-avatar>
               {{ bookmark.nombre }}
           </v-chip>
           <v-spacer></v-spacer>
-          <v-btn dark color="green" @click="">
-            Inscribir
+          <v-btn dark color="primary" @click="reinscribirHorario(bookmark.horario)" v-if="$store.state.canReinscribir">
+            Reinscribir
           </v-btn>
           <v-btn dark color="accent" @click="">
             Eliminar
@@ -42,12 +42,22 @@
         </v-layout>
       </v-container>
     </v-card>
+    <v-snackbar
+        timeout=6000
+        right=true
+        absolute
+        v-model="snackbar"
+        :color="snbColor"
+      >
+      {{ snbText }}
+      <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
 <script>
 import AlumnoService from '@/services/AlumnoService'
-// import Bucket from 'buckets-js'
+import InscripcionService from '@/services/InscripcionService'
 
 export default {
 
@@ -58,11 +68,20 @@ export default {
       try {
         const response = await AlumnoService.bookmarks(this.$store.state.alumno.boleta)
         this.bookmarks = response.data
-        console.log(JSON.stringify(this.bookmarks, null, 2))
         this.isReady = true
         this.isAuthorized = true
       } catch (err) {
       }
+    },
+    async reinscribirHorario (bookmark) {
+      const response = await InscripcionService.store({
+        horario: bookmark.map((b) => b.id),
+        boleta_alumno: this.$store.state.alumno.boleta
+      })
+      console.log(response)
+      this.snbColor = 'blue'
+      this.snbText = 'La Reinscripción se ha realizado coon éxito'
+      this.snackbar = true
     }
   },
   data () {

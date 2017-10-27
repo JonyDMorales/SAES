@@ -13,6 +13,7 @@ import * as PlanEstudiosController from "./controllers/PlanEstudiosController";
 import * as CitaReinscripcionController from "./controllers/CitaReinscripcionController";
 import * as AnalistaController from "./controllers/AnalistaController";
 import * as ProfesorController from "./controllers/ProfesorController";
+import * as InscripcionController from "./controllers/InscripcionController";
 
 import * as Middleware from "./config";
 
@@ -53,7 +54,7 @@ app.post("/analista", AnalistaController.store);
 app.get("/analista/:id", AnalistaController.show);
 app.delete("/analista/:id", AnalistaController.destroy);
 app.put("/analista/:id", AnalistaController.update);
-app.post("/analista/id", AnalistaController.login);
+app.post("/analista/login", AnalistaController.login);
 
 app.get("/profesor", ProfesorController.index);
 app.post("/profesor", ProfesorController.store);
@@ -85,5 +86,9 @@ app.post("/crear_horarios", HorarioClaseController.make);
 app.post("/cita_reinscripcion", CitaReinscripcionController.store);
 app.get("/cita_reinscripcion", CitaReinscripcionController.index);
 app.get("/cita_reinscripcion/:boleta", CitaReinscripcionController.show);
+
+app.post("/inscripcion", InscripcionController.store);
+app.get("/inscripcion", InscripcionController.index);
+app.get("/inscripcion/:boleta", InscripcionController.show);
 
 module.exports = app;

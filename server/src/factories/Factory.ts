@@ -14737,28 +14737,12 @@ let isc_escom = [
         "optativa": false
       },
       {
-        "id": 28,
-        "id_plan_estudios": 1,
-        "nombre": "Optativa A",
-        "semestre": 5,
-        "creditos": 4.39,
-        "optativa": true
-      },
-      {
         "id": 29,
         "id_plan_estudios": 1,
         "nombre": "Análisis de Algoritmos",
         "semestre": 5,
         "creditos": 4.39,
         "optativa": false
-      },
-      {
-        "id": 30,
-        "id_plan_estudios": 1,
-        "nombre": "Optativa B",
-        "semestre": 5,
-        "creditos": 4.39,
-        "optativa": true
       },
       {
         "id": 31,
@@ -14820,22 +14804,6 @@ let isc_escom = [
         "id": 38,
         "id_plan_estudios": 1,
         "nombre": "Compiladores",
-        "semestre": 6,
-        "creditos": 4.39,
-        "optativa": false
-      },
-      {
-        "id": 39,
-        "id_plan_estudios": 1,
-        "nombre": "Optativa C",
-        "semestre": 6,
-        "creditos": 4.39,
-        "optativa": false
-      },
-      {
-        "id": 40,
-        "id_plan_estudios": 1,
-        "nombre": "Optativa D",
         "semestre": 6,
         "creditos": 4.39,
         "optativa": false

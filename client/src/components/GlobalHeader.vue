@@ -4,11 +4,11 @@
     <v-spacer></v-spacer>
     <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
     <!-- Alumno -->
-    <v-toolbar-items class="hidden-sm-and-down" v-if="$store.state.isAlumnoLoggedIn">
+    <v-toolbar-items class="hidden-sm-and-down" v-if="$store.state.isAlumnoLoggedIn && $store.state.userType === 1">
       <v-menu offset-y>
         <v-btn color="primary" flat class="white--text" slot="activator">Alumno</v-btn>
         <v-list>
-          <v-list-tile @click="">
+          <v-list-tile @click="goToInfoGeneral()">
             <v-icon>account_circle</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Información General</v-list-tile-title>
           </v-list-tile>
@@ -25,7 +25,7 @@
       <v-menu offset-y>
         <v-btn color="primary" flat class="white--text" slot="activator">Inscripción Actual</v-btn>
         <v-list>
-          <v-list-tile @click="">
+          <v-list-tile @click="goToHorario()">
             <v-icon>schedule</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Horario</v-list-tile-title>
           </v-list-tile>
@@ -46,7 +46,7 @@
             <v-icon>bookmark</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Marcadores</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click="">
+          <v-list-tile @click="goToReinscripcion()">
             <v-icon>border_color</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Reinscripción</v-list-tile-title>
           </v-list-tile>
@@ -58,7 +58,7 @@
       </v-btn>
     </v-toolbar-items>
     <!-- Admin -->
-    <v-toolbar-items class="hidden-sm-and-down">
+    <v-toolbar-items class="hidden-sm-and-down" v-if="$store.state.userType === 2">
       <v-menu offset-y>
         <v-btn color="primary" flat class="white--text" slot="activator">Administrar</v-btn>
         <v-list>
@@ -89,7 +89,7 @@
           </v-list-tile>
         </v-list>
       </v-menu>
-      <v-btn flat @click="logout()">
+      <v-btn flat @click="logoutAdmin()">
         Salir
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
@@ -105,6 +105,13 @@ export default {
     logout () {
       this.$store.dispatch('setToken', null)
       this.$store.dispatch('setAlumno', null)
+      this.$router.push({
+        name: 'login'
+      })
+    },
+    logoutAdmin () {
+      this.$store.dispatch('setToken', null)
+      this.$store.dispatch('setAdmin', null)
       this.$router.push({
         name: 'login'
       })
@@ -132,6 +139,21 @@ export default {
     goToGenerarCitas () {
       this.$router.push({
         name: 'generarCitas'
+      })
+    },
+    goToReinscripcion () {
+      this.$router.push({
+        name: 'reinscripcion'
+      })
+    },
+    goToHorario () {
+      this.$router.push({
+        name: 'horarioActual'
+      })
+    },
+    goToInfoGeneral () {
+      this.$router.push({
+        name: 'infoGeneral'
       })
     }
   }

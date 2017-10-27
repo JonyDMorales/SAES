@@ -57,7 +57,6 @@
           </v-dialog>
         </v-flex>
       </v-layout>
-
       <v-layout row v-if="!isReady">
         <v-flex xs4>
           <v-dialog
@@ -116,6 +115,11 @@
         </v-flex>
       </v-layout>
       <br v-if="!isReady">
+      <v-layout row v-if="!isReady">
+        <v-flex xs1 offset-xs6>
+          <v-progress-circular color="primary" v-bind:indeterminate="true"></v-progress-circular>
+        </v-flex>
+      </v-layout>
       <v-layout row>
         <v-flex xs12 offset-xs6  v-if="!isReady && resquestStarted">
           <v-progress-circular indeterminate v-bind:size="40" color="primary"></v-progress-circular>
@@ -144,7 +148,6 @@
               <td>{{ props.item.boleta_alumno }}</td>
               <td>{{ props.item.nombre_alumno }}</td>
               <td>{{ parseDateToSpanish(props.item.fecha_inicio) }}</td>
-              <td>{{ parseDateToSpanish(props.item.fecha_limite) }}</td>
             </template>
           </v-data-table>
           <div class="text-xs-center pt-2" v-if="isReady">
@@ -159,6 +162,7 @@
 
 <script>
 import CitasService from '@/services/CitasService'
+import Utils from '@/Utils'
 
 export default {
 
@@ -187,31 +191,8 @@ export default {
         this.isReady = true
       }
     },
-    parseDateToSpanish (mlDate) {
-      var date = new Date(mlDate).toString()
-      var arrayDate = date.split(' ')
-      return arrayDate[0]
-        .replace('Mon', 'Lunes')
-        .replace('Tue', 'Martes')
-        .replace('Wed', 'Miércoles')
-        .replace('Thu', 'Jueves')
-        .replace('Fri', 'Viernes') + ' ' +
-        arrayDate[2] + ' ' +
-        arrayDate[1]
-        .replace('Jan', 'Enero')
-        .replace('Feb', 'Febrero')
-        .replace('Mar', 'Marzo')
-        .replace('Apr', 'Abril')
-        .replace('May', 'Mayo')
-        .replace('Jun', 'Junio')
-        .replace('Jul', 'Julio')
-        .replace('Aug', 'Agosto')
-        .replace('Sep', 'Septiembre')
-        .replace('Oct', 'Octubre')
-        .replace('Nov', 'Noviembre')
-        .replace('Dec', 'Diciembre') + ' ' +
-        arrayDate[3] + ' ' +
-        arrayDate[4]
+    parseDateToSpanish (date) {
+      return Utils.parseDateToSpanish(date)
     }
   },
   data () {
@@ -245,11 +226,6 @@ export default {
         {
           text: 'Fecha Inscripción',
           value: 'fecha_inicio',
-          align: 'left'
-        },
-        {
-          text: 'Fecha Límite',
-          value: 'fecha_fin',
           align: 'left'
         }
       ]

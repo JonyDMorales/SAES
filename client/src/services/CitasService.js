@@ -6,12 +6,11 @@ export default {
   },
   index (cita) {
     return Api().get('cita_reinscripcion')
+  },
+  show (boleta) {
+    return Api().get('cita_reinscripcion/' + boleta)
   }
   /*
-  show (boleta) {
-    return Api().get('alumno/${boleta}')
-  },
-
   update (alumno) {
     return Api().put('alumno/${alumno.boleta}')
   },

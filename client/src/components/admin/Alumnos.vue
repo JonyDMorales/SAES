@@ -167,6 +167,7 @@ export default {
     async getAlumnos () {
       const response = await AlumnoService.index()
       this.alumnos = response.data
+      console.log(JSON.stringify(this.alumnos, null, 2))
     },
     async seeDetails (boleta) {
       const response = await AlumnoService.show(boleta)

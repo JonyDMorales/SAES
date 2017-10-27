@@ -12,7 +12,10 @@ export default new Vuex.Store({
   state: {
     token: null,
     alumno: null,
-    isAlumnoLoggedIn: false
+    admin: null,
+    isAlumnoLoggedIn: false,
+    userType: 0,
+    canReinscribir: false
   },
   mutations: {
     setToken (state, token) {
@@ -21,10 +24,20 @@ export default new Vuex.Store({
         state.isAlumnoLoggedIn = true
       } else {
         state.isAlumnoLoggedIn = false
+        state.userType = 0
+        state.canReinscribir = false
       }
     },
     setAlumno (state, alumno) {
       state.alumno = alumno
+      state.userType = 1
+    },
+    setAdmin (state, admin) {
+      state.admin = admin
+      state.userType = 2
+    },
+    setCanReinscribir (state, canReinscribir) {
+      state.canReinscribir = canReinscribir
     }
   },
   actions: {
@@ -33,6 +46,12 @@ export default new Vuex.Store({
     },
     setAlumno ({commit}, alumno) {
       commit('setAlumno', alumno)
+    },
+    setAdmin ({commit}, admin) {
+      commit('setAdmin', admin)
+    },
+    setCanReinscribir ({commit}, canReinscribir) {
+      commit('setCanReinscribir', canReinscribir)
     }
   }
 
