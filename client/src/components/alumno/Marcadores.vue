@@ -36,7 +36,7 @@
             <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
             <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
             <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-            <td>{{ props.item.lugares_disponibles }}</td>
+            <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
           </template>
           </v-data-table>
         </v-layout>
@@ -78,7 +78,7 @@ export default {
         horario: bookmark.map((b) => b.id),
         boleta_alumno: this.$store.state.alumno.boleta
       })
-      console.log(response)
+      console.log(response.data)
       this.snbColor = 'blue'
       this.snbText = 'La Reinscripción se ha realizado coon éxito'
       this.snackbar = true

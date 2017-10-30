@@ -9,10 +9,10 @@
               Alumno
             </v-tabs-item>
             <v-tabs-item href="#tab-profesor">
-              Administrador
+              Profesor
             </v-tabs-item>
             <v-tabs-item href="#tab-admin">
-              Profesor
+              Administrador
             </v-tabs-item>
           </v-tabs-bar>
           <v-tabs-items>
@@ -28,14 +28,14 @@
                     ></v-text-field>
                     <v-text-field
                       label="Contraseña"
-                      v-model="password"
+                      v-model="password_alumno"
                       prepend-icon="vpn_key"
-                      :append-icon="e1 ? 'visibility_off' : 'visibility'"
-                      :append-icon-cb="passwordIcon"
-                      :type="e1 ? 'tex' : 'password'"
+                      :append-icon="vIconAlumno ? 'visibility_off' : 'visibility'"
+                      :append-icon-cb="() => vIconAlumno = !vIconAlumno"
+                      :type="vIconAlumno ? 'tex' : 'password'"
                       counter
                     ></v-text-field>
-                    <v-btn color="primary" @click="login">Entrar</v-btn>
+                    <v-btn color="primary" @click="loginAlumno">Entrar</v-btn>
                     <v-alert class="red accent-2" icon="warning" v-if="error" value="true">
                       <span v-for="err in errors" :key="err">{{ err }}<br></span>
                     </v-alert>
@@ -46,27 +46,7 @@
             <v-tabs-content id="tab-profesor">
               <v-card flat>
                 <v-card-text>
-                  <v-flex xs12>
-                    <v-text-field
-                      label="Identificador"
-                      v-model="id"
-                      hint="Ex. 2014630270"
-                      prepend-icon="account_circle"
-                    ></v-text-field>
-                    <v-text-field
-                      label="Contraseña"
-                      v-model="apassword"
-                      prepend-icon="vpn_key"
-                      :append-icon="e1 ? 'visibility_off' : 'visibility'"
-                      :append-icon-cb="passwordIcon"
-                      :type="e1 ? 'tex' : 'password'"
-                      counter
-                    ></v-text-field>
-                    <v-btn color="primary" @click="loginAdmin">Entrar</v-btn>
-                    <v-alert class="red accent-2" icon="warning" v-if="error" value="true">
-                      <span v-for="err in errors" :key="err">{{ err }}<br></span>
-                    </v-alert>
-                  </v-flex>
+                  
                 </v-card-text>
               </v-card>
             </v-tabs-content>
@@ -76,17 +56,16 @@
                   <v-flex xs12>
                     <v-text-field
                       label="Identificador"
-                      v-model="id"
-                      hint="Ex. 2014630270"
+                      v-model="id_admin"
                       prepend-icon="account_circle"
                     ></v-text-field>
                     <v-text-field
                       label="Contraseña"
-                      v-model="apassword"
+                      v-model="password_admin"
                       prepend-icon="vpn_key"
-                      :append-icon="e1 ? 'visibility_off' : 'visibility'"
-                      :append-icon-cb="passwordIcon"
-                      :type="e1 ? 'tex' : 'password'"
+                      :append-icon="vIconAdmin ? 'visibility_off' : 'visibility'"
+                      :append-icon-cb="() => vIconAdmin = !vIconAdmin"
+                      :type="vIconAdmin ? 'tex' : 'password'"
                       counter
                     ></v-text-field>
                     <v-btn color="primary" @click="loginAdmin">Entrar</v-btn>
@@ -107,7 +86,6 @@
 <script>
 import AlumnoService from '@/services/AlumnoService'
 import AdminService from '@/services/AdminService'
-// import AlumnoValidator from '@/validators/AlumnoValidator'
 import CitasService from '@/services/CitasService'
 
 export default {
@@ -115,10 +93,10 @@ export default {
   name: 'login',
   methods:
   {
-    async login () {
+    async loginAlumno () {
       const response = await AlumnoService.login({
         boleta: this.boleta,
-        password: this.password
+        password: this.password_alumno
       })
       const responseCita = await CitasService.show(this.boleta)
       if (response.data.status === 'ok') {
@@ -138,7 +116,7 @@ export default {
     async loginAdmin () {
       const response = await AdminService.login({
         id: this.id,
-        password: this.apassword
+        password: this.password_admin
       })
       if (response.data.status === 'ok') {
         this.$store.dispatch('setToken', response.data.token)
@@ -150,20 +128,18 @@ export default {
         this.error = true
         this.errors = response.data.errors
       }
-    },
-    passwordIcon () {
-      this.e1 = !this.e1
     }
   },
   data () {
     return {
       boleta: '',
-      password: '',
+      password_alumno: '',
       error: false,
       errors: [],
-      id: '',
-      apassword: '',
-      e1: false
+      id_admin: '',
+      password_admin: '',
+      vIconAlumno: false,
+      vIconAdmin: false
     }
   },
   mounted () {

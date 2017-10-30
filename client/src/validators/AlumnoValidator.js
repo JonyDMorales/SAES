@@ -21,11 +21,32 @@ export default {
     if (error) {
       return {
         status: 'error',
-        errors: error.details.map((err) => err.message.replace('password', 'Contraseña').replace('boleta', 'No. Boleta'))
+        errors: error.details.map((err) => err.message.replace('password', '').replace('boleta', '').replace('""', '').replace('\\', '').trim())
       }
     } else {
       return {
         status: 'ok'
+      }
+    }
+  },
+  email (email) {
+    let schema = {
+      email: Validator.string().email()
+    }
+    let messages = {
+      string: {
+        email: 'Formato no válido'
+      }
+    }
+    const { error } = Validator.validate(email, schema, { abortEarly: false, language: messages })
+    if (error) {
+      return {
+        error: true,
+        errors: error.details.map((err) => err.message.replace('email', '').replace('""', '').replace('\\', '').trim())
+      }
+    } else {
+      return {
+        error: false
       }
     }
   }

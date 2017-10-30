@@ -13,31 +13,43 @@ export default new Vuex.Store({
     token: null,
     alumno: null,
     admin: null,
-    isAlumnoLoggedIn: false,
+    profesor: null,
     userType: 0,
-    canReinscribir: false
+    canReinscribir: false,
+    isAlreadyInscrito: false
   },
   mutations: {
     setToken (state, token) {
       state.token = token
-      if (token) {
-        state.isAlumnoLoggedIn = true
-      } else {
-        state.isAlumnoLoggedIn = false
+      if (!token) {
         state.userType = 0
-        state.canReinscribir = false
       }
     },
     setAlumno (state, alumno) {
       state.alumno = alumno
-      state.userType = 1
+      if (!alumno) {
+        state.canReinscribir = false
+      } else {
+        state.userType = 1
+      }
     },
     setAdmin (state, admin) {
       state.admin = admin
-      state.userType = 2
+      if (admin) {
+        state.userType = 2
+      }
+    },
+    setProfesor (state, profesor) {
+      state.profesor = profesor
+      if (profesor) {
+        state.userType = 3
+      }
     },
     setCanReinscribir (state, canReinscribir) {
       state.canReinscribir = canReinscribir
+    },
+    setIsAlreadyInscrito (state, setIsAlreadyInscrito) {
+      state.setIsAlreadyInscrito = setIsAlreadyInscrito
     }
   },
   actions: {
@@ -50,8 +62,14 @@ export default new Vuex.Store({
     setAdmin ({commit}, admin) {
       commit('setAdmin', admin)
     },
+    setProfesor ({commit}, profesor) {
+      commit('setProfesor', profesor)
+    },
     setCanReinscribir ({commit}, canReinscribir) {
       commit('setCanReinscribir', canReinscribir)
+    },
+    setIsAlreadyInscrito ({commit}, isAlreadyInscrito) {
+      commit('setIsAlreadyInscrito', isAlreadyInscrito)
     }
   }
 

@@ -19,6 +19,8 @@ let kardexData = {
 	_id: 0
 }
 
+let forVa
+
 export let saveAlumno = (alumnoData: any) => {
 	let alumno = new Alumno(alumnoData);
 	return alumno.save();
@@ -51,6 +53,11 @@ export let deleteAlumnoByBoleta = (boleta: number) => {
 
 export let getAlumnoForLogin = (boleta: number, password: string) => {
 	let query = Alumno.findOne({}, visisible).and([{ boleta: boleta }, { password: password }]);
+	return query.exec();
+}
+
+export let checkEmail = (email: string) => {
+	let query = Alumno.findOne({email: email}, { boleta: 1, _id: 0 });
 	return query.exec();
 }
 

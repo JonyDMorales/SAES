@@ -14,7 +14,7 @@
       </v-flex>
       <v-flex xs2 offset-xs6>
         <v-btn color="primary" dark @click.stop="dialogInscribir = true" class="mt-3">Inscribir Alumno</v-btn>
-        <v-dialog v-model="dialogInscribir">
+        <v-dialog v-model="dialogInscribir" persistent max-width="500px">
           <v-card> 
             <v-card-title class="headline">
                 Inscribir Alumno
@@ -26,12 +26,15 @@
               ></v-text-field>
               <v-text-field
                 label="Correo"
+                :rules="[rules.email, rules.emailUnique]"
+                validate-on-blur
                 prepend-icon="email"
+                v-model="nEmail"
               ></v-text-field>
             </v-card-text>
             <v-card-actions>
-              <v-btn color="accent" flat @click.stop="dialog=false">Cerrar</v-btn>
-              <v-btn color="primary" flat>Guardar</v-btn>
+              <v-btn color="accent" flat @click.stop="dialogInscribir=false">Cerrar</v-btn>
+              <v-btn color="primary" flat @click="">Guardar</v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
@@ -114,7 +117,7 @@
                   v-model="alumno.password"
                   prepend-icon="vpn_key"
                   :append-icon="e1 ? 'visibility_off' : 'visibility'"
-                  :append-icon-cb="passwordIcon"
+                  :append-icon-cb="() => e1 = !e1"
                   :type="e1 ? 'tex' : 'password'"
                   counter
                   :disabled="!edit"
@@ -145,12 +148,12 @@
       </v-card>
     </v-dialog>
     <v-snackbar
-      timeout=6000
-      bottom=true
+      :timeout="snackbarTimeout"
+      bottom
       v-model="snackbar"
-      :color="color"
+      :color="snackbarColor"
     >
-      {{ notificationText }}
+      {{ snackbarText }}
       <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
     </v-snackbar>
   </v-container>
@@ -158,6 +161,7 @@
 
 <script>
 import AlumnoService from '@/services/AlumnoService'
+import AlumnoValidator from '@/validators/AlumnoValidator'
 
 export default {
 
@@ -167,11 +171,9 @@ export default {
     async getAlumnos () {
       const response = await AlumnoService.index()
       this.alumnos = response.data
-      console.log(JSON.stringify(this.alumnos, null, 2))
     },
     async seeDetails (boleta) {
       const response = await AlumnoService.show(boleta)
-      console.log(JSON.stringify(response.data, null, 2))
       this.alumno = response.data
       this.dialogDetails = true
     },
@@ -185,29 +187,18 @@ export default {
       }
       const response = await AlumnoService.update(nData)
       if (response.data.status === 'ok') {
-        for (var i = 0; i < this.alumnos.length; i++) {
-          // update main list for not make another request
-          if (this.alumnos[i].boleta === nData.boleta) {
-            this.alumnos[i].nombre = nData.nombre
-            this.alumnos[i].email = nData.email
-            this.alumnos[i].password = nData.password
-            break
-          }
-        }
+        this.getAlumnos() // refresh data
         this.dialogDetails = false
-        this.color = 'green lighten-1'
-        this.notificationText = 'Los cambios se realizaron con éxito'
+        this.snackbarColor = 'green lighten-1'
+        this.snackbarText = 'Los cambios se realizaron con éxito'
         this.snackbar = true
       } else {
         this.dialogDetails = false
-        this.color = 'red darken-3'
-        this.notificationText = 'Error al actualizar'
+        this.snackbarColor = 'red darken-3'
+        this.snackbarText = 'Error al actualizar'
         this.snackbar = true
       }
       this.edit = false
-    },
-    passwordIcon () {
-      this.e1 = !this.e1
     }
 
   },
@@ -219,11 +210,13 @@ export default {
       alumnos: [],
       alumno: {},
       edit: false,
+      nEmail: '',
       e1: false,
       pagination: { rowsPerPage: 10 },
       snackbar: false,
-      notificationText: '',
-      color: 'primary',
+      snackbarText: '',
+      snackbarTimeout: 6000,
+      snackbarColor: 'primary',
       alumnoHeaders: [
         {
           text: 'No. Boleta',
@@ -245,7 +238,25 @@ export default {
           value: 'detalles',
           align: 'left'
         }
-      ]
+      ],
+      rules: {
+        email: (email) => {
+          let validation = AlumnoValidator.email({ email: email })
+          // const response = await AlumnoService.checkEmail(email)
+          // console.log(response.data.isTaken)
+          return !validation.error || validation.errors[0]
+        },
+        emailUnique: (email) => {
+          var isUnique = true
+          for (var i = 0; i < this.alumnos.length; i++) {
+            if (this.alumnos[i].email === email) {
+              isUnique = false
+              break
+            }
+          }
+          return isUnique || 'La dirección de correo ya ha sido utilizada'
+        }
+      }
     }
   },
   mounted () {

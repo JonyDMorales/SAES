@@ -78,7 +78,7 @@
             <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
             <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
             <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-            <td>{{ props.item.lugares_disponibles }}</td>
+            <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
             <td>
               <v-btn dark color="red darken-1" class="mt-3" small fab @click="removeFromSelected(props.item.id)">
                 <v-icon>remove</v-icon>
@@ -105,7 +105,7 @@
           <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-          <td>{{ props.item.lugares_disponibles }}</td>
+          <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
           <td v-if="makeSchedule">
             <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
               <v-icon>add</v-icon>
@@ -129,7 +129,7 @@
           <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-          <td>{{ props.item.lugares_disponibles }}</td>
+          <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos}}</td>
           <td v-if="makeSchedule">
             <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
               <v-icon>add</v-icon>
@@ -153,7 +153,7 @@
           <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-          <td>{{ props.item.lugares_disponibles }}</td>
+          <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
           <td v-if="makeSchedule">
             <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
               <v-icon>add</v-icon>
@@ -194,7 +194,7 @@
                 <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
                 <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
                 <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-                <td>{{ props.item.lugares_disponibles }}</td>
+                <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
               </template>
               </v-data-table>
               <v-tooltip top>
@@ -208,8 +208,8 @@
         </v-card-text>
       </v-card>
       <v-snackbar
-        timeout=6000
-        right=true
+        :timeout="snackbarTimeout"
+        right
         absolute
         v-model="snackbar"
         :color="snbColor"
@@ -244,6 +244,7 @@
 import HorariosService from '@/services/HorariosService'
 import AlumnoService from '@/services/AlumnoService'
 import Bucket from 'buckets-js'
+import Pusher from 'pusher-js'
 
 export default {
 
@@ -354,6 +355,34 @@ export default {
       this.snackbar = true
       this.nextBookmarSchedule = []
       this.nameBookmarkSchedule = ''
+    },
+    startPusher () {
+      Pusher.logToConsole = true
+      var pusher = new Pusher('91d6af0b1edccedbb84c', {
+        cluster: 'us2',
+        encrypted: true
+      })
+      var channel = pusher.subscribe('inscripcion-channel')
+      channel.bind('onNewInscription', (data) => {
+        data.forEach((occupability) => {
+          this.updateScheduleOccupability(occupability)
+        })
+      })
+    },
+    updateScheduleOccupability (occupability) {
+      var lower = 0
+      var upper = this.horarios.length - 1
+      var middle
+      while (lower <= upper) {
+        middle = Math.floor((lower + upper) / 2)
+        if (occupability.id === this.horarios[middle].id) {
+          this.horarios[middle].lugares_disponibles = occupability.lugares
+          this.horarios[middle].alumnos_inscritos = occupability.inscritos
+          break
+        }
+        if (occupability.id > this.horarios[middle].id) lower = middle + 1
+        else upper = middle - 1
+      }
     }
   },
   data () {
@@ -367,6 +396,7 @@ export default {
       isByGroup: true,
       isByUAs: false,
       isGlobal: false,
+      snackbarTimeout: 6000,
       currentSchedule: 'Grupo: 1CM1',
       makeSchedule: false,
       selectedClasses: [],
@@ -440,6 +470,7 @@ export default {
   },
   mounted () {
     this.getHorarios()
+    this.startPusher()
   },
   watch: {
     groupSelected () {

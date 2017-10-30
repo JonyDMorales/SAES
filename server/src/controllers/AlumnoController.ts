@@ -8,6 +8,19 @@ import * as GetBookmarks from "../usecases/GetBookmarks";
 
 dotenv.config({ path: ".env" });
 
+export let emailExists = async (req: Request, res: Response) => {
+	try {
+		let result = await AlumnoDataSource.checkEmail(req.params.email);
+		if(result) {
+			res.json({isTaken: true}).end()
+		} else {
+			res.json({isTaken: false}).end()
+		}
+	} catch(e) {
+		res.json({ status: "error" }).end()
+	}
+};
+
 export let store = async (req: Request, res: Response) => {
 	try {
 		let alumno = await AlumnoDataSource.saveAlumno(req.body);

@@ -24,6 +24,9 @@ export default {
   },
   bookmarks (boleta) {
     return Api().get('alumno/' + boleta + '/horario')
+  },
+  checkEmail (email) {
+    return Api().get('alumno/validation/email/' + email)
   }
   /*
   destroy (boleta) {

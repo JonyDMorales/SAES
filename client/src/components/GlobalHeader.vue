@@ -4,7 +4,7 @@
     <v-spacer></v-spacer>
     <v-toolbar-side-icon class="hidden-md-and-up"></v-toolbar-side-icon>
     <!-- Alumno -->
-    <v-toolbar-items class="hidden-sm-and-down" v-if="$store.state.isAlumnoLoggedIn && $store.state.userType === 1">
+    <v-toolbar-items class="hidden-sm-and-down" v-if="$store.state.userType === 1">
       <v-menu offset-y>
         <v-btn color="primary" flat class="white--text" slot="activator">Alumno</v-btn>
         <v-list>
@@ -52,7 +52,7 @@
           </v-list-tile>
         </v-list>
       </v-menu>
-      <v-btn flat @click="logout()">
+      <v-btn flat @click="logoutAlumno()">
         Salir
         <v-icon right>exit_to_app</v-icon>
       </v-btn>
@@ -102,7 +102,7 @@ export default {
 
   name: 'globalHeader',
   methods: {
-    logout () {
+    logoutAlumno () {
       this.$store.dispatch('setToken', null)
       this.$store.dispatch('setAlumno', null)
       this.$router.push({

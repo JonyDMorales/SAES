@@ -13,16 +13,21 @@ let visible = {
 }
 
 export let getAllHorarios = () => {
-	let query = HorarioClase.find({}, visible);
+	let query = HorarioClase.find({}, visible).sort({ id: 1 });
  	return query.exec();
 }
 
 export let getHorariosSorted = () => {
-	let query = HorarioClase.find({}, visible).sort({ grupo: 1 });
+	let query = HorarioClase.find({}, visible).sort({ id: 1 });
 	return query.exec();
 }
 
 export let getHorarioById = (id: number) => {
 	let query = HorarioClase.findOne({ id: id }, visible);
+ 	return query.exec();
+}
+
+export let updateOccupability = (id: number) => {
+	let query = HorarioClase.findOneAndUpdate({ id: id }, { $inc: { alumnos_inscritos: 1 }});
  	return query.exec();
 }
