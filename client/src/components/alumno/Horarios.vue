@@ -78,7 +78,7 @@
             <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
             <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
             <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-            <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
+            <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
             <td>
               <v-btn dark color="red darken-1" class="mt-3" small fab @click="removeFromSelected(props.item.id)">
                 <v-icon>remove</v-icon>
@@ -105,7 +105,7 @@
           <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-          <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
+          <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
           <td v-if="makeSchedule">
             <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
               <v-icon>add</v-icon>
@@ -129,7 +129,7 @@
           <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-          <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos}}</td>
+          <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos}}</td>
           <td v-if="makeSchedule">
             <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
               <v-icon>add</v-icon>
@@ -153,7 +153,7 @@
           <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-          <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
+          <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
           <td v-if="makeSchedule">
             <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
               <v-icon>add</v-icon>
@@ -194,7 +194,7 @@
                 <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
                 <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
                 <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
-                <td>{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
+                <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
               </template>
               </v-data-table>
               <v-tooltip top>
@@ -383,6 +383,11 @@ export default {
         if (occupability.id > this.horarios[middle].id) lower = middle + 1
         else upper = middle - 1
       }
+    },
+    occupabilityColor (lugares) {
+      if (lugares < 10) return 'red lighten-3'
+      if (lugares < 20) return 'orange lighten-3'
+      else return 'green lighten-4'
     }
   },
   data () {
@@ -420,7 +425,7 @@ export default {
         { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
         { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
         { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
-        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' }
+        { text: 'Lugares', value: 'alumnos_inscritos', align: 'left' }
       ],
       uaHeaders: [
         { text: 'Grupo', value: 'grupo', align: 'left' },
@@ -430,7 +435,7 @@ export default {
         { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
         { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
         { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
-        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' }
+        { text: 'Lugares', value: 'alumnos_inscritos', align: 'left' }
       ],
       selectedClassesHeaders: [
         { text: 'Grupo', value: 'grupo', align: 'left' },
@@ -441,7 +446,7 @@ export default {
         { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
         { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
         { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
-        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' },
+        { text: 'Lugares', value: 'alumnos_inscritos', align: 'left' },
         { text: 'Quitar', value: 'quitar', align: 'left', sortable: false }
       ],
       gloabalHeader: [
@@ -453,7 +458,7 @@ export default {
         { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
         { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
         { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
-        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' }
+        { text: 'Lugares', value: 'alumnos_inscritos', align: 'left' }
       ],
       scheduleHeader: [
         { text: 'Grupo', value: 'grupo', align: 'left' },
@@ -464,7 +469,7 @@ export default {
         { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
         { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
         { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
-        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' }
+        { text: 'Lugares', value: 'alumnos_inscritos', align: 'left' }
       ]
     }
   },
