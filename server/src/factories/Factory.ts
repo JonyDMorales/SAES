@@ -14865,25 +14865,28 @@ export let alumnoWithTrayectory = (n: number) => {
 		let email = Faker.internet.email().toLowerCase();
 		let name = Faker.name.firstName();
 		let _name = name.toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace(' ','')
-		var data: any = {
+    let year = Faker.random.number({min: 10, max: 20})
+    let id = Faker.random.number({min: 0, max: 9999})
+    var srtId = String(id)
+    let len = 4 - srtId.length
+    var aux = ''
+    while (len--) {
+      aux += '0';
+    }
+    var data: any = {
 			nombre: name + ' ' + Faker.name.lastName() + ' ' + Faker.name.lastName(),
-			boleta: Faker.random.number({min: 2000000000, max: 2010000000}),
+			boleta: parseInt('20' + year + '63' + aux + srtId),
 			password: _name,
 			email: _name + String(Faker.random.number({min: 100, max: 999})) + email.substring(email.indexOf('@'), email.length),
-
-			promedio_general: 0,
-			numero_unidades_reprobadas: 0,
       
-      unidades_cursadas: [],
-      unidades_aprobadas: [],
-      unidades_no_aprobadas: []
+      unidades_cursadas: []
 		}
 
 
     let unidades_cursadas = Faker.random.number({min: 6, max: 44})
     let nperiodos = Math.ceil(unidades_cursadas / 6)
     var periods = []
-    var initPeriod = String(Faker.random.number({min: 10, max: 20})) + '/' + String(Faker.random.number({min: 1, max: 2}));
+    var initPeriod = year + '/' + String(Faker.random.number({min: 1, max: 2}));
     
     periods.push(initPeriod)
     for (var i = 1; i < nperiodos; i++) {
@@ -14898,54 +14901,133 @@ export let alumnoWithTrayectory = (n: number) => {
       } else {
         periodo = periods[Math.floor(i / 6)]
       }
-      data.unidades_cursadas.push({
+      data.unidades_cursadas.push({ // CURSE (1ER PERIODO)
         id_unidad_aprendizaje: i,
         unidad_aprendizaje: getUAName(i),
         calificacion: calificacion,
-        periodo: periodo
+        periodo: periodo,
+        forma_evaluacion: (Faker.random.boolean() ? 'ORD' : 'EXT')
       })
       
       if(calificacion < 6) {
-        if(Faker.random.boolean()) { // recurse
-          data.unidades_aprobadas.push({
+        let calificacionETS = Faker.random.number({min: 0, max: 10})
+        if (calificacionETS > 5) {
+          // ETS (1ER PERIODO)
+          data.unidades_cursadas.push({
             id_unidad_aprendizaje: i,
             unidad_aprendizaje: getUAName(i),
-            calificacion: Faker.random.number({min: 6, max: 10}),
-            periodo: getNextPeriod(periodo),
-            forma_evaluacion: Faker.random.boolean() ? 'REC' : 'ETS'
+            calificacion: calificacionETS,
+            periodo: periodo,
+            forma_evaluacion: 'ETS'
           })
-        } else {
-          data.unidades_no_aprobadas.push({
+        } else { 
+          // ETS (1ER PERIODO)
+          data.unidades_cursadas.push({
             id_unidad_aprendizaje: i,
             unidad_aprendizaje: getUAName(i),
-            calificacion: calificacion,
-            periodo: periodo
+            calificacion: calificacionETS,
+            periodo: periodo,
+            forma_evaluacion: 'ETS'
           })
-          no_aprobadas++;
+          // 1ER RECURSE (2DO PERIODO)
+          let calificacionREC = Faker.random.number({min: 0, max: 10})
+          if (calificacionREC > 5) {
+            data.unidades_cursadas.push({
+              id_unidad_aprendizaje: i,
+              unidad_aprendizaje: getUAName(i),
+              calificacion: calificacionREC,
+              periodo: getNextPeriod(periodo),
+              forma_evaluacion: 'REC-' + (Faker.random.boolean() ? 'ORD' : 'EXT')
+            })
+          } else {
+            data.unidades_cursadas.push({
+              id_unidad_aprendizaje: i,
+              unidad_aprendizaje: getUAName(i),
+              calificacion: calificacionREC,
+              periodo: getNextPeriod(periodo),
+              forma_evaluacion: 'REC-' + (Faker.random.boolean() ? 'ORD' : 'EXT')
+            })
+
+            let calificacionETS2 = Faker.random.number({min: 0, max: 10})
+            if (calificacionETS2 > 5) {
+              // ETS2 (2DO PERIODO)
+              data.unidades_cursadas.push({
+                id_unidad_aprendizaje: i,
+                unidad_aprendizaje: getUAName(i),
+                calificacion: calificacionETS2,
+                periodo: getNextPeriod(periodo),
+                forma_evaluacion: 'ETS'
+              })
+            } else { 
+              // ETS2 (2DO PERIODO)
+              data.unidades_cursadas.push({
+                id_unidad_aprendizaje: i,
+                unidad_aprendizaje: getUAName(i),
+                calificacion: calificacionETS2,
+                periodo: getNextPeriod(periodo),
+                forma_evaluacion: 'ETS'
+              })
+              
+              // SOLO ETS POR UN PERIODO
+              let calificacionETS3 = Faker.random.number({min: 0, max: 10})
+              if (calificacionETS3 > 5) {
+                // ETS3 (3ER PERIODO)
+                data.unidades_cursadas.push({
+                  id_unidad_aprendizaje: i,
+                  unidad_aprendizaje: getUAName(i),
+                  calificacion: calificacionETS3,
+                  periodo: getNextPeriod(getNextPeriod(periodo)),
+                  forma_evaluacion: 'ETS'
+                })
+              } else { 
+                // ETS3 (3ER PERIODO)
+                data.unidades_cursadas.push({
+                  id_unidad_aprendizaje: i,
+                  unidad_aprendizaje: getUAName(i),
+                  calificacion: calificacionETS3,
+                  periodo: getNextPeriod(getNextPeriod(periodo)),
+                  forma_evaluacion: 'ETS'
+                })
+
+                // 1ER DICTAMEN - SOLO ETS 4TO PERIODO
+                let calificacionETS4 = Faker.random.number({min: 0, max: 10})
+                if (calificacionETS4 > 5) { // ETS4 (4TO PERIODO)
+                  data.unidades_cursadas.push({
+                    id_unidad_aprendizaje: i,
+                    unidad_aprendizaje: getUAName(i),
+                    calificacion: calificacionETS4,
+                    periodo: getNextPeriod(getNextPeriod(getNextPeriod(periodo))),
+                    forma_evaluacion: 'ETS-DIC'
+                  })
+                } else {
+                  data.unidades_cursadas.push({
+                    id_unidad_aprendizaje: i,
+                    unidad_aprendizaje: getUAName(i),
+                    calificacion: calificacionETS4,
+                    periodo: getNextPeriod(getNextPeriod(getNextPeriod(periodo))),
+                    forma_evaluacion: 'ETS-DIC'
+                  })
+                  // 1ER DICTAMEN INCUMPLIDO
+                }
+              }
+            }
+          }
         }
-      } else {
-        data.unidades_aprobadas.push({
-          id_unidad_aprendizaje: i,
-          unidad_aprendizaje: getUAName(i),
-          calificacion: calificacion,
-          periodo: periodo,
-          forma_evaluacion: Faker.random.boolean() ? 'ORD' : 'EXT'
-        })
       }
     }
     
-    data.promedio_general = ((data.unidades_aprobadas.reduce((total: number, idx: any) => total + idx.calificacion, 0))
+    /* data.promedio_general = ((data.unidades_aprobadas.reduce((total: number, idx: any) => total + idx.calificacion, 0))
     + (data.unidades_no_aprobadas.reduce((total: number, idx: any) => total + idx.calificacion, 0)))
-    / (data.unidades_aprobadas.length + data.unidades_no_aprobadas.length)
+    / (data.unidades_aprobadas.length + data.unidades_no_aprobadas.length) */
 
-    data.numero_unidades_reprobadas = no_aprobadas;
+    // data.numero_unidades_reprobadas = no_aprobadas;
 
-    //console.log(JSON.stringify(data,null,2))
+    // console.log(JSON.stringify(data, null, 2))
 		let alumno = new Alumno(data);
-
+    
 	  alumno.save()
 	  .then(() => console.log("Alumno Factory => Data => Success"))
-	  .catch((err) => console.log(err));
+    .catch((err) => console.log(err));
 	}
 }
 

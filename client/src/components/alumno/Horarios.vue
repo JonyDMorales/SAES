@@ -357,7 +357,7 @@ export default {
       this.nameBookmarkSchedule = ''
     },
     startPusher () {
-      Pusher.logToConsole = true
+      // Pusher.logToConsole = true
       var pusher = new Pusher('91d6af0b1edccedbb84c', {
         cluster: 'us2',
         encrypted: true
