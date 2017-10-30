@@ -11,7 +11,9 @@ const alumnoSchema = new mongoose.Schema({
 
 	unidades_cursadas: [],
 
-	horarios_guardados: []
+	horarios_guardados: [],
+
+	resetPasswordCode: Number
 
 }, { timestamps: false });
 

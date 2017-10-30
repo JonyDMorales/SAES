@@ -215,8 +215,8 @@
         :color="snbColor"
       >
       {{ snbText }}
-      <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
-    </v-snackbar>
+        <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
+      </v-snackbar>
     </v-dialog>
     <v-dialog v-model="dialogBookmark">
       <v-card> 

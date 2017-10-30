@@ -27,6 +27,12 @@ export default {
   },
   checkEmail (email) {
     return Api().get('alumno/validation/email/' + email)
+  },
+  getCode (boleta) {
+    return Api().get('alumno/' + boleta + '/sendEmailPasswordReset')
+  },
+  checkCode (boleta, code) {
+    return Api().post('alumno/' + boleta + '/checkCode', code)
   }
   /*
   destroy (boleta) {

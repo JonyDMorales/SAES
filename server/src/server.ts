@@ -49,6 +49,8 @@ app.get("/alumno/:boleta/kardex", AlumnoController.kardex);
 app.get("/alumno/:boleta/horario", AlumnoController.bookmarks)
 app.post("/alumno/:boleta/horario", AlumnoController.storeBookmark)
 app.get("/alumno/validation/email/:email", AlumnoController.emailExists)
+app.get("/alumno/:boleta/sendEmailPasswordReset", AlumnoController.sendEmailPasswordReset)
+app.post("/alumno/:boleta/checkCode", AlumnoController.checkCode)
 
 app.get("/analista", AnalistaController.index);
 app.post("/analista", AnalistaController.store);

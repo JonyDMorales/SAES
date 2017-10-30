@@ -71,7 +71,17 @@ export let getKardexData = (boleta: number) => {
 	return query.exec();
 }
 
+export let getCode = (boleta: number) => {
+	let query = Alumno.findOne({ boleta: boleta }, {_id: 0, resetPasswordCode: 1});
+	return query.exec();
+}
+
 export let modifyAlumno = (boleta: number, newAlumnoData: any) => {
 	let query = Alumno.update({boleta: boleta}, newAlumnoData);
+	return query.exec();
+}
+
+export let setPasswordCode = (boleta: number, code: number) => {
+	let query = Alumno.findOneAndUpdate({boleta: boleta}, {resetPasswordCode: code});
 	return query.exec();
 }
