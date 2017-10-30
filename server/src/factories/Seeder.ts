@@ -12,7 +12,7 @@ mongoose.connect(process.env.MONGO_URI, { useMongoClient: true })
 
 function run() 
 {
-	// Factory.alumnoWithTrayectory(10);
+	Factory.alumnoWithTrayectory(10);
 	// Factory.unidadesAprendizajeEscom();
 	// Factory.horariosClase();
 	// Factory.profesoresESCOM();

@@ -14894,6 +14894,7 @@ export let alumnoWithTrayectory = (n: number) => {
     }
     var no_aprobadas = 0;
     for (var i = 1; i <= unidades_cursadas; i++) {
+      if (i === 39 || i === 40 || i === 30 || i === 28) continue;
       let calificacion = Faker.random.number({min: 0, max: 10})
       var periodo;
       if(i%6 ===  0) {

@@ -7,44 +7,83 @@
     </v-layout>
     <v-card>
       <v-layout row>
-        <v-flex xs2>
-          <v-chip label outline color="red">Promedio: {{ promedio.toFixed(2) }}</v-chip>
+        <v-flex xs7>
+          <v-card>
+            <v-toolbar color="primary" dark>
+              <v-toolbar-title>Unidaded Cursadas</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <v-list>
+              <v-list-group v-for="item in kardex" v-bind:key="item.id">
+                <v-list-tile slot="item" @click="">
+                  <v-list-tile-action>
+                    <v-icon :color="item.history[item.history.length - 1].calificacion < 6 ? 'red accent-4' : 'green accent-4'">class</v-icon>
+                  </v-list-tile-action>
+                  <v-list-tile-content>
+                    <v-list-tile-title>{{ item.id }}</v-list-tile-title>
+                  </v-list-tile-content>
+                  <v-list-tile-action>
+                    <v-icon>keyboard_arrow_down</v-icon>
+                  </v-list-tile-action>
+                </v-list-tile>
+                <v-list-tile v-for="subItem in item.history" v-bind:key="subItem.id_unidad_aprendizaje" @click="">
+                  <v-list-tile-content>
+                    <v-list-tile-sub-title>{{ subItem.periodo + ' - ' + subItem.unidad_aprendizaje}}</v-list-tile-sub-title>
+                    <v-list-tile-sub-title>{{ subItem.forma_evaluacion + ' - ' + subItem.calificacion }}</v-list-tile-sub-title>
+                  </v-list-tile-content>
+                </v-list-tile>
+              </v-list-group>
+            </v-list>
+          </v-card>
         </v-flex>
-        <v-flex xs1 offset-xs8>
-          <v-chip label outline :color="uasReprobadas.length > 0 ? 'red' : 'green'">Estado: {{ uasReprobadas.length > 0 ? 'Irregular' : 'Regular' }}</v-chip>
-        </v-flex>
-      </v-layout>
-      <v-layout row>
-        <v-flex xs6>
-          <v-subheader>Unidades de Aprendizaje Aprobadas</v-subheader>
-          <v-data-table
-          v-bind:headers="uasAprobadasHeader"
-          :items="uasAprobadas"
-          hide-actions
-          class="elevation-2"
-          >
-          <template slot="items" slot-scope="props">
-            <td>{{ props.item.unidad_aprendizaje }}</td>
-            <td>{{ props.item.periodo }}</td>
-            <td>{{ props.item.forma_evaluacion }}</td>
-            <td class="green lighten-4">{{ props.item.calificacion }}</td>
-          </template>
-          </v-data-table>
-        </v-flex>
-        <v-flex xs6>
-          <v-subheader>Unidades de Aprendizaje NO Aprobadas</v-subheader>
-          <v-data-table
-          v-bind:headers="uasReprobadasHeader"
-          :items="uasReprobadas"
-          hide-actions
-          class="elevation-2"
-          >
-          <template slot="items" slot-scope="props">
-            <td>{{ props.item.unidad_aprendizaje }}</td>
-            <td>{{ props.item.periodo }}</td>
-            <td class="red lighten-4">{{ props.item.calificacion }}</td>
-          </template>
-          </v-data-table>
+        <v-flex xs4 offset-xs1>
+          <v-card>
+            <v-toolbar color="primary" dark>
+              <v-toolbar-title>Información</v-toolbar-title>
+              <v-spacer></v-spacer>
+            </v-toolbar>
+            <v-list>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-sub-title>
+                    Promedio: {{ promedio }}
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-divider></v-divider>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-sub-title>
+                    Estado: {{ numReprobadas > 0 ? 'Irregular' : 'Regular'}}
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-divider></v-divider>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-sub-title>
+                    No. Unidades de Aprendizaje Reprobadas: {{ numReprobadas }}
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-divider></v-divider>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-sub-title>
+                    Créditos Obtenidos: 123.45
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-divider></v-divider>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-sub-title>
+                    Créditos Restantes: 122.67
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+            </v-list>
+          </v-card>
         </v-flex>
       </v-layout>
     </v-card>
@@ -53,6 +92,7 @@
 
 <script>
 import AlumnoService from '@/services/AlumnoService'
+import Bucket from 'buckets-js'
 
 export default {
 
@@ -62,38 +102,49 @@ export default {
     async getKardexData () {
       const response = await AlumnoService.kardex(this.$store.state.alumno.boleta)
       this.uasCursadas = response.data.unidades_cursadas
-      this.uasAprobadas = response.data.unidades_aprobadas
-      this.uasReprobadas = response.data.unidades_no_aprobadas
-      this.promedio = response.data.promedio_general
       this.isReady = true
-      // console.log(response.data)
     }
 
   },
   data () {
     return {
       isReady: false,
-      uasCursadas: [],
-      uasAprobadas: [],
-      uasReprobadas: [],
-      promedio: 0.0,
-      uasAprobadasHeader: [
-        { text: 'Unidad de Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
-        { text: 'Periodo', value: 'periodo', align: 'left' },
-        { text: 'Forma Evaluación', value: 'forma_evaluacion', align: 'left' },
-        {text: 'Calificación', value: 'calificacion', align: 'left'}
-      ],
-      uasReprobadasHeader: [
-        { text: 'Unidad de Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
-        { text: 'Periodo', value: 'periodo', align: 'left' },
-        {text: 'Calificación', value: 'calificacion', align: 'left'}
-      ]
+      uasCursadas: []
     }
   },
   mounted () {
     this.getKardexData()
+  },
+  computed: {
+    kardex: function () {
+      var items = new Bucket.Dictionary()
+      this.uasCursadas.forEach((ua) => {
+        if (items.get(ua.unidad_aprendizaje)) {
+          items.get(ua.unidad_aprendizaje).push(ua)
+        } else {
+          items.set(ua.unidad_aprendizaje, [ua])
+        }
+      })
+      var result = []
+      items.keys().forEach((item) => {
+        result.push({
+          id: item,
+          history: items.get(item).sort((a, b) => {
+            let periodA = a.periodo.split('/')
+            let periodB = b.periodo.split('/')
+            return (periodA[0] - periodB[0])
+          })
+        })
+      })
+      return result
+    },
+    promedio: function () {
+      return (this.kardex.reduce((sum, ua) => sum + ua.history[ua.history.length - 1].calificacion, 0) / this.kardex.length).toFixed(2)
+    },
+    numReprobadas: function () {
+      return this.kardex.filter((ua) => ua.history[ua.history.length - 1].calificacion < 6).length
+    }
   }
-
 }
 
 </script>

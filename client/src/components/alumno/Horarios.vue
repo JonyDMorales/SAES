@@ -385,8 +385,8 @@ export default {
       }
     },
     occupabilityColor (lugares) {
-      if (lugares < 10) return 'red lighten-3'
-      if (lugares < 20) return 'orange lighten-3'
+      if (lugares < 10) return 'red lighten-4'
+      if (lugares < 20) return 'orange lighten-4'
       else return 'green lighten-4'
     }
   },
