@@ -14865,7 +14865,7 @@ export let alumnoWithTrayectory = (n: number) => {
 		let email = Faker.internet.email().toLowerCase();
 		let name = Faker.name.firstName();
 		let _name = name.toLowerCase().replace('á','a').replace('é','e').replace('í','i').replace('ó','o').replace('ú','u').replace(' ','')
-    let year = Faker.random.number({min: 10, max: 20})
+    let year = Faker.random.number({min: 10, max: 15})
     let id = Faker.random.number({min: 0, max: 9999})
     var srtId = String(id)
     let len = 4 - srtId.length
@@ -14893,6 +14893,8 @@ export let alumnoWithTrayectory = (n: number) => {
       periods.push(getNextPeriod(periods[i-1]))
     }
     var no_aprobadas = 0;
+    var dictamen = false;
+    var dictamenIncumplido = false;
     for (var i = 1; i <= unidades_cursadas; i++) {
       if (i === 39 || i === 40 || i === 30 || i === 28) continue;
       let calificacion = Faker.random.number({min: 0, max: 10})
@@ -14907,7 +14909,7 @@ export let alumnoWithTrayectory = (n: number) => {
         unidad_aprendizaje: getUAName(i),
         calificacion: calificacion,
         periodo: periodo,
-        forma_evaluacion: (Faker.random.boolean() ? 'ORD' : 'EXT')
+        forma_evaluacion: (Faker.random.boolean() ? 'Ordinario' : 'Extraordinario')
       })
       
       if(calificacion < 6) {
@@ -14938,7 +14940,7 @@ export let alumnoWithTrayectory = (n: number) => {
               unidad_aprendizaje: getUAName(i),
               calificacion: calificacionREC,
               periodo: getNextPeriod(periodo),
-              forma_evaluacion: 'REC-' + (Faker.random.boolean() ? 'ORD' : 'EXT')
+              forma_evaluacion: 'Recurse-' + (Faker.random.boolean() ? 'Ordinario' : 'Extraordinario')
             })
           } else {
             data.unidades_cursadas.push({
@@ -14946,7 +14948,7 @@ export let alumnoWithTrayectory = (n: number) => {
               unidad_aprendizaje: getUAName(i),
               calificacion: calificacionREC,
               periodo: getNextPeriod(periodo),
-              forma_evaluacion: 'REC-' + (Faker.random.boolean() ? 'ORD' : 'EXT')
+              forma_evaluacion: 'Recurse-' + (Faker.random.boolean() ? 'Ordinario' : 'Extraordinario')
             })
 
             let calificacionETS2 = Faker.random.number({min: 0, max: 10})
@@ -14989,7 +14991,7 @@ export let alumnoWithTrayectory = (n: number) => {
                   periodo: getNextPeriod(getNextPeriod(periodo)),
                   forma_evaluacion: 'ETS'
                 })
-
+                dictamen = true;
                 // 1ER DICTAMEN - SOLO ETS 4TO PERIODO
                 let calificacionETS4 = Faker.random.number({min: 0, max: 10})
                 if (calificacionETS4 > 5) { // ETS4 (4TO PERIODO)
@@ -14998,7 +15000,7 @@ export let alumnoWithTrayectory = (n: number) => {
                     unidad_aprendizaje: getUAName(i),
                     calificacion: calificacionETS4,
                     periodo: getNextPeriod(getNextPeriod(getNextPeriod(periodo))),
-                    forma_evaluacion: 'ETS-DIC'
+                    forma_evaluacion: 'ETS-Dictamen'
                   })
                 } else {
                   data.unidades_cursadas.push({
@@ -15006,22 +15008,19 @@ export let alumnoWithTrayectory = (n: number) => {
                     unidad_aprendizaje: getUAName(i),
                     calificacion: calificacionETS4,
                     periodo: getNextPeriod(getNextPeriod(getNextPeriod(periodo))),
-                    forma_evaluacion: 'ETS-DIC'
+                    forma_evaluacion: 'ETS-Dictamen'
                   })
                   // 1ER DICTAMEN INCUMPLIDO
+                  dictamenIncumplido = true;
                 }
               }
             }
           }
         }
       }
+      // if(dictamen && i > 5) break;
+      if(dictamenIncumplido && i > 5) break;
     }
-    
-    /* data.promedio_general = ((data.unidades_aprobadas.reduce((total: number, idx: any) => total + idx.calificacion, 0))
-    + (data.unidades_no_aprobadas.reduce((total: number, idx: any) => total + idx.calificacion, 0)))
-    / (data.unidades_aprobadas.length + data.unidades_no_aprobadas.length) */
-
-    // data.numero_unidades_reprobadas = no_aprobadas;
 
     // console.log(JSON.stringify(data, null, 2))
 		let alumno = new Alumno(data);

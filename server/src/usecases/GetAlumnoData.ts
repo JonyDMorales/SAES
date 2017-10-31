@@ -49,6 +49,7 @@ export let execute = async (boleta: number) => {
             error: false,
             nombre: alumno.nombre,
             email: alumno.email,
+            password: alumno.password,
             boleta: alumno.boleta,
             creditos_obtenidos: credits,
             periodos_cursados: periods.toArray().sort((a: string , b: string) => {

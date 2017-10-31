@@ -35,6 +35,14 @@
             <v-list-tile>
               <v-list-tile-content>
                 <v-list-tile-sub-title>
+                  Email: {{ email }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
                   Carrera: {{ carrera }}
                 </v-list-tile-sub-title>
               </v-list-tile-content>
@@ -121,6 +129,7 @@ export default {
       this.creditos_totales = response.data.creditos_totales
       this.periodos_cursados = response.data.periodos_cursados
       this.periodos = response.data.periodos
+      this.email = response.data.email
       this.carrera = response.data.carrera
       this.isReady = true
     }
@@ -138,6 +147,7 @@ export default {
       periodos_cursados: [],
       periodos: 0,
       boleta: 0,
+      email: '',
       nombre: '',
       carrera: ''
     }

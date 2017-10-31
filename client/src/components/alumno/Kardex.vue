@@ -5,104 +5,38 @@
          <v-progress-linear v-bind:indeterminate="true"></v-progress-linear>
       </v-flex>
     </v-layout>
-    <v-card>
-      <v-layout row>
-        <v-flex xs7>
-          <v-card>
-            <v-toolbar color="primary" dark>
-              <v-toolbar-title>Unidaded Cursadas</v-toolbar-title>
-              <v-spacer></v-spacer>
-            </v-toolbar>
-            <v-list>
-              <v-list-group v-for="item in kardex" v-bind:key="item.id">
-                <v-list-tile slot="item" @click="">
-                  <v-list-tile-action>
-                    <v-icon :color="item.history[item.history.length - 1].calificacion < 6 ? 'red accent-4' : 'green accent-4'">class</v-icon>
-                  </v-list-tile-action>
-                  <v-list-tile-content>
-                    <v-list-tile-title>{{ item.id }}</v-list-tile-title>
-                  </v-list-tile-content>
-                  <v-list-tile-action>
-                    <v-icon>keyboard_arrow_down</v-icon>
-                  </v-list-tile-action>
-                </v-list-tile>
-                <v-list-tile v-for="subItem in item.history" v-bind:key="subItem.id_unidad_aprendizaje" @click="">
-                  <v-list-tile-content>
-                    <v-list-tile-sub-title>{{ subItem.periodo + ' - ' + subItem.unidad_aprendizaje}}</v-list-tile-sub-title>
-                    <v-list-tile-sub-title>{{ subItem.forma_evaluacion + ' - ' + subItem.calificacion }}</v-list-tile-sub-title>
-                  </v-list-tile-content>
-                </v-list-tile>
-              </v-list-group>
-            </v-list>
-          </v-card>
-        </v-flex>
-        <v-flex xs4 offset-xs1>
-          <v-card>
-            <v-toolbar color="primary" dark>
-              <v-toolbar-title>Información</v-toolbar-title>
-              <v-spacer></v-spacer>
-            </v-toolbar>
-            <v-list>
-              <v-list-tile>
+    <v-layout row>
+      <v-flex xs8 offset-xs2>
+        <v-card>
+          <v-toolbar color="primary" dark>
+            <v-toolbar-title>Unidaded Cursadas</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-toolbar-title>Promedio: {{ promedio }}</v-toolbar-title>
+          </v-toolbar>
+          <v-list>
+            <v-list-group v-for="item in kardex" v-bind:key="item.id">
+              <v-list-tile slot="item" @click="">
+                <v-list-tile-action>
+                  <v-icon :color="item.history[item.history.length - 1].calificacion < 6 ? 'red accent-4' : 'green accent-4'">class</v-icon>
+                </v-list-tile-action>
                 <v-list-tile-content>
-                  <v-list-tile-sub-title>
-                    Promedio: {{ promedio }}
-                  </v-list-tile-sub-title>
+                  <v-list-tile-title>{{ item.id }}</v-list-tile-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                  <v-icon>keyboard_arrow_down</v-icon>
+                </v-list-tile-action>
+              </v-list-tile>
+              <v-list-tile v-for="subItem in item.history" v-bind:key="subItem.id_unidad_aprendizaje" @click="">
+                <v-list-tile-content>
+                  <v-list-tile-sub-title>{{ subItem.periodo + ' - ' + subItem.unidad_aprendizaje}}</v-list-tile-sub-title>
+                  <v-list-tile-sub-title>{{ subItem.forma_evaluacion + ' - ' + subItem.calificacion }}</v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
-              <v-divider></v-divider>
-              <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-sub-title>
-                    Estado: {{ num_reprobadas > 0 ? 'Irregular' : 'Regular'}}
-                  </v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-divider></v-divider>
-              <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-sub-title>
-                    No. Unidades de Aprendizaje Reprobadas: {{ num_reprobadas }}
-                  </v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-divider></v-divider>
-              <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-sub-title>
-                    Créditos Obtenidos: {{ creditos_obtenidos.toFixed(2) }}
-                  </v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-divider></v-divider>
-              <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-sub-title>
-                    Créditos Restantes: {{ (creditos_totales - creditos_obtenidos).toFixed(2) }}
-                  </v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-divider></v-divider>
-              <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-sub-title>
-                    Periodos Cursados: {{ periodos_cursados }}
-                  </v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
-              <v-divider></v-divider>
-              <v-list-tile>
-                <v-list-tile-content>
-                  <v-list-tile-sub-title>
-                    No. Periodos Restantes: {{ periodos - periodos_cursados.length }}
-                  </v-list-tile-sub-title>
-                </v-list-tile-content>
-              </v-list-tile>
-            </v-list>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-card>
+            </v-list-group>
+          </v-list>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
