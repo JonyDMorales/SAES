@@ -16,10 +16,6 @@
             <v-icon>assignment</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Kardex</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click="">
-            <v-icon>lock</v-icon>&nbsp;&nbsp;
-            <v-list-tile-title>Cambiar Contraseña</v-list-tile-title>
-          </v-list-tile>
         </v-list>
       </v-menu>
       <v-menu offset-y>

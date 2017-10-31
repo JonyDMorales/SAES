@@ -127,35 +127,35 @@ export let sendEmailPasswordReset = async (req: Request, res: Response) => {
 	let code: number = Math.floor((Math.random() * 999999) + 100000);
 	let result: any = await AlumnoDataSource.setPasswordCode(req.params.boleta, code);
 	if(!result) {
-		res.json({error: true, errors: ['Número de boleta incrorrecto']}).end()
+		res.json({error: true, errors: ['Número de boleta incorrecto']}).end()
 	} else {
 		res.json({error: false, msg: 'Hemos enviado el código a la dirección: ' + result.email}).end()
+		Nodemailer.createTestAccount((err: any, account: any) => {
+			let transporter = Nodemailer.createTransport({
+				host: 'smtp.gmail.com',
+				port: 465,
+				secure: true,
+				auth: {
+					user: 'saes.ipn.escom@gmail.com',
+					pass: 'Sjt7gNkNECmr2lDM'
+				}
+			});
+		
+			let mailOptions = {
+				from: '"SAES::ESCOM" <saes.ipn.escom@gmail.com>',
+				to: result.email,
+				subject: 'Restrablecer Contraseña SAES',
+				text: '',
+				html: '<h2>El código para restablecer la contraseña es: <b>' + String(code) + '</b></h2><br><span>Él código expira en 10 minutos.</span>'
+			};
+		
+			transporter.sendMail(mailOptions, (error: any, info: any) => {
+				if (error) {
+					return console.log(error);
+				}
+			});
+		});	
 	}
-	Nodemailer.createTestAccount((err: any, account: any) => {
-		let transporter = Nodemailer.createTransport({
-			host: 'smtp.gmail.com',
-			port: 465,
-			secure: true,
-			auth: {
-				user: 'saes.ipn.escom@gmail.com',
-				pass: 'Sjt7gNkNECmr2lDM'
-			}
-		});
-	
-		let mailOptions = {
-			from: '"SAES::ESCOM" <saes.ipn.escom@gmail.com>',
-			to: result.email,
-			subject: 'Restrablecer Contraseña SAES',
-			text: '',
-			html: '<h2>El código para restablecer la contraseña es: <b>' + String(code) + '</b></h2><br><span>Él código expira en 10 minutos.</span>'
-		};
-	
-		transporter.sendMail(mailOptions, (error: any, info: any) => {
-			if (error) {
-				return console.log(error);
-			}
-		});
-	});	
 };
 
 let loginToken = (alumno: any) => {
