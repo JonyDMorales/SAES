@@ -5,8 +5,8 @@ export let saveUnidadAprendizaje = (unidadAprendizajeData: any) => {
 	return unidadAprendizaje.save();
 }
 
-export let getAllUnidadAprendizajes = () => {
-	let query = UnidadAprendizaje.find();
+export let getAllUnidadesAprendizaje = () => {
+	let query = UnidadAprendizaje.find().sort({ id: 1});
  	return query.exec();
 }
 

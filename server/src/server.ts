@@ -21,7 +21,7 @@ dotenv.config({ path: ".env" });
 
 (mongoose as any).Promise = global.Promise;
 
-mongoose.connect(process.env.MONGO_URI, { useMongoClient: true })
+mongoose.connect(process.env.MONGOLAB_URI, { useMongoClient: true })
     .then(() => console.log("MongoDB is ready"))
     .catch(err => console.log("MongoDB connection error. Please make sure MongoDB is running."));
 

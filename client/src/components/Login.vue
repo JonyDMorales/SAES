@@ -156,6 +156,7 @@
     <v-snackbar
         :timeout="snackbarTimeout"
         right
+        top
         absolute
         v-model="snackbar"
         :color="snackbarColor"
@@ -218,7 +219,7 @@ export default {
       const response = await AlumnoService.getCode(this.boleta)
       console.log(JSON.stringify(response.data))
       if (!response.data.error) {
-        this.snackbarColor = 'green darken-3'
+        this.snackbarColor = 'green darken-1'
         this.snackbarText = response.data.msg
         this.snackbar = true
         this.step = 1
@@ -232,7 +233,7 @@ export default {
       const response = await AlumnoService.checkCode(this.boleta, {code: this.code})
       console.log(JSON.stringify(response.data))
       if (!response.data.error) {
-        this.snackbarColor = 'green darken-3'
+        this.snackbarColor = 'green darken-1'
         this.snackbarText = response.data.msg
         this.snackbar = true
         this.step = 2
@@ -249,7 +250,7 @@ export default {
       }
       const response = await AlumnoService.update(nData)
       if (response.data.status === 'ok') {
-        this.snackbarColor = 'green darken-3'
+        this.snackbarColor = 'green darken-1'
         this.snackbarText = 'La contraseña fue restablecida con éxito'
         this.snackbar = true
         this.dialogResetPassword = false

@@ -5,55 +5,100 @@
          <v-progress-linear v-bind:indeterminate="true"></v-progress-linear>
       </v-flex>
     </v-layout>
-    <v-card>
-      <v-subheader class="ml-4">Información General</v-subheader>
-      <v-divider></v-divider>
-      <br>
-      <v-layout row class="ml-5">
-        <v-flex xs2>
-          <v-chip label outline color="primary">No. Boleta: {{ alumnoData.boleta }}</v-chip>
-        </v-flex>
-        <v-flex xs3>
-          <v-chip label outline color="primary">Nombre: {{ alumnoData.nombre }}</v-chip>
-        </v-flex>
-        <v-flex xs2>
-          <v-chip label outline color="primary">E-mail: {{ alumnoData.email }}</v-chip>
-        </v-flex>
-      </v-layout>
-      <v-subheader class="ml-4">Información Académica</v-subheader>
-      <v-divider></v-divider>
-      <br>
-      <v-layout row class="ml-5">
-        <v-flex xs2>
-          <v-chip label outline color="primary">Promedio: {{ alumnoData.promedio_general.toFixed(2) }}</v-chip>
-        </v-flex>
-        <v-flex xs2>
-          <v-chip label outline :color="alumnoData.unidades_no_aprobadas.length > 0 ? 'red' : 'green'">Estado: {{ alumnoData.unidades_no_aprobadas.length > 0 ? 'Irregular' : 'Regular' }}</v-chip>
-        </v-flex>
-      </v-layout>
-      <v-layout row class="ml-5">
-        <v-flex xs2>
-          <v-chip label outline color="primary">Créditos Obtenidos: {{ '120.34' }}</v-chip>
-        </v-flex>
-        <v-flex xs2>
-          <v-chip label outline color="primary">Créditos Restantes: {{ '156.17' }}</v-chip>
-        </v-flex>
-      </v-layout>
-      <v-subheader class="ml-4">Unidades de Aprendizaje Reprobadas</v-subheader>
-      <v-divider></v-divider>
-      <br>
-      <v-layout row class="ml-5" v-for="ua in alumnoData.unidades_no_aprobadas" :key="ua.id_unidad_aprendizaje">
-        <v-flex xs2>
-          <v-chip label outline color="primary">{{ ua.unidad_aprendizaje }}</v-chip>
-        </v-flex>
-      </v-layout>
-      <v-layout row class="ml-5" v-if="alumnoData.unidades_no_aprobadas.length === 0">
-        <v-flex xs2>
-          <v-chip label outline color="primary">No Hay Adeudos</v-chip>
-        </v-flex>
-      </v-layout>
-      <br>
-    </v-card>
+    <v-layout row>
+      <v-flex xs4 offset-xs4>
+        <v-card>
+          <v-toolbar color="primary" dark>
+            <v-btn icon>
+              <v-icon>school</v-icon>
+            </v-btn>
+            <v-toolbar-title>Información General</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
+          <v-list>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  Boleta: {{ boleta }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  Nombre: {{ nombre }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  Carrera: {{ carrera }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  Promedio: {{ promedio }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  Estado: {{ num_reprobadas > 0 ? 'Irregular' : 'Regular'}}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  No. Unidades de Aprendizaje Reprobadas: {{ num_reprobadas }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  Créditos Obtenidos: {{ creditos_obtenidos.toFixed(2) }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  Créditos Restantes: {{ (creditos_totales - creditos_obtenidos).toFixed(2) }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  Periodos Cursados: {{ periodos_cursados }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+            <v-divider></v-divider>
+            <v-list-tile>
+              <v-list-tile-content>
+                <v-list-tile-sub-title>
+                  No. Periodos Restantes: {{ periodos - periodos_cursados.length }}
+                </v-list-tile-sub-title>
+              </v-list-tile-content>
+            </v-list-tile>
+          </v-list>
+        </v-card>
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
@@ -62,27 +107,44 @@ import AlumnoService from '@/services/AlumnoService'
 
 export default {
 
-  name: 'infoGeneral',
+  name: 'kardex',
   methods:
   {
-    async getAlumnoData () {
+    async getData () {
       const response = await AlumnoService.show(this.$store.state.alumno.boleta)
-      this.alumnoData = response.data
+      this.kardex = response.data.kardex
+      this.boleta = response.data.boleta
+      this.nombre = response.data.nombre
+      this.promedio = response.data.promedio
+      this.num_reprobadas = response.data.num_reprobadas
+      this.creditos_obtenidos = response.data.creditos_obtenidos
+      this.creditos_totales = response.data.creditos_totales
+      this.periodos_cursados = response.data.periodos_cursados
+      this.periodos = response.data.periodos
+      this.carrera = response.data.carrera
       this.isReady = true
-      console.log(JSON.stringify(response.data, null, 2))
     }
 
   },
   data () {
     return {
+      kardex: [],
       isReady: false,
-      alumnoData: {}
+      uasCursadas: [],
+      promedio: 0,
+      num_reprobadas: 0,
+      creditos_obtenidos: 0,
+      creditos_totales: 0,
+      periodos_cursados: [],
+      periodos: 0,
+      boleta: 0,
+      nombre: '',
+      carrera: ''
     }
   },
   mounted () {
-    this.getAlumnoData()
+    this.getData()
   }
-
 }
 
 </script>

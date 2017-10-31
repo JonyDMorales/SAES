@@ -5,6 +5,7 @@ const Nodemailer = require('nodemailer');
 
 import * as AlumnoDataSource from "../datasources/AlumnoDataSource";
 import * as GetBookmarks from "../usecases/GetBookmarks";
+import * as GetAlumnoData from "../usecases/GetAlumnoData";
 
 
 dotenv.config({ path: ".env" });
@@ -41,12 +42,8 @@ export let index = async (req: Request, res: Response) => {
 };
 
 export let show = async (req: Request, res: Response) => {
-	try {
-		let alumno = await AlumnoDataSource.getAlumnoByBoleta(req.params.boleta);
-		res.json(alumno).end()
-	} catch(e) {
-		res.json({ status: "error" }).end()
-	}
+	let result = await GetAlumnoData.execute(req.params.boleta);
+	res.json(result).end()
 };
 
 export let update = async (req: Request, res: Response) => {

@@ -13,7 +13,7 @@ export let store = async (req: Request, res: Response) => {
 
 export let index = async (req: Request, res: Response) => {
 	try {
-		let unidadadesAprendizaje = await UnidadAprendizajeDataSource.getAllUnidadAprendizajes();
+		let unidadadesAprendizaje = await UnidadAprendizajeDataSource.getAllUnidadesAprendizaje();
 		res.json(unidadadesAprendizaje).end()
 	} catch(e) {
 		res.json({ status: "error" }).end()

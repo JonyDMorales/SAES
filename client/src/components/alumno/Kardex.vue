@@ -54,7 +54,7 @@
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-sub-title>
-                    Estado: {{ numReprobadas > 0 ? 'Irregular' : 'Regular'}}
+                    Estado: {{ num_reprobadas > 0 ? 'Irregular' : 'Regular'}}
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -62,7 +62,7 @@
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-sub-title>
-                    No. Unidades de Aprendizaje Reprobadas: {{ numReprobadas }}
+                    No. Unidades de Aprendizaje Reprobadas: {{ num_reprobadas }}
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -70,7 +70,7 @@
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-sub-title>
-                    Créditos Obtenidos: 123.45
+                    Créditos Obtenidos: {{ creditos_obtenidos.toFixed(2) }}
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -78,7 +78,23 @@
               <v-list-tile>
                 <v-list-tile-content>
                   <v-list-tile-sub-title>
-                    Créditos Restantes: 122.67
+                    Créditos Restantes: {{ (creditos_totales - creditos_obtenidos).toFixed(2) }}
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-divider></v-divider>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-sub-title>
+                    Periodos Cursados: {{ periodos_cursados }}
+                  </v-list-tile-sub-title>
+                </v-list-tile-content>
+              </v-list-tile>
+              <v-divider></v-divider>
+              <v-list-tile>
+                <v-list-tile-content>
+                  <v-list-tile-sub-title>
+                    No. Periodos Restantes: {{ periodos - periodos_cursados.length }}
                   </v-list-tile-sub-title>
                 </v-list-tile-content>
               </v-list-tile>
@@ -92,58 +108,40 @@
 
 <script>
 import AlumnoService from '@/services/AlumnoService'
-import Bucket from 'buckets-js'
 
 export default {
 
   name: 'kardex',
   methods:
   {
-    async getKardexData () {
-      const response = await AlumnoService.kardex(this.$store.state.alumno.boleta)
-      this.uasCursadas = response.data.unidades_cursadas
+    async getData () {
+      const response = await AlumnoService.show(this.$store.state.alumno.boleta)
+      this.kardex = response.data.kardex
+      this.promedio = response.data.promedio
+      this.num_reprobadas = response.data.num_reprobadas
+      this.creditos_obtenidos = response.data.creditos_obtenidos
+      this.creditos_totales = response.data.creditos_totales
+      this.periodos_cursados = response.data.periodos_cursados
+      this.periodos = response.data.periodos
       this.isReady = true
     }
 
   },
   data () {
     return {
+      kardex: [],
       isReady: false,
-      uasCursadas: []
+      uasCursadas: [],
+      promedio: 0,
+      num_reprobadas: 0,
+      creditos_obtenidos: 0,
+      creditos_totales: 0,
+      periodos_cursados: [],
+      periodos: 0
     }
   },
   mounted () {
-    this.getKardexData()
-  },
-  computed: {
-    kardex: function () {
-      var items = new Bucket.Dictionary()
-      this.uasCursadas.forEach((ua) => {
-        if (items.get(ua.unidad_aprendizaje)) {
-          items.get(ua.unidad_aprendizaje).push(ua)
-        } else {
-          items.set(ua.unidad_aprendizaje, [ua])
-        }
-      })
-      var result = []
-      items.keys().forEach((item) => {
-        result.push({
-          id: item,
-          history: items.get(item).sort((a, b) => {
-            let periodA = a.periodo.split('/')
-            let periodB = b.periodo.split('/')
-            return (periodA[0] - periodB[0])
-          })
-        })
-      })
-      return result
-    },
-    promedio: function () {
-      return (this.kardex.reduce((sum, ua) => sum + ua.history[ua.history.length - 1].calificacion, 0) / this.kardex.length).toFixed(2)
-    },
-    numReprobadas: function () {
-      return this.kardex.filter((ua) => ua.history[ua.history.length - 1].calificacion < 6).length
-    }
+    this.getData()
   }
 }
 
