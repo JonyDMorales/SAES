@@ -5,7 +5,7 @@
          <v-progress-linear v-bind:indeterminate="true"></v-progress-linear>
       </v-flex>
     </v-layout>
-    <v-card>
+    <v-card flat>
     <v-layout row>
       <v-flex xs2>
         <v-text-field
@@ -178,7 +178,7 @@
         </v-toolbar>
         <v-card-text>
           <v-container fluid>
-            <v-layout row v-for="schedule in schedules" :key="schedule">
+            <v-layout row v-for="schedule in schedules" :key="schedule" class="mb-5">
               <v-data-table
                 v-bind:headers="scheduleHeader"
                 :items="schedule"
@@ -547,3 +547,14 @@ export default {
 }
 
 </script>
+
+<style>
+  /* This is for documentation purposes and will not be needed in your application */
+  #create .speed-dial {
+    position: absolute;
+  }
+
+  #create .btn--floating {
+    position: relative;
+  }
+</style>
