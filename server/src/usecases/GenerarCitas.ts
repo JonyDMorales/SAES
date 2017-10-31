@@ -1,9 +1,9 @@
 import * as AlumnoDataSource from "../datasources/AlumnoDataSource";
 import * as CitasReinscripcionDataSource from "../datasources/CitasReinscripcionDataSource";
+import * as GetAlumnoData from "./GetAlumnoData";
 import * as Bluebird from "bluebird";
 
 export let execute = async (opts: any) => {
-
 	const Second: number = 1000;
 	const Minute: number = Second * 60;
 	const Hour: number = Minute * 60;
@@ -17,8 +17,8 @@ export let execute = async (opts: any) => {
 	let totalMinutes: number = Math.floor(totalPeriod / Minute);
 	let minutesFactor: number =  Math.ceil((Minute * 15) / (1000 * 60));
 	let rounds:number = Math.ceil(totalMinutes / minutesFactor);
-	let alumnos = await AlumnoDataSource.getAlumnosSorted();
-	let alumnosPerPeriod: number = Math.ceil(alumnos.length / rounds);
+	let boletas: any[] = await AlumnoDataSource.getBoletaAlumnos();
+	let alumnosPerPeriod: number = Math.ceil(boletas.length / rounds);
 	
 	var idx = 1;
 	var time: number = opts.startDate;
@@ -26,12 +26,34 @@ export let execute = async (opts: any) => {
 	var infoCitas: any[] = []
 	var limitDay: number = opts.startDate;
 
-	alumnos.forEach((alumno: any) => { 
+	let alumnos = await Bluebird.map(boletas, async (boleta: any) => {
+		let alumno = await GetAlumnoData.execute(boleta.boleta)
+		return alumno;
+	})
+
+	alumnos.sort((a:any, b:any) => {
+		if (a.num_reprobadas != b.num_reprobadas) {
+			return a.num_reprobadas - b.num_reprobadas;
+		} else {
+			return b.promedio - a.promedio
+		}
+	});
+
+	alumnos.forEach((alumno: any) => {
+		/*
+		var minutes: number = Math.ceil(time / (1000 * 60))
+		var mod: number = minutes % minutesFactor
+		if (mod > 0 ) {
+			time -= (mod * 1000 * 60)
+		}
+		*/
 		infoCitas.push({
 			boleta_alumno: alumno.boleta,
 			nombre_alumno: alumno.nombre,
 			fecha_inicio: time,
-			fecha_limite: time + (1000 * 60 * 60 * 24)
+			fecha_limite: time + (1000 * 60 * 60 * 24),
+			promedio: alumno.promedio,
+			num_reprobadas: alumno.num_reprobadas
 		});
 		let nextLimit:number = limitDay + totalTimePerDay;
 		if(time < nextLimit) {

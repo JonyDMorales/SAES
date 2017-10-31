@@ -4,6 +4,8 @@ const citaReinscripcionSchema = new mongoose.Schema({
   
 	boleta_alumno: {type: Number, unique: true},
 	nombre_alumno: {type: String },
+	promedio: Number,
+	num_reprobadas: Number,
 	fecha_inicio: Number,
 	fecha_limite: Number
 

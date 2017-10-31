@@ -31,6 +31,11 @@ export let addBookmark = (boleta: number, schedule: any) => {
 	return query.exec();
 }
 
+export let getBoletaAlumnos = () => {
+	let query = Alumno.find({}, {_id: 0, boleta: 1});
+ 	return query.exec();
+}
+
 export let getAllAlumnos = () => {
 	let query = Alumno.find({}, visisible);
  	return query.exec();
@@ -62,7 +67,7 @@ export let checkEmail = (email: string) => {
 }
 
 export let getAlumnosSorted = () => {
-	let query = Alumno.find({}, visisible).sort({numero_unidades_reprobadas: 1, promedio_general: -1});
+	let query = Alumno.find({}, visisible);
 	return query.exec();
 }
 

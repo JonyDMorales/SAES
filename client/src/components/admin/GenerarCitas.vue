@@ -147,6 +147,8 @@
             <template slot="items" slot-scope="props">
               <td>{{ props.item.boleta_alumno }}</td>
               <td>{{ props.item.nombre_alumno }}</td>
+              <td>{{ props.item.promedio }}</td>
+              <td>{{ props.item.num_reprobadas }}</td>
               <td>{{ parseDateToSpanish(props.item.fecha_inicio) }}</td>
             </template>
           </v-data-table>
@@ -176,8 +178,8 @@ export default {
       let startDate = new Date(this.startDate + 'T' + this.startTime + 'Z').getTime()
       let endDate = new Date(this.endDate + 'T' + this.endTime + 'Z').getTime()
       const response = await CitasService.store({
-        startDate: startDate + 1000 * 60 * 60 * 5,
-        endDate: endDate + 1000 * 60 * 60 * 5,
+        startDate: startDate + 1000 * 60 * 60 * 6,
+        endDate: endDate + 1000 * 60 * 60 * 6,
         startTime: (arrayStartTime[0] * 1000 * 60 * 60) + (arrayStartTime[1] * 1000 * 60),
         endTime: (arrayEndTime[0] * 1000 * 60 * 60) + (arrayEndTime[1] * 1000 * 60)
       })
@@ -228,9 +230,22 @@ export default {
           sortable: false
         },
         {
-          text: 'Fecha Inscripción',
+          text: 'Promedio',
+          value: 'promedio',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Unidades Reprobadas',
+          value: 'num_reprobadas',
+          align: 'left',
+          sortable: false
+        },
+        {
+          text: 'Fecha Reinscripción',
           value: 'fecha_inicio',
-          align: 'left'
+          align: 'left',
+          sortable: false
         }
       ]
     }

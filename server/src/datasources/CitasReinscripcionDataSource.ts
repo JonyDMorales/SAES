@@ -5,6 +5,8 @@ export let visible = {
 	nombre_alumno: 1,
 	fecha_inicio: 1,
 	fecha_limite: 1,
+	promedio: 1,
+	num_reprobadas: 1,
 	_id: 0
 }
 
