@@ -178,7 +178,7 @@
                   <v-list-tile v-if="dictamen25.dictamen">
                     <v-list-tile-content>
                       <v-list-tile-sub-title>
-                        UAs Dictamen: {{ ...dictamen25.uas.map(((idx) => idx.id)) }}
+                        UAs Dictamen: {{ ...dictamen25.uas }}
                       </v-list-tile-sub-title>
                     </v-list-tile-content>
                   </v-list-tile>
@@ -271,7 +271,7 @@ export default {
       } else {
         this.isReady = true
         this.startTimer()
-        this.dialog = true
+        // this.dialog = true
       }
     },
     parseDateToSpanish (date) {
@@ -341,12 +341,16 @@ export default {
       this.errorsSchedule = []
       this.current = pSchedule
       var sum = 0
+      var uasCannotTake = []
       var occupability = true
       var canTakeIt = true
       pSchedule.forEach((pschedule) => {
         sum += (this.getCredits(pschedule.id_unidad_aprendizaje))
         if (pschedule.lugares_disponibles - pschedule.alumnos_inscritos === 0) occupability = false
-        if (!this.canTakeIt(pschedule.id_unidad_aprendizaje)) canTakeIt = false
+        if (!this.canTakeIt(pschedule.id_unidad_aprendizaje)) {
+          uasCannotTake.push(pschedule.unidad_aprendizaje)
+          canTakeIt = false
+        }
       })
       if (sum < 20.0) {
         this.errorsSchedule.push('No puedes reinscribir menos de la carga mínima de créditos.')
@@ -358,11 +362,12 @@ export default {
         this.errorsSchedule.push('No hay lugares disponibles en algunas materias seleccionadas.')
       }
       if (!canTakeIt) {
-        this.errorsSchedule.push('No es posible volver a cursar algunas materias seleccionadas.')
+        this.errorsSchedule.push('Ya no es posible cursar ' + uasCannotTake)
       }
       this.showScheduleLogs = true
     },
     canTakeIt (id) {
+      console.log(id)
       var canTake = true
       this.alumno.kardex.forEach((k) => {
         if (k.history[0].id_unidad_aprendizaje === id) {
@@ -371,6 +376,9 @@ export default {
               canTake = false
             }
           })
+          if (k.history[k.history.length - 1].calificacion > 5) {
+            canTake = false
+          }
         }
       })
       return canTake
@@ -468,8 +476,6 @@ export default {
       })
       return possible
     },
-    isDictamen: function () {
-    },
     UAsCannotTake: function () {
     },
     dictamen25: function () {
@@ -485,7 +491,7 @@ export default {
       })
       return {
         dictamen: dictamen25,
-        uas: uas
+        uas: uas.map((idx) => idx.id)
       }
     },
     maxCredits: function () {

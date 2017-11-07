@@ -244,8 +244,7 @@ export default {
         {
           text: 'Fecha Reinscripción',
           value: 'fecha_inicio',
-          align: 'left',
-          sortable: false
+          align: 'left'
         }
       ]
     }
