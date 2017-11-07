@@ -143,11 +143,11 @@
           <v-layout row>
             <v-flex xs12>
               <v-card flat>
-                <v-toolbar color="primary" dark flat>
+                <v-toolbar :color="dictamen25.dictamen ? 'amber darken-3' : 'primary'" dark flat>
                   <v-btn icon>
                     <v-icon>assignment</v-icon>
                   </v-btn>
-                  <v-toolbar-title>Reinscripción</v-toolbar-title>
+                  <v-toolbar-title>{{ dictamen25.dictamen ? 'Reinscripción con 1er Dictamen' : 'Reinscripción' }}</v-toolbar-title>
                   <v-spacer></v-spacer>
                 </v-toolbar>
                 <v-list>
@@ -174,9 +174,49 @@
                       </v-list-tile-sub-title>
                     </v-list-tile-content>
                   </v-list-tile>
+                  <v-divider v-if="dictamen25.dictamen"></v-divider>
+                  <v-list-tile v-if="dictamen25.dictamen">
+                    <v-list-tile-content>
+                      <v-list-tile-sub-title>
+                        UAs Dictamen: {{ ...dictamen25.uas.map(((idx) => idx.id)) }}
+                      </v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
                 </v-list>
                 <v-card-actions>
                   <v-btn color="primary" @click="goBack()">Regresar</v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-flex>
+          </v-layout>
+        </v-container>
+      </v-card>
+    </v-dialog>
+    <!-- **************************************************************** -->
+    <v-dialog v-model="dialogPossibleReinscription" persistent max-width="600px">
+      <v-card>
+        <v-container fluid>
+          <v-layout row>
+            <v-flex xs12>
+              <v-card flat>
+                <v-toolbar color="red lighten-1" dark flat>
+                  <v-btn icon>
+                    <v-icon>assignment</v-icon>
+                  </v-btn>
+                  <v-toolbar-title>1º Dictamen Incumplido</v-toolbar-title>
+                  <v-spacer></v-spacer>
+                </v-toolbar>
+                <v-list>
+                  <v-list-tile>
+                    <v-list-tile-content>
+                      <v-list-tile-sub-title>
+                        Para poder reinscribirte tendrás que pedir dictamen al Consejo Ceneral.
+                      </v-list-tile-sub-title>
+                    </v-list-tile-content>
+                  </v-list-tile>
+                </v-list>
+                <v-card-actions>
+                  <v-btn outline color="primary" @click="goBack()">Regresar</v-btn>
                 </v-card-actions>
               </v-card>
             </v-flex>
@@ -223,7 +263,16 @@ export default {
     async getCita () {
       const responseCita = await CitasService.show(this.$store.state.alumno.boleta)
       this.cita = responseCita.data
-      this.startTimer()
+      const responseAlumno = await AlumnoService.show(this.$store.state.alumno.boleta)
+      this.alumno = responseAlumno.data
+      if (!this.isPossibleReinscripcion) {
+        this.isReady = true
+        this.dialogPossibleReinscription = true
+      } else {
+        this.isReady = true
+        this.startTimer()
+        this.dialog = true
+      }
     },
     parseDateToSpanish (date) {
       return Utils.parseDateToSpanish(date)
@@ -272,10 +321,10 @@ export default {
     async activeReinscripcion () {
       this.isReady = false
       this.dialog = false
-      const responseAlumno = await AlumnoService.show(this.$store.state.alumno.boleta)
+      // const responseAlumno = await AlumnoService.show(this.$store.state.alumno.boleta)
       const responseHorarios = await HorariosService.index()
       const reponseUnidadAprendizaje = await UnidadAprendizajeService.index()
-      this.alumno = responseAlumno.data
+      // this.alumno = responseAlumno.data
       this.horarios = responseHorarios.data
       this.UAs = reponseUnidadAprendizaje.data
       this.$store.dispatch('setCanReinscribir', true)
@@ -341,12 +390,22 @@ export default {
       this.$router.push({
         name: 'infoGeneral'
       })
+    },
+    nextPeriod (period) {
+      let year = period.split('/')[0]
+      let n = period.split('/')[1]
+      if (n === '1') {
+        return year + '/2'
+      } else {
+        return String(parseInt(year) + 1) + '/1'
+      }
     }
   },
   data () {
     return {
       search: '',
       cita: {},
+      dialogPossibleReinscription: false,
       current: [],
       showScheduleLogs: false,
       dialogBookmarks: false,
@@ -358,7 +417,7 @@ export default {
       UAs: [],
       bookmarks: [],
       horarios: [],
-      dialog: true,
+      dialog: false,
       isReady: false,
       errorsSchedule: [],
       snackbar2: false,
@@ -394,21 +453,47 @@ export default {
   },
   mounted () {
     this.getCita()
-    this.isReady = true
+    // this.isReady = true
     // this.activeReinscripcion()
   },
   computed: {
-    maxCredits: function () {
-      return this.cita.num_reprobadas > 0 ? 30 : 60
-    },
     isPossibleReinscripcion: function () {
-
+      var possible = true
+      this.alumno.kardex.forEach((k) => {
+        k.history.forEach((h) => {
+          if (h.forma_evaluacion.indexOf('Dictamen') !== -1) {
+            possible = false
+          }
+        })
+      })
+      return possible
     },
     isDictamen: function () {
-
     },
-    UAsTaken: function () {
-      
+    UAsCannotTake: function () {
+    },
+    dictamen25: function () {
+      var dictamen25 = false
+      var uas = []
+      this.alumno.kardex.forEach((ua) => {
+        let lastPeriod = this.nextPeriod(this.nextPeriod(ua.history[0].periodo))
+        console.log(lastPeriod)
+        if (lastPeriod === ua.history[ua.history.length - 1].periodo && ua.history[ua.history.length - 1].calificacion < 6) {
+          dictamen25 = true
+          uas.push(ua)
+        }
+      })
+      return {
+        dictamen: dictamen25,
+        uas: uas
+      }
+    },
+    maxCredits: function () {
+      if (this.dictamen25.dictamen) {
+        return 25
+      } else {
+        return this.cita.num_reprobadas > 0 ? 30 : 60
+      }
     }
   }
 

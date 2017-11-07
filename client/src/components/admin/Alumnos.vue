@@ -156,7 +156,7 @@
                       <v-list-tile v-for="subItem in item.history" v-bind:key="subItem.id_unidad_aprendizaje" @click="">
                         <v-list-tile-content>
                           <v-list-tile-sub-title>{{ subItem.periodo + ' - ' + subItem.unidad_aprendizaje}}</v-list-tile-sub-title>
-                          <v-list-tile-sub-title>{{ subItem.forma_evaluacion + ' - ' + subItem.calificacion }}</v-list-tile-sub-title>
+                          <v-list-tile-sub-title>{{ subItem.forma_evaluacion + ' - Calificación: ' + subItem.calificacion }}</v-list-tile-sub-title>
                         </v-list-tile-content>
                       </v-list-tile>
                     </v-list-group>
