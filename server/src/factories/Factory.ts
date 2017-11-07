@@ -14991,7 +14991,7 @@ export let alumnoWithTrayectory = (n: number) => {
                   periodo: getNextPeriod(getNextPeriod(periodo)),
                   forma_evaluacion: 'ETS'
                 })
-                dictamen = true;
+
                 // 1ER DICTAMEN - SOLO ETS 4TO PERIODO
                 let calificacionETS4 = Faker.random.number({min: 0, max: 10})
                 if (calificacionETS4 > 5) { // ETS4 (4TO PERIODO)
@@ -15018,8 +15018,7 @@ export let alumnoWithTrayectory = (n: number) => {
           }
         }
       }
-      // if(dictamen && i > 5) break;
-      if(dictamenIncumplido && i > 5) break;
+      // if(dictamenIncumplido && i > 5) break;
     }
 
     // console.log(JSON.stringify(data, null, 2))

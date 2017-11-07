@@ -201,12 +201,12 @@ export default {
     },
     async loginAdmin () {
       const response = await AdminService.login({
-        id: this.id,
+        id: this.id_admin,
         password: this.password_admin
       })
       if (response.data.status === 'ok') {
         this.$store.dispatch('setToken', response.data.token)
-        this.$store.dispatch('setAdmin', response.data.alumno)
+        this.$store.dispatch('setAdmin', response.data.analista)
         this.$router.push({
           name: 'alumnos'
         })

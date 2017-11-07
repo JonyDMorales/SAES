@@ -17,10 +17,10 @@
           <v-btn dark color="primary" @click="reinscribirHorario(bookmark.horario)" v-if="$store.state.canReinscribir">
             Reinscribir
           </v-btn>
-          -->
           <v-btn dark color="accent" @click="">
             Eliminar
           </v-btn>
+          -->
         </v-layout>
         <v-layout row>
           <v-data-table

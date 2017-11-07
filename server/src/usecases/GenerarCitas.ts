@@ -15,7 +15,7 @@ export let execute = async (opts: any) => {
 	let totalTimePerDay: number = opts.endTime - opts.startTime;
 	let totalPeriod = totalDays * totalTimePerDay;
 	let totalMinutes: number = Math.floor(totalPeriod / Minute);
-	let minutesFactor: number =  Math.ceil((Minute * 15) / (1000 * 60));
+	let minutesFactor: number =  Math.ceil((Minute * 5) / (1000 * 60));
 	let rounds:number = Math.ceil(totalMinutes / minutesFactor);
 	let boletas: any[] = await AlumnoDataSource.getBoletaAlumnos();
 	let alumnosPerPeriod: number = Math.ceil(boletas.length / rounds);

@@ -79,11 +79,14 @@
             <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
             <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
             <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
+            <td> <v-chip label color="white" text-color="red darken-1" @click="removeFromSelected(props.item.id)">Quitar</v-chip></td>
+            <!--
             <td>
               <v-btn dark color="red darken-1" class="mt-3" small fab @click="removeFromSelected(props.item.id)">
                 <v-icon>remove</v-icon>
               </v-btn>
             </td>
+            -->
           </template>
         </v-data-table>
         </v-bottom-sheet>
@@ -106,11 +109,16 @@
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
           <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
+          <td v-if="makeSchedule"> 
+            <v-chip label color="white" text-color="primary" @click="addClase(props.item.id, props.item.grupo)">Seleccionar</v-chip>
+          </td>
+          <!--
           <td v-if="makeSchedule">
             <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
               <v-icon>add</v-icon>
             </v-btn>
           </td>
+          -->
         </template>
        </v-data-table>
 
@@ -130,11 +138,16 @@
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
           <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos}}</td>
+          <td v-if="makeSchedule"> 
+            <v-chip label color="white" text-color="primary" @click="addClase(props.item.id, props.item.grupo)">Seleccionar</v-chip>
+          </td>
+          <!--
           <td v-if="makeSchedule">
             <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
               <v-icon>add</v-icon>
             </v-btn>
           </td>
+          -->
         </template>
        </v-data-table>
 
@@ -154,10 +167,15 @@
           <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
           <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
           <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
+          <!--
           <td v-if="makeSchedule">
             <v-btn dark color="primary" small fab @click="addClase(props.item.id, props.item.grupo)">
               <v-icon>add</v-icon>
             </v-btn>
+          </td>
+          -->
+          <td v-if="makeSchedule">
+            <v-chip label color="white" text-color="primary" @click="addClase(props.item.id, props.item.grupo)">Seleccionar</v-chip>
           </td>
         </template>
        </v-data-table>
@@ -547,14 +565,3 @@ export default {
 }
 
 </script>
-
-<style>
-  /* This is for documentation purposes and will not be needed in your application */
-  #create .speed-dial {
-    position: absolute;
-  }
-
-  #create .btn--floating {
-    position: relative;
-  }
-</style>

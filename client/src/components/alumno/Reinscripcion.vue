@@ -2,12 +2,12 @@
   <v-container fluid>
     <v-layout row v-if="!isReady">
       <v-flex xs12>
-         <v-progress-linear v-bind:indeterminate="true"></v-progress-linear>
+         <v-progress-linear v-bind:indeterminate="true" height="5"></v-progress-linear>
       </v-flex>
     </v-layout>
     <v-card flat>
       <v-layout row>
-        <v-flex xs2>
+        <v-flex xs3>
           <v-text-field
           prepend-icon="search"
           label="Buscar"
@@ -29,6 +29,7 @@
             v-bind:headers="gloabalHeader"
             :items="horarios"
             v-bind:search="search"
+            no-data-text=""
             hide-actions
             class="elevation-2"
           >
@@ -42,11 +43,14 @@
             <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
             <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
             <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
+            <td> <v-chip label color="white" text-color="blue">Seleccionar</v-chip> </td>
+            <!--
             <td>
               <v-btn dark color="primary" small fab @click="seleccionar(props.item.id, props.item.grupo)">
                 <v-icon>add</v-icon>
               </v-btn>
             </td>
+            -->
           </template>
         </v-data-table>
         </v-flex>
@@ -99,18 +103,36 @@
           </v-container>
         </v-card-text>
       </v-card>
-      <v-dialog v-model="showScheduleLogs">
+      <v-dialog v-model="showScheduleLogs" max-width="500px">
         <v-card> 
-          <v-card-title>
-          </v-card-title>
-          <v-card-text>
-            <v-alert color="error" icon="warning" value="true">
-              <span v-for="error in errorsSchedule" :key="error">{{ error }}<br></span>
-            </v-alert>
-          </v-card-text>
-          <v-card-actions>
-            <v-btn color="primary" flat @click.stop="showScheduleLogs=false">Cerrar</v-btn>
-          </v-card-actions>
+          <v-container fluid>
+            <v-layout row>
+              <v-flex xs12>
+                <v-card flat>
+                  <v-toolbar :color="errorsSchedule.length > 0 ? 'red lighten-1' : 'green accent-4'" dark flat>
+                    <v-btn icon>
+                      <v-icon>assignment</v-icon>
+                    </v-btn>
+                    <v-toolbar-title>Resincripción</v-toolbar-title>
+                    <v-spacer></v-spacer>
+                  </v-toolbar>
+                  <v-list>
+                    <v-list-tile v-for="error in errorsSchedule" :key="error">
+                      <v-list-tile-content>
+                        <v-list-tile-sub-title>
+                          {{ error }}
+                        </v-list-tile-sub-title>
+                      </v-list-tile-content>
+                    </v-list-tile>
+                  </v-list>
+                  <v-card-actions>
+                    <v-btn color="primary" @click="" v-if="errorsSchedule.length == 0">Confirmar Reinscripción</v-btn>
+                    <v-btn outline color="accent" @click="showScheduleLogs = false" v-if="errorsSchedule.length > 0">Regresar</v-btn>
+                  </v-card-actions>
+                </v-card>
+              </v-flex>
+            </v-layout>
+          </v-container>
         </v-card>
       </v-dialog>
     </v-dialog>
@@ -148,11 +170,14 @@
                   <v-list-tile>
                     <v-list-tile-content>
                       <v-list-tile-sub-title>
-                        Máximos Créditos: {{ maxCredits }}
+                        Máximo Créditos: {{ maxCredits }}
                       </v-list-tile-sub-title>
                     </v-list-tile-content>
                   </v-list-tile>
                 </v-list>
+                <v-card-actions>
+                  <v-btn color="primary" @click="goBack()">Regresar</v-btn>
+                </v-card-actions>
               </v-card>
             </v-flex>
           </v-layout>
@@ -169,6 +194,17 @@
       Ya Puedes Empezar Tu Reinscripción
       <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
     </v-snackbar>
+    <v-snackbar
+        timeout=6000
+        right
+        top
+        absolute
+        v-model="snackbar2"
+        :color="snbColor"
+      >
+      {{ snbText }}
+      <v-btn flat color="white" @click.native="snackbar2 = false">Close</v-btn>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -177,6 +213,7 @@ import CitasService from '@/services/CitasService'
 import AlumnoService from '@/services/AlumnoService'
 import HorariosService from '@/services/HorariosService'
 import UnidadAprendizajeService from '@/services/UnidadAprendizajeService'
+import InscripcionService from '@/services/InscripcionService'
 import Utils from '@/Utils'
 
 export default {
@@ -190,6 +227,17 @@ export default {
     },
     parseDateToSpanish (date) {
       return Utils.parseDateToSpanish(date)
+    },
+    async reinscribirHorario () {
+      const response = await InscripcionService.store({
+        horario: this.current.map((b) => b.id),
+        boleta_alumno: this.$store.state.alumno.boleta
+      })
+      console.log(response)
+      this.dialogBookmarks = false
+      this.snbColor = 'blue'
+      this.snbText = 'La Reinscripción se ha realizado con éxito'
+      this.snackbar2 = true
     },
     async getBookmarks () {
       this.bookmarksReady = false
@@ -222,6 +270,8 @@ export default {
       this.remainTimeMsg = (days > 0 ? (days > 1 ? days + ' Días ' : days + ' Día ') : '') + (hrs < 10 ? '0' + hrs : hrs) + ':' + (min < 10 ? '0' + min : min) + ':' + (sec < 10 ? '0' + sec : sec)
     },
     async activeReinscripcion () {
+      this.isReady = false
+      this.dialog = false
       const responseAlumno = await AlumnoService.show(this.$store.state.alumno.boleta)
       const responseHorarios = await HorariosService.index()
       const reponseUnidadAprendizaje = await UnidadAprendizajeService.index()
@@ -240,6 +290,7 @@ export default {
     },
     validateHorario (pSchedule) {
       this.errorsSchedule = []
+      this.current = pSchedule
       var sum = 0
       var occupability = true
       var canTakeIt = true
@@ -248,6 +299,9 @@ export default {
         if (pschedule.lugares_disponibles - pschedule.alumnos_inscritos === 0) occupability = false
         if (!this.canTakeIt(pschedule.id_unidad_aprendizaje)) canTakeIt = false
       })
+      if (sum < 20.0) {
+        this.errorsSchedule.push('No puedes reinscribir menos de la carga mínima de créditos.')
+      }
       if (sum > this.maxCredits) {
         this.errorsSchedule.push('No puedes reinscribir mas de ' + this.maxCredits + ' créditos.')
       }
@@ -282,12 +336,18 @@ export default {
         if (id > this.UAs[middle].id) lower = middle + 1
         else upper = middle - 1
       }
+    },
+    goBack () {
+      this.$router.push({
+        name: 'infoGeneral'
+      })
     }
   },
   data () {
     return {
       search: '',
       cita: {},
+      current: [],
       showScheduleLogs: false,
       dialogBookmarks: false,
       remainTimeMsg: '',
@@ -301,6 +361,12 @@ export default {
       dialog: true,
       isReady: false,
       errorsSchedule: [],
+      snackbar2: false,
+      snbColor: '',
+      snbText: '',
+      drawer: true,
+      mini: true,
+      right: null,
       gloabalHeader: [
         { text: 'Grupo', value: 'grupo', align: 'left' },
         { text: 'Unidad Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
@@ -327,12 +393,22 @@ export default {
     }
   },
   mounted () {
-    // this.getCita()
-    this.activeReinscripcion()
+    this.getCita()
+    this.isReady = true
+    // this.activeReinscripcion()
   },
   computed: {
     maxCredits: function () {
-      return this.alumno.num_reprobadas > 0 ? 30 : 60
+      return this.cita.num_reprobadas > 0 ? 30 : 60
+    },
+    isPossibleReinscripcion: function () {
+
+    },
+    isDictamen: function () {
+
+    },
+    UAsTaken: function () {
+      
     }
   }
 

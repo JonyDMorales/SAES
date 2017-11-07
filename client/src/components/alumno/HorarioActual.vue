@@ -12,6 +12,7 @@
           :items="schedule"
           hide-actions
           class="elevation-2"
+          no-data-text="No hay reinscripción"
         >
         <template slot="items" slot-scope="props">
           <td>{{ props.item.grupo }}</td>

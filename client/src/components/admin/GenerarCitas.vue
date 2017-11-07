@@ -115,7 +115,7 @@
         </v-flex>
       </v-layout>
       <br v-if="!isReady">
-      <v-layout row v-if="!isReady">
+      <v-layout row v-if="!isReady && resquestStarted">
         <v-flex xs1 offset-xs6>
           <v-progress-circular color="primary" v-bind:indeterminate="true"></v-progress-circular>
         </v-flex>
