@@ -18,13 +18,27 @@
           ></v-text-field>
         </v-flex>
         <v-spacer></v-spacer>
-        <v-flex xs2>
-          <v-btn v-if="!bookmarksBtn" color="primary" @click="onStartReinscripcion()" class="mt-4">Empezar Reinscripción</v-btn>
-          <v-tooltip top v-if="bookmarksBtn">
+        <v-flex xs2 v-if="!bookmarksBtn">
+          <v-btn color="primary" @click="onStartReinscripcion()" class="mt-4">Empezar Reinscripción</v-btn>
+        </v-flex>
+        <v-flex xs2 v-if="bookmarksBtn">
+          <v-tooltip top>
+            <v-btn slot="activator" small fab dark color="primary" @click="" class="mt-4">
+              <v-icon>list</v-icon>
+            </v-btn>
+            <span>Inscritas</span>
+          </v-tooltip>
+          <v-tooltip top>
             <v-btn slot="activator" small fab dark color="primary" @click="getBookmarks()" class="mt-4" :loading="!bookmarksReady">
               <v-icon>bookmark</v-icon>
             </v-btn>
             <span>Marcadores</span>
+          </v-tooltip>
+          <v-tooltip top>
+            <v-btn slot="activator" small fab dark color="primary" @click="" class="mt-4">
+              <v-icon>schedule</v-icon>
+            </v-btn>
+            <span>Generar Horario</span>
           </v-tooltip>
         </v-flex>
       </v-layout>
@@ -49,7 +63,7 @@
             <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
             <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
             <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
-            <td> <v-chip label color="white" text-color="blue">Seleccionar</v-chip> </td>
+            <td v-if="reinscripcionHasStarted"> <v-chip label color="white" text-color="blue">Seleccionar</v-chip> </td>
             <!--
             <td>
               <v-btn dark color="primary" small fab @click="seleccionar(props.item.id, props.item.grupo)">
@@ -281,12 +295,13 @@ import HorariosService from '@/services/HorariosService'
 import UnidadAprendizajeService from '@/services/UnidadAprendizajeService'
 import InscripcionService from '@/services/InscripcionService'
 import Utils from '@/Utils'
+import Pusher from 'pusher-js'
 
 export default {
   name: 'reinscripcion',
   methods:
   {
-    async getCita () {
+    async init () {
       const responseCita = await CitasService.show(this.$store.state.alumno.boleta)
       this.cita = responseCita.data
       const responseAlumno = await AlumnoService.show(this.$store.state.alumno.boleta)
@@ -298,6 +313,43 @@ export default {
         this.isReady = true
         this.startTimer()
         // this.dialog = true
+      }
+    },
+    startPusher () {
+      // Pusher.logToConsole = true
+      var pusher = new Pusher('91d6af0b1edccedbb84c', {
+        cluster: 'us2',
+        encrypted: true
+      })
+      var channel = pusher.subscribe('inscripcion-channel')
+      channel.bind('onNewInscription', (data) => {
+        data.forEach((occupability) => {
+          this.updateScheduleOccupability(occupability)
+        })
+      })
+    },
+    updateScheduleOccupability (occupability) {
+      var lower = 0
+      var upper = this.horarios.length - 1
+      var middle
+      while (lower <= upper) {
+        middle = Math.floor((lower + upper) / 2)
+        if (occupability.id === this.horarios[middle].id) {
+          this.horarios[middle].lugares_disponibles = occupability.lugares
+          this.horarios[middle].alumnos_inscritos = occupability.inscritos
+          break
+        }
+        if (occupability.id > this.horarios[middle].id) lower = middle + 1
+        else upper = middle - 1
+      }
+      // update bookmarks
+      for (var i = 0; i < this.bookmarks.length; i++) {
+        for (var j = 0; j < this.bookmarks[i].horario.length; j++) {
+          if (occupability.id === this.bookmarks[i].horario[j].id) {
+            this.bookmarks[i].horario[j].lugares_disponibles = occupability.lugares
+            this.bookmarks[i].horario[j].alumnos_inscritos = occupability.inscritos
+          }
+        }
       }
     },
     parseDateToSpanish (date) {
@@ -355,6 +407,7 @@ export default {
       this.$store.dispatch('setCanReinscribir', true)
       this.snackbar = true
       this.dialog = false
+      this.startPusher()
       this.isReady = true
     },
     occupabilityColor (lugares) {
@@ -392,7 +445,6 @@ export default {
       this.showScheduleLogs = true
     },
     canTakeIt (id) {
-      console.log(id)
       var canTake = true
       this.alumno.kardex.forEach((k) => {
         if (k.history[0].id_unidad_aprendizaje === id) {
@@ -442,6 +494,8 @@ export default {
       this.bookmarksBtn = true
       this.snackbarMsgLeftTime = 'Tiempo Restante: 15:00'
       this.snackbarReinscripcion = true
+      this.reinscripcionHasStarted = true
+      this.gloabalHeader.push({ text: 'Seleccionar', value: 'seleccionar', align: 'left', sortable: false })
       setInterval(() => {
         var min = Math.floor(remainTime / (1000 * 60)) % 60
         var sec = Math.floor(remainTime / (1000)) % 60
@@ -483,6 +537,7 @@ export default {
       snackbar2: false,
       snbColor: '',
       snbText: '',
+      reinscripcionHasStarted: false,
       drawer: true,
       snackbarReinscripcion: false,
       snackbarMsgLeftTime: '',
@@ -498,8 +553,7 @@ export default {
         { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
         { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
         { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
-        { text: 'Lugares', value: 'alumnos_inscritos', align: 'left' },
-        { text: 'Seleccionar', value: 'seleccionar', align: 'left', sortable: false }
+        { text: 'Lugares', value: 'alumnos_inscritos', align: 'left' }
       ],
       bookmarkHeader: [
         { text: 'Grupo', value: 'grupo', align: 'left' },
@@ -515,9 +569,7 @@ export default {
     }
   },
   mounted () {
-    this.getCita()
-    // this.isReady = true
-    // this.activeReinscripcion()
+    this.init()
   },
   computed: {
     isPossibleReinscripcion: function () {
@@ -532,13 +584,13 @@ export default {
       return possible
     },
     UAsCannotTake: function () {
+
     },
     dictamen25: function () {
       var dictamen25 = false
       var uas = []
       this.alumno.kardex.forEach((ua) => {
         let lastPeriod = this.nextPeriod(this.nextPeriod(ua.history[0].periodo))
-        console.log(lastPeriod)
         if (lastPeriod === ua.history[ua.history.length - 1].periodo && ua.history[ua.history.length - 1].calificacion < 6) {
           dictamen25 = true
           uas.push(ua)
