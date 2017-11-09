@@ -19,7 +19,13 @@
         </v-flex>
         <v-spacer></v-spacer>
         <v-flex xs2>
-          <v-btn color="primary" @click="getBookmarks()" class="mt-4" :loading="!bookmarksReady">Marcadores</v-btn>
+          <v-btn v-if="!bookmarksBtn" color="primary" @click="onStartReinscripcion()" class="mt-4">Empezar Reinscripción</v-btn>
+          <v-tooltip top v-if="bookmarksBtn">
+            <v-btn slot="activator" small fab dark color="primary" @click="getBookmarks()" class="mt-4" :loading="!bookmarksReady">
+              <v-icon>bookmark</v-icon>
+            </v-btn>
+            <span>Marcadores</span>
+          </v-tooltip>
         </v-flex>
       </v-layout>
       <br>
@@ -76,7 +82,7 @@
                   {{ bookmark.nombre }}
               </v-chip>
               <v-spacer></v-spacer>
-              <v-btn dark color="primary" @click="validateHorario(bookmark.horario)" v-if="$store.state.canReinscribir">
+              <v-btn dark color="primary" @click="validateHorario(bookmark.horario)">
                 Reinscribir
               </v-btn>
             </v-layout>
@@ -224,26 +230,46 @@
         </v-container>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="dialogInfo" persistent>
+      <v-card>
+        <v-card-title class="headline">Importante</v-card-title>
+        <v-card-text>
+          A partir de ahora tendrás 15 minutos para completar tu reinscripción, después de este periodo de tiempo la sesión se cerrará.
+          </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="red darken-1" flat @click.native="dialogInfo = false">Regresar</v-btn>
+          <v-btn color="primary" flat @click="startReinscripcion">Empezar</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-snackbar
       :timeout="snackbarTimeout"
       right
-      absolute
       v-model="snackbar"
       color="blue darken-1"
       >
       Ya Puedes Empezar Tu Reinscripción
-      <v-btn flat color="white" @click.native="snackbar = false">Close</v-btn>
+      <v-btn flat color="white" @click.native="snackbar = false">Cerrar</v-btn>
     </v-snackbar>
     <v-snackbar
         timeout=6000
         right
         top
-        absolute
         v-model="snackbar2"
         :color="snbColor"
       >
       {{ snbText }}
-      <v-btn flat color="white" @click.native="snackbar2 = false">Close</v-btn>
+      <v-btn flat color="white" @click.native="snackbar2 = false">Cerrar</v-btn>
+    </v-snackbar>
+    <v-snackbar
+        timeout=900000
+        left
+        bottom
+        v-model="snackbarReinscripcion"
+        color="primary"
+      >
+      {{ snackbarMsgLeftTime }}
     </v-snackbar>
   </v-container>
 </template>
@@ -301,6 +327,7 @@ export default {
         this.activeReinscripcion()
       } else {
         this.setRemainTimeMsg(remainTime)
+        this.dialog = true
         setInterval(() => {
           remainTime -= 1000
           if (remainTime < 0 && !this.$store.state.canReinscribir) {
@@ -321,10 +348,8 @@ export default {
     async activeReinscripcion () {
       this.isReady = false
       this.dialog = false
-      // const responseAlumno = await AlumnoService.show(this.$store.state.alumno.boleta)
       const responseHorarios = await HorariosService.index()
       const reponseUnidadAprendizaje = await UnidadAprendizajeService.index()
-      // this.alumno = responseAlumno.data
       this.horarios = responseHorarios.data
       this.UAs = reponseUnidadAprendizaje.data
       this.$store.dispatch('setCanReinscribir', true)
@@ -407,6 +432,32 @@ export default {
       } else {
         return String(parseInt(year) + 1) + '/1'
       }
+    },
+    onStartReinscripcion () {
+      this.dialogInfo = true
+    },
+    startReinscripcion () {
+      var remainTime = 900000
+      this.dialogInfo = false
+      this.bookmarksBtn = true
+      this.snackbarMsgLeftTime = 'Tiempo Restante: 15:00'
+      this.snackbarReinscripcion = true
+      setInterval(() => {
+        var min = Math.floor(remainTime / (1000 * 60)) % 60
+        var sec = Math.floor(remainTime / (1000)) % 60
+        this.snackbarMsgLeftTime = 'Tiempo Restante: ' + (min < 10 ? '0' + min : min) + ':' + (sec < 10 ? '0' + sec : sec)
+        remainTime -= 1000
+        if (remainTime < 0) {
+          this.endReinscripcion()
+        } else {
+          min = Math.floor(remainTime / (1000 * 60)) % 60
+          sec = Math.floor(remainTime / (1000)) % 60
+          this.snackbarMsgLeftTime = 'Tiempo Restante: ' + (min < 10 ? '0' + min : min) + ':' + (sec < 10 ? '0' + sec : sec)
+        }
+      }, 1000)
+    },
+    endReinscripcion () {
+
     }
   },
   data () {
@@ -422,6 +473,7 @@ export default {
       snackbar: false,
       bookmarksReady: true,
       alumno: {},
+      dialogInfo: false,
       UAs: [],
       bookmarks: [],
       horarios: [],
@@ -432,7 +484,10 @@ export default {
       snbColor: '',
       snbText: '',
       drawer: true,
+      snackbarReinscripcion: false,
+      snackbarMsgLeftTime: '',
       mini: true,
+      bookmarksBtn: false,
       right: null,
       gloabalHeader: [
         { text: 'Grupo', value: 'grupo', align: 'left' },
