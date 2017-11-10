@@ -3,7 +3,9 @@ import * as bodyParser from "body-parser";
 import * as dotenv from "dotenv";
 import * as mongoose from "mongoose";
 import * as passport from "passport";
-var cors = require('cors');
+// var cors = require('cors');
+var path = require('path');
+var serveStatic = require('serve-static');
 
 import * as MainController from "./controllers/MainController";
 import * as AlumnoController from "./controllers/AlumnoController";
@@ -27,10 +29,11 @@ mongoose.connect(process.env.MONGO_URI, { useMongoClient: true })
 
 const app = express();
 
+app.use(serveStatic(__dirname + "/frontend"));
 app.set("port", process.env.PORT || 8080);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
+// app.use(cors());
 
 app.listen(app.get("port"), () => {
   console.log(("App is running at http://localhost:%d"), app.get("port"));
