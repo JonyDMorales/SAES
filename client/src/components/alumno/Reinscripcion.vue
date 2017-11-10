@@ -23,7 +23,7 @@
         </v-flex>
         <v-flex xs2 v-if="bookmarksBtn">
           <v-tooltip top>
-            <v-btn slot="activator" small fab dark color="primary" @click="" class="mt-4">
+            <v-btn slot="activator" small fab dark color="primary" @click="showInscritas()" class="mt-4">
               <v-icon>list</v-icon>
             </v-btn>
             <span>Inscritas</span>
@@ -63,14 +63,7 @@
             <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
             <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
             <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
-            <td v-if="reinscripcionHasStarted"> <v-chip label color="white" text-color="blue">Seleccionar</v-chip> </td>
-            <!--
-            <td>
-              <v-btn dark color="primary" small fab @click="seleccionar(props.item.id, props.item.grupo)">
-                <v-icon>add</v-icon>
-              </v-btn>
-            </td>
-            -->
+            <td v-if="reinscripcionHasStarted"> <v-chip label color="white" text-color="blue" @click="inscribirUA(props.item)">Inscribir</v-chip> </td>
           </template>
         </v-data-table>
         </v-flex>
@@ -123,7 +116,7 @@
           </v-container>
         </v-card-text>
       </v-card>
-      <v-dialog v-model="showScheduleLogs" max-width="500px">
+      <v-dialog v-model="showScheduleLogs" max-width="750px">
         <v-card> 
           <v-container fluid>
             <v-layout row>
@@ -257,6 +250,28 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-bottom-sheet v-model="inscritasSheet">
+      <v-data-table
+        v-bind:headers="inscritasHeader"
+        :items="inscritas"
+        hide-actions
+        class="elevation-2"
+        no-data-text="No tienes ninguna Unidad de Aprendizaje inscrita"
+      >
+      <template slot="items" slot-scope="props">
+        <td>{{ props.item.grupo }}</td>
+        <td>{{ props.item.unidad_aprendizaje }}</td>
+        <td>{{ props.item.profesor }}</td>
+        <td>{{ props.item.horarios[0].hora_inicio  + ' - ' + props.item.horarios[0].hora_fin }}</td>
+        <td>{{ props.item.horarios[1].hora_inicio  + ' - ' + props.item.horarios[1].hora_fin }}</td>
+        <td>{{ props.item.horarios[2].hora_inicio  + ' - ' + props.item.horarios[2].hora_fin }}</td>
+        <td>{{ props.item.horarios[3].hora_inicio  + ' - ' + props.item.horarios[3].hora_fin }}</td>
+        <td>{{ props.item.horarios[4].hora_inicio  + ' - ' + props.item.horarios[4].hora_fin }}</td>
+        <td :class="occupabilityColor(props.item.lugares_disponibles - props.item.alumnos_inscritos)">{{ props.item.lugares_disponibles - props.item.alumnos_inscritos }}</td>
+        <td> <v-chip label color="white" text-color="red darken-1" @click="removeFromInscritas(props.item.id)">Quitar</v-chip></td>
+      </template>
+      </v-data-table>
+    </v-bottom-sheet>
     <v-snackbar
       :timeout="snackbarTimeout"
       right
@@ -267,9 +282,9 @@
       <v-btn flat color="white" @click.native="snackbar = false">Cerrar</v-btn>
     </v-snackbar>
     <v-snackbar
-        timeout=6000
+        :timeout=5000
         right
-        top
+        bottom
         v-model="snackbar2"
         :color="snbColor"
       >
@@ -277,7 +292,7 @@
       <v-btn flat color="white" @click.native="snackbar2 = false">Cerrar</v-btn>
     </v-snackbar>
     <v-snackbar
-        timeout=900000
+        :timeout=900000
         left
         bottom
         v-model="snackbarReinscripcion"
@@ -296,6 +311,7 @@ import UnidadAprendizajeService from '@/services/UnidadAprendizajeService'
 import InscripcionService from '@/services/InscripcionService'
 import Utils from '@/Utils'
 import Pusher from 'pusher-js'
+var Bucket = require('buckets-js')
 
 export default {
   name: 'reinscripcion',
@@ -327,6 +343,9 @@ export default {
           this.updateScheduleOccupability(occupability)
         })
       })
+    },
+    showInscritas () {
+      this.inscritasSheet = true
     },
     updateScheduleOccupability (occupability) {
       var lower = 0
@@ -470,6 +489,7 @@ export default {
         if (id > this.UAs[middle].id) lower = middle + 1
         else upper = middle - 1
       }
+      return 4.39
     },
     goBack () {
       this.$router.push({
@@ -512,6 +532,77 @@ export default {
     },
     endReinscripcion () {
 
+    },
+    inscribirUA (clase) {
+      var found = false
+      var sameUA = false
+      var sum = this.getCredits(clase.id_unidad_aprendizaje)
+      var hoursDays = new Bucket.Set()
+      var overlaps = false
+      for (var i = this.inscritas.length - 1; i >= 0; i--) {
+        for (var j = 0; j < this.inscritas[i].horarios.length; j++) {
+          if (this.inscritas[i].horarios[j].hora_inicio.length > 0) {
+            let key = this.inscritas[i].horarios[j].dia + this.inscritas[i].horarios[j].hora_inicio + this.inscritas[i].horarios[j].hora_fin
+            hoursDays.add(key)
+          }
+        }
+        sum += (this.getCredits(this.inscritas[i].id_unidad_aprendizaje))
+        if (this.inscritas[i].unidad_aprendizaje === clase.unidad_aprendizaje) {
+          sameUA = true
+        }
+        if (this.inscritas[i].id === clase.id) {
+          found = true
+        }
+      }
+      var prevSize = hoursDays.size()
+      for (var index = 0; index < clase.horarios.length; index++) {
+        if (clase.horarios[index].hora_inicio.length > 0) {
+          let key = clase.horarios[index].dia + clase.horarios[index].hora_inicio + clase.horarios[index].hora_fin
+          hoursDays.add(key)
+          if (prevSize === hoursDays.size()) {
+            overlaps = true
+            break
+          } else {
+            prevSize = hoursDays.size()
+          }
+        }
+      }
+      if (overlaps) {
+        this.snbColor = 'red lighten-1'
+        this.snbText = 'Esta Unidad de Aprendizaje se traslapa con otra.'
+        this.snackbar2 = true
+      } else if (sameUA) {
+        this.snbColor = 'red lighten-1'
+        this.snbText = 'Ya has inscrito esta Unidad de Aprendizaje.'
+        this.snackbar2 = true
+      } else if (sum > this.maxCredits) {
+        this.snbColor = 'red lighten-1'
+        this.snbText = 'No puedes reinscribir mas de ' + this.maxCredits + ' créditos.'
+        this.snackbar2 = true
+      } else if (!this.canTakeIt(clase.id_unidad_aprendizaje)) {
+        this.snbColor = 'red lighten-1'
+        this.snbText = 'Ya no puedes cursar esta Unidad de Aprendizaje.'
+        this.snackbar2 = true
+      } else if (clase.lugares_disponibles - clase.alumnos_inscritos === 0) {
+        this.snbColor = 'red lighten-1'
+        this.snbText = 'Ya no hay lugares disponibles en esta Unidad de Aprendizaje.'
+        this.snackbar2 = true
+      } else {
+        if (!found) {
+          this.inscritas.push(clase)
+          this.inscritasSheet = true
+        }
+      }
+    },
+    removeFromInscritas (id) {
+      var idx = 0
+      for (var i = this.inscritas.length - 1; i >= 0; i--) {
+        if (this.inscritas[i].id === id) {
+          idx = i
+          break
+        }
+      }
+      this.inscritas.splice(idx, 1)
     }
   },
   data () {
@@ -529,8 +620,10 @@ export default {
       alumno: {},
       dialogInfo: false,
       UAs: [],
+      inscritas: [],
       bookmarks: [],
       horarios: [],
+      inscritasSheet: false,
       dialog: false,
       isReady: false,
       errorsSchedule: [],
@@ -565,6 +658,18 @@ export default {
         { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
         { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
         { text: 'Lugares', value: 'lugares_disponibles', align: 'left' }
+      ],
+      inscritasHeader: [
+        { text: 'Grupo', value: 'grupo', align: 'left' },
+        { text: 'Unidad Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
+        { text: 'Profesor', value: 'profesor', align: 'left' },
+        { text: 'Lunes', value: 'Lunes', align: 'left', sortable: false },
+        { text: 'Martes', value: 'Martes', align: 'left', sortable: false },
+        { text: 'Miércoles', value: 'Miércoles', align: 'left', sortable: false },
+        { text: 'Jueves', value: 'Jueves', align: 'left', sortable: false },
+        { text: 'Viernes', value: 'Viernes', align: 'left', sortable: false },
+        { text: 'Lugares', value: 'lugares_disponibles', align: 'left' },
+        { text: 'Quitar', value: 'quitar', align: 'left' }
       ]
     }
   },
