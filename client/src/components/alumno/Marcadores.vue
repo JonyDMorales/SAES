@@ -59,7 +59,6 @@
 
 <script>
 import AlumnoService from '@/services/AlumnoService'
-import InscripcionService from '@/services/InscripcionService'
 
 export default {
 
@@ -74,16 +73,6 @@ export default {
         this.isAuthorized = true
       } catch (err) {
       }
-    },
-    async reinscribirHorario (bookmark) {
-      const response = await InscripcionService.store({
-        horario: bookmark.map((b) => b.id),
-        boleta_alumno: this.$store.state.alumno.boleta
-      })
-      console.log(response.data)
-      this.snbColor = 'blue'
-      this.snbText = 'La Reinscripción se ha realizado coon éxito'
-      this.snackbar = true
     }
   },
   data () {

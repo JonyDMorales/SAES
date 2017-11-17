@@ -9,5 +9,8 @@ export default {
   },
   show (boleta) {
     return Api().get('inscripcion/' + boleta)
+  },
+  inscrito (boleta) {
+    return Api().get('inscrito/' + boleta)
   }
 }

@@ -5,7 +5,7 @@
          <v-progress-linear v-bind:indeterminate="true" height="5"></v-progress-linear>
       </v-flex>
     </v-layout>
-    <v-card flat>
+    <v-card flat v-if="!$store.state.isAlreadyInscrito">
       <v-layout row>
         <v-flex xs3>
           <v-text-field
@@ -89,7 +89,7 @@
                   {{ bookmark.nombre }}
               </v-chip>
               <v-spacer></v-spacer>
-              <v-btn dark color="primary" @click="validateHorario(bookmark.horario)">
+              <v-btn dark color="primary" @click="validateHorario(bookmark.horario, true)">
                 Reinscribir
               </v-btn>
             </v-layout>
@@ -139,7 +139,7 @@
                     </v-list-tile>
                   </v-list>
                   <v-card-actions>
-                    <v-btn color="primary" @click="" v-if="errorsSchedule.length == 0">Confirmar Reinscripción</v-btn>
+                    <v-btn color="primary" @click="reinscribir()" v-if="errorsSchedule.length == 0">Confirmar Reinscripción</v-btn>
                     <v-btn outline color="accent" @click="showScheduleLogs = false" v-if="errorsSchedule.length > 0">Regresar</v-btn>
                   </v-card-actions>
                 </v-card>
@@ -250,6 +250,15 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+    <v-dialog v-model="$store.state.isAlreadyInscrito" persistent>
+      <v-card>
+        <v-card-title class="headline">Reinscripción Finalizada</v-card-title>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="primary" @click="watchSchedule">Ver Horario</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-bottom-sheet v-model="inscritasSheet">
       <v-data-table
         v-bind:headers="inscritasHeader"
@@ -299,6 +308,7 @@
         color="primary"
       >
       {{ snackbarMsgLeftTime }}
+      <v-btn flat color="white" @click="endReinscripcion()">Finalizar</v-btn>
     </v-snackbar>
   </v-container>
 </template>
@@ -317,6 +327,11 @@ export default {
   name: 'reinscripcion',
   methods:
   {
+    watchSchedule () {
+      this.$router.push({
+        name: 'horarioActual'
+      })
+    },
     async init () {
       const responseCita = await CitasService.show(this.$store.state.alumno.boleta)
       this.cita = responseCita.data
@@ -374,17 +389,6 @@ export default {
     parseDateToSpanish (date) {
       return Utils.parseDateToSpanish(date)
     },
-    async reinscribirHorario () {
-      const response = await InscripcionService.store({
-        horario: this.current.map((b) => b.id),
-        boleta_alumno: this.$store.state.alumno.boleta
-      })
-      console.log(response)
-      this.dialogBookmarks = false
-      this.snbColor = 'blue'
-      this.snbText = 'La Reinscripción se ha realizado con éxito'
-      this.snackbar2 = true
-    },
     async getBookmarks () {
       this.bookmarksReady = false
       const response = await AlumnoService.bookmarks(this.$store.state.alumno.boleta)
@@ -434,7 +438,8 @@ export default {
       if (lugares < 20) return 'orange lighten-4'
       else return 'green lighten-4'
     },
-    validateHorario (pSchedule) {
+    validateHorario (pSchedule, isFromBookmark) {
+      this.isFromBookmark = isFromBookmark
       this.errorsSchedule = []
       this.current = pSchedule
       var sum = 0
@@ -522,7 +527,7 @@ export default {
         this.snackbarMsgLeftTime = 'Tiempo Restante: ' + (min < 10 ? '0' + min : min) + ':' + (sec < 10 ? '0' + sec : sec)
         remainTime -= 1000
         if (remainTime < 0) {
-          this.endReinscripcion()
+          this.killReinscripcion()
         } else {
           min = Math.floor(remainTime / (1000 * 60)) % 60
           sec = Math.floor(remainTime / (1000)) % 60
@@ -531,9 +536,23 @@ export default {
       }, 1000)
     },
     endReinscripcion () {
-
+      this.validateHorario(this.inscritas, false)
+      if (this.errorsSchedule.length === 0) {
+        this.inscritasSheet = true
+      }
     },
-    inscribirUA (clase) {
+    async killReinscripcion () {
+      this.inscritas.forEach(async (inscrita) => {
+        const response = await HorariosService.occupability(inscrita.id, { inc: -1 })
+        console.log(response.data)
+      })
+      this.bookmarksBtn = false
+      this.inscritas = []
+      this.snbColor = 'red lighten-1'
+      this.snbText = 'Tiempo de Reinscripción Finalizado'
+      this.snackbar2 = true
+    },
+    async inscribirUA (clase) {
       var found = false
       var sameUA = false
       var sum = this.getCredits(clase.id_unidad_aprendizaje)
@@ -589,12 +608,30 @@ export default {
         this.snackbar2 = true
       } else {
         if (!found) {
+          const response = await HorariosService.occupability(clase.id, { inc: 1 })
+          console.log(response.data)
           this.inscritas.push(clase)
           this.inscritasSheet = true
         }
       }
     },
-    removeFromInscritas (id) {
+    async reinscribir () {
+      const response = await InscripcionService.store({
+        inscripcionData: {
+          horario: this.current.map((b) => b.id),
+          boleta_alumno: this.$store.state.alumno.boleta
+        },
+        update_occupability: this.isFromBookmark
+      })
+      console.log(response.data)
+      this.$store.dispatch('setIsAlreadyInscrito', true)
+      this.showScheduleLogs = false
+      this.snbColor = 'blue'
+      this.snbText = 'La Reinscripción se ha realizado con éxito'
+      this.snackbar2 = true
+      this.inscritas = []
+    },
+    async removeFromInscritas (id) {
       var idx = 0
       for (var i = this.inscritas.length - 1; i >= 0; i--) {
         if (this.inscritas[i].id === id) {
@@ -602,6 +639,8 @@ export default {
           break
         }
       }
+      const response = await HorariosService.occupability(id, { inc: -1 })
+      console.log(response.data)
       this.inscritas.splice(idx, 1)
     }
   },
@@ -637,6 +676,7 @@ export default {
       mini: true,
       bookmarksBtn: false,
       right: null,
+      isFromBookmark: false,
       gloabalHeader: [
         { text: 'Grupo', value: 'grupo', align: 'left' },
         { text: 'Unidad Aprendizaje', value: 'unidad_aprendizaje', align: 'left' },
@@ -676,12 +716,18 @@ export default {
   mounted () {
     this.init()
   },
+  beforeDestroy () {
+    this.inscritas.forEach(async (inscrita) => {
+      const response = await HorariosService.occupability(inscrita.id, { inc: -1 })
+      console.log(response.data)
+    })
+  },
   computed: {
     isPossibleReinscripcion: function () {
       var possible = true
       this.alumno.kardex.forEach((k) => {
         k.history.forEach((h) => {
-          if (h.forma_evaluacion.indexOf('Dictamen') !== -1) {
+          if (h.forma_evaluacion.indexOf('Dictamen') !== -1 && h.calificacion < 6) {
             possible = false
           }
         })

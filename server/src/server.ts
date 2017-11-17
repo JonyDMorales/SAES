@@ -3,7 +3,7 @@ import * as bodyParser from "body-parser";
 import * as dotenv from "dotenv";
 import * as mongoose from "mongoose";
 import * as passport from "passport";
-// var cors = require('cors');
+var cors = require('cors');
 var path = require('path');
 var serveStatic = require('serve-static');
 
@@ -29,11 +29,11 @@ mongoose.connect(process.env.MONGO_URI, { useMongoClient: true })
 
 const app = express();
 
-app.use(serveStatic(__dirname + "/frontend"));
+app.use(serveStatic(__dirname + "/dist"));
 app.set("port", process.env.PORT || 8080);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(cors());
+app.use(cors());
 
 app.listen(app.get("port"), () => {
   console.log(("App is running at http://localhost:%d"), app.get("port"));
@@ -85,7 +85,7 @@ app.get("/horario_clases", Middleware.isAlumnoAuthenticated, HorarioClaseControl
 //app.post("/horario_clases", horarioClaseController.store);
 //app.get("/horario_clases/:id", horarioClaseController.show);
 //app.delete("/horario_clases/:id", horarioClaseController.destroy);
-//app.put("/horario_clases/:id", horarioClaseController.update);
+app.put("/horario_clases/:id", HorarioClaseController.occupability);
 
 app.post("/crear_horarios", HorarioClaseController.make);
 
@@ -96,5 +96,6 @@ app.get("/cita_reinscripcion/:boleta", CitaReinscripcionController.show);
 app.post("/inscripcion", InscripcionController.store);
 app.get("/inscripcion", InscripcionController.index);
 app.get("/inscripcion/:boleta", InscripcionController.show);
+app.get("/inscrito/:boleta", InscripcionController.inscrito);
 
 module.exports = app;

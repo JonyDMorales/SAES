@@ -42,7 +42,7 @@
             <v-icon>bookmark</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Marcadores</v-list-tile-title>
           </v-list-tile>
-          <v-list-tile @click="goToReinscripcion()">
+          <v-list-tile @click="goToReinscripcion()" v-if="!$store.state.isAlreadyInscrito">
             <v-icon>border_color</v-icon>&nbsp;&nbsp;
             <v-list-tile-title>Reinscripción</v-list-tile-title>
           </v-list-tile>

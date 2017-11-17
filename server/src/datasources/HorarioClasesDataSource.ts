@@ -27,7 +27,7 @@ export let getHorarioById = (id: number) => {
  	return query.exec();
 }
 
-export let updateOccupability = (id: number) => {
-	let query = HorarioClase.findOneAndUpdate({ id: id }, { $inc: { alumnos_inscritos: 1 }});
+export let updateOccupability = (id: number, inc: number) => {
+	let query = HorarioClase.findOneAndUpdate({ id: id }, { $inc: { alumnos_inscritos: inc }});
  	return query.exec();
 }

@@ -170,7 +170,7 @@
 <script>
 import AlumnoService from '@/services/AlumnoService'
 import AdminService from '@/services/AdminService'
-// import CitasService from '@/services/CitasService'
+import InscripcionService from '@/services/InscripcionService'
 
 export default {
 
@@ -182,15 +182,11 @@ export default {
         boleta: this.boleta,
         password: this.password_alumno
       })
-      // const responseCita = await CitasService.show(this.boleta)
       if (response.data.status === 'ok') {
+        const inscripcionResponse = await InscripcionService.inscrito(this.boleta)
+        this.$store.dispatch('setIsAlreadyInscrito', inscripcionResponse.data.inscrito)
         this.$store.dispatch('setToken', response.data.token)
         this.$store.dispatch('setAlumno', response.data.alumno)
-        /*
-        if (responseCita.data.fecha_inicio) {
-          this.$store.dispatch('setCanReinscribir', !(responseCita.data.fecha_inicio - Date.now() > 0))
-        }
-        */
         this.$router.push({
           name: 'infoGeneral'
         })

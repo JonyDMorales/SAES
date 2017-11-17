@@ -16,7 +16,7 @@ export default new Vuex.Store({
     profesor: null,
     userType: 0,
     canReinscribir: false,
-    isAlreadyInscrito: false
+    isAlreadyInscrito: null
   },
   mutations: {
     setToken (state, token) {
@@ -48,8 +48,8 @@ export default new Vuex.Store({
     setCanReinscribir (state, canReinscribir) {
       state.canReinscribir = canReinscribir
     },
-    setIsAlreadyInscrito (state, setIsAlreadyInscrito) {
-      state.setIsAlreadyInscrito = setIsAlreadyInscrito
+    setIsAlreadyInscrito (state, isAlreadyInscrito) {
+      state.isAlreadyInscrito = isAlreadyInscrito
     }
   },
   actions: {
